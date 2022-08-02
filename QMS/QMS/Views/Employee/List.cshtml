@@ -1,0 +1,210 @@
+﻿
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var subModules = Session["subModules"] != null ? (List<QMS.Data.SubModule>)Session["subModules"] : new List<QMS.Data.SubModule>();
+    int subModuleId = subModules.Where(m => m.Name == "Employees").FirstOrDefault().Id;
+    bool canAdd = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
+    bool canEdit = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
+    bool canDelete = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
+    
+}
+
+<!DOCTYPE html>
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<main class="bg-white-500 flex-1 p-3 overflow-hidden">
+    <div class="flex flex-col">
+        <!--Grid Form-->
+        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
+                    <span>Employees</span>
+
+
+
+                    @if (canAdd)
+                    {
+                        <span style="float:right;">
+                            @*<button class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded" onclick="AddJobTitle();">
+                                    Add Job Title
+                                </button>*@
+                            <a class="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-4  rounded text-decoration-none" href="@Url.Content("~/Employee/Add")">
+                                Add Employee
+                            </a>
+
+                        </span>
+                    }
+                </div>
+
+                @if (TempData["addSuccessMessage"] != null)
+                {
+                    <div class="bg-green-200 text-success text-center p-3 w-25 border-1 m-1 float-end addMessage">
+                        @TempData["addSuccessMessage"]
+                    <i class="fa fa-times float-end hover:bg-white cancelMessage" aria-hidden="true"></i>
+                </div>
+            }
+                @if (TempData["addErrorMessage"] != null)
+                {
+                    <div class="bg-red-200 text-danger text-center  p-3 w-25 border-1 m-1 float-end addMessage">
+                        @TempData["addErrorMessage"]
+                    <i class="fa fa-times float-end hover:bg-white cancelMessage" aria-hidden="true"></i>
+                </div>
+            }
+
+                <div class="row searchSection">
+                    @using (Html.BeginForm("List", "Employee", FormMethod.Post))
+                    {
+
+                        <label class=" control-label px-4 py-2">Search</label>
+
+                        <input type="text" name="search" placeholder="Search" class="border-1 border-gray-400 px-3 py-2 mt-2" />
+
+                        <button class="btn btn-primary mb-2 ml-2" type="submit">
+                            <i class="fa fa-search"></i>
+
+                            Search
+                        </button>
+
+
+
+                    }
+
+                </div>
+
+
+                <div class="p-3">
+                    <table class="table-responsive  w-full text-12 table-striped rounded">
+                        <thead>
+                            <tr>
+                                @*<th class="border  px-2 py-2"><a href="@Url.Content("~/Employee/List/" + new { sortOrder = ViewBag.sortOrder == null ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy="Code" })">Code</a></th>*@
+                                <th class="border  px-2 py-2">@Html.ActionLink("Code", "List", new { sortOrder = ViewBag.sortOrder == null ? "Desc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy = "Emp_Code", pageNumber = ViewBag.pageNumber == 0 ? 1 : ViewBag.pageNumber })</th>
+                                <th class="border  px-2 py-2">@Html.ActionLink("Name", "List", new { sortOrder = ViewBag.sortOrder == null ? "Desc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy = "Emp_Name", pageNumber = ViewBag.pageNumber == 0 ? 1 : ViewBag.pageNumber })</th>
+                                @*<th class="border  px-2 py-2">Name</th>*@
+                              
+                                @*<th class="border  px-4 py-2">Last Updated By/On</th>*@
+                                <th class="border w-1/6 px-4 py-2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mytbody">
+                            @if (ViewBag.Employees != null && ViewBag.Employees.Count > 0)
+                            {
+                                foreach (var employee in ViewBag.Employees)
+                                {
+                                    <tr>
+                                        <td class="border px-2 py-2">@(employee.Emp_Code)</td>
+                                        <td class="border px-2 py-2 ">@(employee.Emp_Name)</td>
+                                  
+                                        @*<td class="border  ">@(employee.LastUpdatedBy + " " + employee.LastUpdatedOn)</td>*@
+                                        <td class="border ">
+
+                                            @if (canEdit)
+                                            {
+                                                <a class="bg-green-500 cursor-pointer rounded p-1 mx-1 text-blue-900" href="@Url.Content("~/Employee/Edit/" + employee.Id)">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            }
+                                            @if (canDelete)
+                                            {
+                                                <a class="bg-gray-500 cursor-pointer rounded p-1 mx-1 text-red-500" href="@Url.Content("~/Employee/Delete/" + employee.Id)">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            }
+                                            
+                                             
+                                            
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="11" class="border px-4 py-4">
+                                        No Record Found!
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+            </div>
+        </div>
+        <!--/Grid Form-->
+    </div>
+    @{
+        double totalPages = ViewBag.totalPages;
+
+        <ul class="pagination m-2">
+
+            @if (ViewBag.pageNumber == 1)
+            {
+                <li>@Html.ActionLink("Prev", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = 1 }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
+            }
+            else
+            {
+                <li>@Html.ActionLink("Prev", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = ViewBag.pageNumber - 1 }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
+            }
+
+
+            @for (int i = 1; i <= totalPages; i++)
+            {
+
+                if (i == ViewBag.pageNumber)
+                {
+
+                    <li>@Html.ActionLink(i.ToString(), "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = i }, new { @class = " px-3 py-1 border bg-blue-700 text-white text-decoration-none" })</li>
+                }
+                else
+                {
+
+                    <li>@Html.ActionLink(i.ToString(), "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = i }, new { @class = " px-3 py-1 border bg-light text-decoration-none" })</li>
+
+                }
+
+
+            }
+
+
+
+            @if (ViewBag.pageNumber == totalPages)
+            {
+                <li>@Html.ActionLink("Next", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = totalPages }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
+            }
+            else
+            {
+                <li>@Html.ActionLink("Next", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = ViewBag.pageNumber + 1 }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
+            }
+        </ul>
+
+
+    }
+</main>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        if ($('#mytbody').children('tr').length < 2) {
+
+            $('.searchSection').addClass('hide');
+
+        }
+        $('.cancelMessage').click(function () {
+            $('.addMessage').addClass('hide');
+        })
+
+    })
+</script>
+

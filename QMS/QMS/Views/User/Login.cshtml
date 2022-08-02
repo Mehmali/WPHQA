@@ -1,0 +1,103 @@
+﻿
+@{
+    Layout = null;
+    var URL = Url.Content("~/Templates/admin/dist/images/image11.jpg");
+}
+
+@*<!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>QMS - Login</title>
+    </head>
+    <body>
+        <div>
+            @using (Html.BeginForm("Login", "User", FormMethod.Post))
+            {
+                @Html.TextBox("UserName")<br />
+                @Html.Password("Password")<br />
+                <button type="submit" value="Login">Login</button>
+            }
+        </div>
+    </body>
+    </html>*@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>QMS - Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="@Url.Content("~/Templates/admin/dist/styles.css")">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+          crossorigin="anonymous">
+    <style>
+
+        .login {
+             background-image: url("@URL");
+             background-repeat:no-repeat;
+             background-size:100%;
+             max-width:100%;
+             height:100%;
+
+        }
+        .test{
+            position:absolute;
+            padding:10px;
+        }
+    </style>
+</head>
+<body class="h-screen font-sans bg-cover" style="background-image: url('@URL'); background-repeat:no-repeat;background-size:100%;max-width:100%;height:100%;">
+    <div class="">
+        <div class="text-center font-bold font-serif pt-6 text-blue-600 text-4xl ">WestPoint Home (Bahrain) W.L.L.</div>
+        <div class="text-center font-bold font-serif mt-3 text-blue-600 text-3xl ">Quality Management System</div>
+        <div class="text-center font-bold font-serif mt-3 text-blue-600 text-2xl ">CAR/CAPA</div>
+    </div>
+    <div class="container mx-auto h-full flex flex-1 justify-center items-center mt-10">
+        <div class="w-full max-w-xs ">
+
+            <div class="leading-loose ">
+
+                <form action="@Url.Content("~/User/Login")" method="post" class="max-w-xs m-4 bg-white p-6 rounded shadow-xl">
+
+                    <div class="bg-white border-b ">
+                        <img src="~/Templates/admin/dist/images/WPHLogo.png" class="w-full" />
+                        @*<p class="text-gray-800  font-medium text-center text-lg font-bold">LOGIN</p>*@
+                    </div>
+                    <div class="mt-10">
+
+                        <label class="block text-sm text-gray-00" for="UserName">User Name</label>
+                        <i class="fas fa-user test"></i>
+                        <input class="w-full px-10 py-1 text-gray-700 bg-gray-200 rounded" id="UserName" name="UserName" type="text" required="" placeholder="User Name" aria-label="UserName" autocomplete="off" />
+
+                    </div>
+                    <div class="mt-6">
+
+                        <label class="block text-sm text-gray-600" for="Password">Password</label>
+                        <i class="fas fa-lock test"></i>
+                        <input class="w-full px-10  py-1 text-gray-700 bg-gray-200 rounded" id="Password" name="Password" type="password" required="" placeholder="*******" aria-label="Password" autocomplete="off" />
+
+                    </div>
+                    <div class="mt-10 items-center justify-between">
+                        <button style="margin-left:60px;" class=" px-4 py-1 text-white font-light align-content-center tracking-wider bg-blue-700 hover:bg-blue-800  rounded-full w-32" type="submit">Login</button>
+                        @*<a class="inline-block right-0 align-baseline  font-bold text-sm text-500 hover:text-blue-800" href="#">
+                                Forgot Password?
+                            </a>*@
+                    </div>
+                    @*<a class="inline-block right-0 align-baseline font-bold text-sm text-500 hover:text-blue-800" href="#">
+                            Not registered ?
+                        </a>*@
+                    @if (TempData["Message"] != null && TempData["Message"].ToString() != "")
+                    {
+                        <div class="bg-red-300 mb-2 border border-red-300 text-red-dark px-4 py-3 rounded relative mt-1" role="alert">
+                            @TempData["Message"]
+                        </div>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

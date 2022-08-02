@@ -1,0 +1,246 @@
+﻿
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+}
+
+<main class="bg-white-500 flex-1 p-3 overflow-hidden">
+    <div class="flex flex-col">
+        <!--Grid Form-->
+        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2 ">
+            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-2/3 ml-24 ">
+                <div class="bg-gray-400 px-2 py-2 border-solid border-gray-800 border-b text-2xl">
+                    Add Site
+                </div>
+
+                <div class="p-3">
+                    <form name="addForm" id="addForm" class="w-full" method="post" action="@Url.Content("~/Site/Add")">
+                        <div class="flex flex-wrap -mx-3 mb-1">
+                            <div class="w-full md:w-1/2 px-3 mb-1 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Description">
+                                    Description
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Description" name="Description" type="text" placeholder="Enter Description">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Country">
+                                    Country
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="Country_Id" name="Country_Id">
+                                    <option>Select Country</option>
+                                    @foreach (var country in ViewBag.Countries)
+                                    {
+                                        <option value="@country.Id">@(country.Name + "[" + country.Code + "]")</option>
+                                        @*<option value="@country.Id" @(country.Id == vcountry.Country_Id ? "selected" : "")>@(country.Name + "[" + country.Code + "]")</option>*@
+                                    }
+                                </select>
+                                <p id="countryErr" class="error mt-1 hide">Please select the country.</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-1">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="City">
+                                    City
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="City_Id" name="City_Id">
+                                    <option>Select City</option>
+                                    @*@Html.Partial("PartialDropDown")*@
+                                </select>
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ZipCode">
+                                    Zip Code
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ZipCode" name="ZipCode" type="text" placeholder="Enter Zip Code">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-1">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="AddressLine1">
+                                    Address Line1
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="AddressLine1" name="AddressLine1" type="text" placeholder="EnterAddress Line1">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="AddressLine2">
+                                    Address Line2
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="AddressLine2" name="AddressLine2" type="text" placeholder="Enter Address Line2">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-1">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Phone">
+                                    Phone
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Phone" name="Phone" type="text" placeholder="Enter Phone">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Phone1">
+                                    Phone1
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Phone1" name="Phone1" type="text" placeholder="Enter Phone1">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-1">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="CellPhone">
+                                    CellPhone
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="CellPhone" name="CellPhone" type="text" placeholder="Enter Cell Phone">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Fax">
+                                    Fax
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Fax" name="Fax" type="text" placeholder="Enter Fax">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-1">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Fax1">
+                                    Fax1
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Fax1" name="Fax1" type="text" placeholder="Enter Fax1">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Email">
+                                    Email
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Email" name="Email" type="text" placeholder="Enter Email">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                        </div>
+                        <div class="md:flex md:items-right">
+                            <div class="md:w-2/3">
+                                <button type="submit" id="save" class="test shadow bg-green-500 hover:bg-green-800 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                                    Save
+                                </button>
+                                <a class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-decoration-none" href="@Url.Content("~/Site/List")">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--/Grid Form-->
+    </div>
+</main>
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script src="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#save').click(function () {
+
+            $('#addForm').validate({
+
+                rules: {
+                    Description: {
+                        required: true
+                    },
+
+                    Email: {
+                        required: true,
+                        Email: true
+                    }
+                },
+                messages: {
+                    Description: {
+                        required: "Please fill with description"
+                    },
+
+                    Email: {
+                        required: "Please enter email address",
+                        Email: "Please enter valid email"
+                    }
+                },
+                highlight: function (element) {
+                    $(element).addClass('redBorder').removeClass('border border-red-500');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('redBorder').addClass('border border-red-500');
+                }
+
+            });
+            validateCountry();
+
+
+
+
+        });
+    });
+
+
+
+    $('#Country_Id').change(function () {
+        //alert($(this).val());
+        var countryId = $(this).val();
+        var Url = '@Url.Content("~/City/List/")' + countryId;
+        //alert(Url);
+        $.ajax({
+            url: Url,
+            type: 'GET',
+            success: function (response) {
+                //alert(response);
+                $('#City_Id').html(response);
+            },
+            error: function () {
+                //alert('Error');
+            }
+
+        });
+        validateCountry();
+    });
+
+    function validateCountry() {
+        var selectedCountry = $('#Country_Id').val();
+        if (selectedCountry == 'Select Country') {
+            $('#Country_Id').addClass('redBorder').removeClass('border border-red-500 focus:border-gray-600');
+            $('#countryErr').removeClass('hide');
+            return false;
+        }
+        else {
+            $('#Country_Id').removeClass('redBorder').addClass('border border-red-500 ');
+            $('#countryErr').addClass('hide');
+            return true;
+        }
+    }
+</script>

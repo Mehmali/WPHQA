@@ -1,0 +1,155 @@
+﻿@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var Complaint = (QMS.Models.ComplaintById)ViewBag.Complaint;
+
+}
+
+<main class="bg-white-500 flex-1 p-3 overflow-hidden">
+    <div class="flex flex-col">
+        <!--Grid Form-->
+        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2 ">
+            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-2/3 ml-24 ">
+                <div class="bg-gray-400 px-2 py-3 border-solid border-gray-800 border-b text-2xl">
+                    Complaint Detail
+                </div>
+
+                <div class="p-4 text-sm">
+
+                    <input type="hidden" name="Id" value="@Complaint.Id" />
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="inline">
+                                Issuer Name:
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="inline">
+                                @Complaint.Issuer_Name
+                            </label>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="inline">
+                                Issuer Department:
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="inline">
+                                @Complaint.IssuerDepartment
+                            </label>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <label class="inline">
+                                Responsible Department:
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="inline">
+                                @Complaint.ResponsibleDepartment
+                            </label>
+
+                        </div>
+                        <div class="col-md-2">
+                            <label class="inline">
+                                Main Type :
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="inline">
+                                @Complaint.ComplaintMainType
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="inline">
+                                Sub Type:
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="inline">
+                                @Complaint.ComplaintSubTypes
+                            </label>
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <label class="inline">
+                                Problem Description:
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="inline">
+                                @Complaint.ProblemDescription
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <div>
+
+                        <form method="post" action="@Url.Content("~/ComplaintDocument/UploadFile") " enctype="multipart/form-data">
+                            <input type="file" id="myFile" name="myFile">
+                            <input type="hidden" name="ComplaintId" value="@Complaint.Id" />
+                            <input type="submit">
+                        </form>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="inline">
+                                Documents
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="inline">
+                                @foreach (var document in ViewBag.ComplaintDocuments)
+                                {
+                                    <a href="@Url.Content("~/UploadedFiles/"+document.File_Name)" target="_blank"> @document.File_Name </a>
+                                    <a href="@Url.Content("~/ComplaintDocument/DownloadFile/"+document.Id)" > Download </a>
+                                    <a class="bg-gray-500 cursor-pointer rounded p-1 mx-1 text-red-500" href="@Url.Content("~/ComplaintDocument/Delete/" + document.Id)">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                }
+                            </label>
+                        </div>
+
+
+                        
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="md:flex md:items-right">
+                            <div class="md:w-2/6">
+                                @*<a class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded text-decoration-none mr-2" href="@Url.Content("~/Employee/Edit/"+ViewBag.Employee.Id)">
+                        Edit
+                    </a>*@
+                                <a class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-decoration-none " href="@Url.Content("~/Complaint/List")">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!--/Grid Form-->
+    </div>
+</main>
+
+
+

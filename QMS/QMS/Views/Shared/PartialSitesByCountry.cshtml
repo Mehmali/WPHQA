@@ -1,0 +1,7 @@
+﻿
+
+<option value="">Select Facility</option>
+@foreach (var site in ViewBag.Sites)
+{
+    <option value="@site.Id">@site.Description</option>
+}

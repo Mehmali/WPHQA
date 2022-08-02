@@ -1,0 +1,266 @@
+﻿
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/Layout.cshtml";
+   
+
+}
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.theme.css" rel="stylesheet" />
+    <title>Test</title>
+
+    <style>
+        .ui-datepicker {
+            background: #5c7682;
+            border: 1px solid blue;
+            color: black
+        }
+   
+    </style>
+
+</head>
+<main class="bg-white-500 flex-1 p-3 overflow-hidden">
+    <div class="flex flex-col">
+        <!--Grid Form-->
+        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2 ">
+            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-2/3 ml-24 ">
+                <div class="bg-gray-400 px-2 py-3 border-solid border-gray-800 border-b text-2xl">
+                    Update Employee
+                </div>
+
+                <div class="p-3">
+                    <form name="editForm" id="editForm" class="w-full" method="post" action="@Url.Content("~/Employee/Edit")">
+                        <input type="hidden" name="Id" value="@ViewBag.Employee.Id" />
+                        <input type="hidden" name="IsActive" value="@ViewBag.Employee.IsActive.ToString()" />
+                        <input type="hidden" name="CreatedBy" value="@ViewBag.Employee.CreatedBy" />
+                        <input type="hidden" name="CreatedOn" value="@ViewBag.Employee.CreatedOn" />
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Emp_Code">
+                                    Code
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Emp_Code" name="Emp_Code" type="text" placeholder="Enter Code" value="@ViewBag.Employee.Emp_Code">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Emp_Name">
+                                    Name
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Emp_Name" name="Emp_Name" type="text" placeholder="Enter Name" value="@ViewBag.Employee.Emp_Name">
+                            </div>
+                        </div>
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Manager_Id">
+                                    Manager
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="Manager_Id" name="Manager_Id">
+                                    <option>Select Manager</option>
+                                    @foreach (var manager in ViewBag.Managers)
+                                    {
+                                        <option value="@manager.Id" @(manager.Id == ViewBag.Employee.Manager_Id ? "selected" : "")>@(manager.Emp_Name)</option>
+                                        @*<option value="@country.Id" @(country.Id == vcountry.Country_Id ? "selected" : "")>@(country.Name + "[" + country.Code + "]")</option>*@
+                                    }
+                                </select>
+                                @*<p id="jobtitleErr" class="error mt-1 hide">Please select the job title.</p>*@
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Email">
+                                    Email
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Email" name="Email" type="text" placeholder="Enter Email" value="@ViewBag.Employee.Email">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="JobTitle">
+                                    Job Title
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="JobTitle_Id" name="JobTitle_Id">
+                                    <option>Select Job Title</option>
+                                    @foreach (var jobTitle in ViewBag.JobTitles)
+                                    {
+                                        <option value="@jobTitle.Id" @(jobTitle.Id == ViewBag.Employee.JobTitle_Id ? "selected" : "")>@(jobTitle.Title)</option>
+                                        @*<option value="@country.Id" @(country.Id == vcountry.Country_Id ? "selected" : "")>@(country.Name + "[" + country.Code + "]")</option>*@
+                                    }
+                                </select>
+                                @*<p id="jobtitleErr" class="error mt-1 hide">Please select the job title.</p>*@
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Department">
+                                    Department
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="Department_Id" name="Department_Id">
+                                    <option>Select Department</option>
+                                    @foreach (var department in ViewBag.Departments)
+                                    {
+                                        <option value="@department.Id" @(department.Id == ViewBag.Employee.Department_Id ? "selected" : "")>@(department.Dept_Name + "[" + department.Dept_Code + "]")</option>
+                                        @*<option value="@country.Id" @(country.Id == vcountry.Country_Id ? "selected" : "")>@(country.Name + "[" + country.Code + "]")</option>*@
+                                    }
+                                </select>
+                                @*<p id="countryErr" class="error mt-1 hide">Please select the department.</p>*@
+                            </div>
+                        </div>
+
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="CompId">
+                                    Company
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="CompId" name="CompId">
+                                    <option>Select Company</option>
+                                    <option value="1" @(ViewBag.Employee.CompId == "1" ? "Selected" : "")>Spinning</option>
+                                    <option value="2" @(ViewBag.Employee.CompId == "2" ? "Selected" : "")>Weaving</option>
+                                    <option value="3" @(ViewBag.Employee.CompId == "3" ? "Selected" : "")>Finishing</option>
+                                    <option value="4" @(ViewBag.Employee.CompId == "4" ? "Selected" : "")>Fabrication</option>
+                                    <option value="5" @(ViewBag.Employee.CompId == "5" ? "Selected" : "")>Corporate</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="md:flex md:items-right">
+                            <div class="md:w-2/3">
+                                <button type="submit" id="save" class="test shadow bg-green-500 hover:bg-green-800 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                                    Update
+                                </button>
+                                <a class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-decoration-none" href="@Url.Content("~/Employee/List")">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--/Grid Form-->
+    </div>
+</main>
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script src="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.dateFormate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            showOtherMonths: true
+        });
+
+        $('.nemericVal').keypress(function (e) {
+            var inputValue = $(this).val();
+            if (!isDecimalValue(inputValue, event)) {
+                return false;
+            }
+
+            //return isNumber(event);     
+
+
+        });
+
+        $('#save').click(function () {
+
+            $('#addForm').validate({
+
+                rules: {
+                    Description: {
+                        required: true
+                    },
+
+                    Email: {
+                        required: true,
+                        Email: true
+                    }
+                },
+                messages: {
+                    Description: {
+                        required: "Please fill with description"
+                    },
+
+                    Email: {
+                        required: "Please enter email address",
+                        Email: "Please enter valid email"
+                    }
+                },
+                highlight: function (element) {
+                    $(element).addClass('redBorder').removeClass('border border-red-500');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('redBorder').addClass('border border-red-500');
+                }
+
+            });
+            validateCountry();
+
+
+
+
+        });
+    });
+
+
+
+    $('#Country_Id').change(function () {
+        //alert($(this).val());
+        var countryId = $(this).val();
+        var Url = '@Url.Content("~/City/List/")' + countryId;
+        
+        alert(Url);
+        $.ajax({
+            url: Url,
+            type: 'GET',
+            success: function (response) {
+                //alert(response);
+                $('#City_Id').html(response);
+            },
+            error: function () {
+                //alert('Error');
+            }
+
+        });
+        validateCountry();
+    });
+
+    function validateCountry() {
+        var selectedCountry = $('#Country_Id').val();
+        if (selectedCountry == 'Select Country') {
+            $('#Country_Id').addClass('redBorder').removeClass('border border-red-500 focus:border-gray-600');
+            $('#countryErr').removeClass('hide');
+            return false;
+        }
+        else {
+            $('#Country_Id').removeClass('redBorder').addClass('border border-red-500 ');
+            $('#countryErr').addClass('hide');
+            return true;
+        }
+    }
+</script>

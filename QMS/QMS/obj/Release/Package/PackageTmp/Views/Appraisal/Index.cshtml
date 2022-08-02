@@ -1,0 +1,212 @@
+﻿
+@{
+    ViewBag.Title = "Apprisals Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var user = Session["user"] != null ? (HRMS.Data.SystemUser)Session["user"] : new HRMS.Data.SystemUser();
+    var permissions = Session["permissions"] != null ? (List<HRMS.Data.UserPermission>)Session["permissions"] : new List<HRMS.Data.UserPermission>();
+    var userRole = user.UserRoles.FirstOrDefault().Role_Id;
+
+    var subModules = Session["subModules"] != null ? (List<HRMS.Data.SubModule>)Session["subModules"] : new List<HRMS.Data.SubModule>();
+    var MyAppraisal = "";
+    var ManagarialView = "";
+    var NextLevelView = "";
+    var HRView = "";
+    ViewBag.Test = "true";
+
+            }
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/BootStrap/css/bootstrap.css">
+
+    <title>Index</title>
+    <style>
+       
+        .button1 {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+        }
+
+            .button1:hover {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+        .button2 {
+            background-color: white;
+            color: black;
+            border: 2px solid #008CBA;
+        }
+
+            .button2:hover {
+                background-color: #008CBA;
+                color: white;
+            }
+
+        .button3 {
+            background-color: white;
+            color: black;
+            border: 2px solid #435a7d;
+        }
+
+            .button3:hover {
+                background-color: #435a7d;
+                color: white;
+            }
+
+        .button4 {
+            background-color: white;
+            color: black;
+            border: 2px solid #868788;
+        }
+
+            .button4:hover {
+                background-color: #868788;
+                color: white;
+            }
+
+        .login {
+            background-image: url("~/Templates/admin/dist/images/login-new.jpeg");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            max-width: 100%;
+            height: 100%;
+        }
+    </style>
+
+</head>
+<body class="login">
+
+
+
+    @{ foreach (var sm in subModules)
+        {
+            var itemName = "";
+            if (permissions.Any(p => p.SubModule_Id == sm.Id && p.Role_Id == userRole && p.AccessLevel > 0))
+            {
+                if (sm.Name.EndsWith("s"))
+                {
+                    itemName = sm.Name.Remove(sm.Name.Length - 1, 1);
+                }
+                else
+                {
+                    itemName = sm.Name;
+                }
+
+                if (itemName == "My Appraisal")
+                {
+                    MyAppraisal = "yes";
+                }
+                if (itemName == "Managarial View")
+                {
+                    ManagarialView = "yes";
+                }
+                if (itemName == "Next Level View")
+                {
+                    NextLevelView = "yes";
+                }
+                if (itemName == "HR View")
+                {
+                    HRView = "yes";
+                }
+
+
+            }
+
+        }
+    }
+    <div class="container-fluid">
+
+
+        <div class="row text-white bg-blue-600 text-center  font-serif border border-white " style="height:13%;">
+
+            @*<div class="col-12 "><img src="~/Templates/admin/dist/images/wphABC.png" class="h-auto w-auto " /></div>*@
+            <div class="  font-serif font-bold mt-3 text-3xl  " style="margin-left:-7%;">WestPoint Home (Bahrain) W.L.L.</div>
+            @*<div class="font-bold">Employee Appraisal System</div>*@
+            @*<div class="font-bold">System</div>*@
+
+            @if (TempData["PasswordChangeSuccessMsg"] != null)
+            {
+                <div id="PasswordSuccess" class="bg-green-200 text-white text-center p-3 w-25 border-1 m-1 float-end addMessage">
+                    @TempData["PasswordChangeSuccessMsg"]
+                    <i class="fa fa-times float-end hover:bg-white cancelMessage" aria-hidden="true"></i>
+                </div>
+            }
+            @if (TempData["PasswordChangeErrMsg"] != null)
+            {
+                <div id="PasswordErr" class="bg-red-300 text-white text-center p-3 w-25 border-1 m-1 float-end addMessage">
+                    @TempData["PasswordChangeErrMsg"]
+                    <i class="fa fa-times float-end hover:bg-white cancelMessage" aria-hidden="true"></i>
+                </div>
+            }
+
+        </div>
+
+ 
+
+        <div class="row " style="height:5%; "></div>
+        <div class="row " style="height:50%;">
+            <div class="col-4">
+                @*<img src="~/Templates/admin/dist/images/WPHLogo.png" class="h-auto w-auto mb-2" />*@
+            </div>
+            <div class="col-3  ">
+                <div class="text-green-800 font-bold text-center text-2xl text-capitalize m-2">MAIN MENU</div>
+                <div class="m-2 p-3  border-3">
+                    <button class="btn  w-100 h-30 p-3 m-1 button1">My Objectives</button>
+                    <button class="btn  w-100 h-30 p-3 m-1 button2" @(ManagarialView == "" ? "disabled" : "")>Supervisory Review</button>
+                    <button class="btn   w-100 h-30 p-3 m-1 button3" @(NextLevelView == "" ? "disabled" : "")>Next Level Review</button>
+                    <button class="btn   w-100 h-30 p-3 m-1 button4" @(HRView == "" ? "disabled" : "")>HR Review</button>
+                </div>
+            </div>
+            <div class="col-5"></div>
+        </div>
+        <div class="row" style="height:20%;">
+
+        </div>
+
+    </div>
+    <script src="~/BootStrap/jquery-3.2.1.min.js"></script>
+    <script src="~/BootStrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+    
+
+            $('.button1').click(function () {
+                window.location = "@Url.Action("List", "Appraisal")"
+            });
+            $('.button2').click(function () {
+                window.location = "@Url.Action("ListAssociates", "Appraisal")"
+            });
+            $('.button3').click(function () {
+                window.location = "@Url.Action("ListNLAssociates", "Appraisal")"
+            });
+             $('.button4').click(function () {
+                window.location = "@Url.Action("ListAll", "Appraisal")"
+            })
+
+            $('.fa-times').click(function () {
+                $('#PasswordErr').hide();
+                $('#PasswordSuccess').hide();
+            })
+    });
+    </script>
+</body>
+</html>
+
+
+
+

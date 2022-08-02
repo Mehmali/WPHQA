@@ -1,0 +1,394 @@
+﻿@using HRMS.Utilities;
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var subModules = Session["subModules"] != null ? (List<HRMS.Data.SubModule>)Session["subModules"] : new List<HRMS.Data.SubModule>();
+    var Managers = (List<HRMS.Data.Employee>)(ViewBag.Managers);
+    var Sites = (List<HRMS.Data.Site>)(ViewBag.Sites);
+    int subModuleId = subModules.Where(m => m.Name == "Managarial View").FirstOrDefault().Id;
+    bool canAdd = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
+    bool canEdit = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
+    bool canDelete = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
+}
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.theme.css" rel="stylesheet" />
+    <title>ListAssociate</title>
+
+    <style>
+        .ui-datepicker {
+            background: #5c7682;
+            border: 1px solid blue;
+            color: black
+        }
+    </style>
+</head>
+<main class="bg-white-500 flex-1 p-3 overflow-hidden">
+    <div class="flex flex-col">
+        <!--Grid Form-->
+        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
+                    <span>Objectives</span>
+                    @if (canAdd)
+                    {
+                        <span style="float:right;">
+                            @*<button class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded" onclick="AddJobTitle();">
+                                    Add Job Title
+                                </button>*@
+                            @*<a class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded" href="@Url.Content("~/Appraisal/Add")">
+                                    Add Appraisal
+                                </a>*@
+
+                        </span>
+                    }
+                </div>
+
+                <div class="row searchSection">
+                    <div class="col-md-6">
+                        @using (Html.BeginForm("ListAssociates", "Appraisal", FormMethod.Post))
+                        {
+
+                        <label class=" px-1 py-1 ml-3">Search by Code or Name</label>
+
+                            <input type="text" name="search" placeholder="Search by Code or Name" class="border-1 border-gray-400 px-1 py-1 m-2 w-60" />
+
+                            <button class="btn btn-sm btn-primary mb-2 ml-1" type="submit">
+                                <i class="fa fa-search"></i>
+
+                                Search
+                            </button>
+
+
+
+                        }
+
+                    </div>
+
+                    <div class="col-md-3 ">
+                        <button class="btn btn-sm  btn-success  ml-10 mt-2 mr-10" type="button" id="FilterSearchTogglerAssociates">
+                            <i class="fa fa-search"></i>
+
+                            <span class="text-sm">Search By Filters</span>
+                        </button>
+                    </div>
+
+                    <div class="col-md-3 ">
+
+
+                        @using (Html.BeginForm("ListAssociates", "Appraisal", FormMethod.Post))
+                        {
+
+
+
+                            <input type="hidden" name="search" placeholder="Search by Code or Name" class="border-1 border-gray-400 px-1 py-1 m-2 w-60" />
+
+                            <button class="btn btn-sm btn-secondary mt-2 ml-1 " type="submit">
+
+
+                                <span class="text-xs">Show All</span>
+                            </button>
+
+
+
+                        }
+                    </div>
+
+                </div>
+
+
+
+                @using (Html.BeginForm("ListAssociatesByFilters", "Appraisal", FormMethod.Post))
+                {
+                    <div id="filtersDivAssociates" class="row hide border-1  p-2 m-3">
+
+
+
+
+                        <div class="col-md-2 ">
+                            <div class=" ">
+
+                                <div class="relative">
+                                    <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-1 px-1 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                            id="Quarter" name="Quarter">
+                                        <option value="">Select Quarter</option>
+                                        <option value="1">Quarter 1</option>
+                                        <option value="2">Quarter 2</option>
+                                        <option value="3">Quarter 3</option>
+                                        <option value="4">Quarter 4</option>
+
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-darker">
+                                        <svg class="fill-current h-4 w-4" xmlns="#"
+                                             viewBox="0 0 20 20">
+                                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 ">
+                            <div class=" ">
+
+                                <div class="relative">
+                                    <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-1 px-1 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                            id="AppraisalYear" name="AppraisalYear">
+                                        <option value="">Select Year</option>
+                                        <option value="2022" @(DateTime.Now.Year == 2022 ? "selected" : "")>2022</option>
+                                        <option value="2023" @(DateTime.Now.Year == 2023 ? "selected" : "")>2023</option>
+
+
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-darker">
+                                        <svg class="fill-current h-4 w-4" xmlns="#"
+                                             viewBox="0 0 20 20">
+                                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 ">
+                            <div class=" md:w-4/4 px-3 mb-6 md:mb-0">
+
+                                <div class="relative">
+                                    <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-1 px-1 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                            id="Site_Id" name="Site_Id">
+                                        <option value="">Select Location</option>
+                                        <option value="1" selected>Bahrain</option>
+                                        @*@foreach (var site in Sites)
+                                            {
+                                                <option value="@site.Id">@(site.Country.Name)</option>
+
+                                            }*@
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-darker">
+                                        <svg class="fill-current h-4 w-4" xmlns="#"
+                                             viewBox="0 0 20 20">
+                                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 ">
+                            <div class=" md:w-4/4 px-1  ">
+
+
+                                <input type="text" name="searchBySupervisor" placeholder="Associate Name" class="border-1 border-gray-400 px-1 bg-gray-200 pb-1  w-60" />
+
+                            </div>
+
+
+
+
+                        </div>
+
+                        <div class="col-md-2 ">
+
+                            <button class="btn btn-sm btn-primary  ml-1 " type="submit">
+                                <i class="fa fa-search"></i>
+
+                                <span class="text-xs">Search</span>
+                            </button>
+
+
+
+
+                        </div>
+
+
+                    </div>
+                }
+
+                <div class="p-3">
+                    <table class="table-responsive w-full rounded">
+                        <thead class="bg-gray-500 text-white text-xs">
+                            <tr>
+                                <th class="border w-1/12 px-1 py-2 text-center">@Html.ActionLink("Emp_Code", "ListAssociates", new { sortOrder = ViewBag.sortOrder == null ? "Desc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy = "Emp_Code" })</th>
+                                <th class="border w-1/12 px-1 py-2 text-center">@Html.ActionLink("Employee Name", "ListAssociates", new { sortOrder = ViewBag.sortOrder == null ? "Desc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy = "Emp_Name" })</th>
+                                <th class="border w-1/12 px-1 py-2 text-center text-primary">Title</th>
+                                @*<th class="border w-1/12 px-2 py-2 text-center text-primary">Supervisor</th>*@
+                                <th class="border w-1/12 px-1 py-2 text-center">@Html.ActionLink("Supervisor", "ListAssociates", new { sortOrder = ViewBag.sortOrder == null ? "Desc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy = "Manager_Name" })</th>
+                                <th class="border w-1/12 px-1 py-2 text-center">Location</th>
+                                <th class="border w-1/12 px-1 py-2 text-center">@Html.ActionLink("Year", "ListAssociates", new { sortOrder = ViewBag.sortOrder == null ? "Desc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy = "AppraisalYear" })</th>
+                                <th class="border w-1/12 px-1 py-2 text-center">Qtr</th>
+                                <th class="border w-1/12 px-1 py-2 text-center">@Html.ActionLink("Status", "ListAssociates", new { sortOrder = ViewBag.sortOrder == null ? "Desc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy = "Status" })</th>
+                                <th class="border w-2/12 px-1 py-2 text-center">Performance Rating</th>
+                                <th class="border w-4/12 px-1 py-2 text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.Appraisals != null && ViewBag.Appraisals.Count > 0)
+                            {
+                                foreach (var Appraisal in ViewBag.Appraisals)
+                                {
+                            <tr>
+                                <td class="border px-1 py-2 text-xs text-center">@Appraisal.Emp_Code</td>
+                                <td class="border px-1 py-2 text-xs ">@Appraisal.Emp_Name</td>
+                                <td class="border px-1 py-2 text-xs ">@Appraisal.Emp_Title</td>
+                                <td class="border px-1 py-2 text-xs ">@Appraisal.Manager_Name</td>
+                                @*<td class="border px-2 py-2 text-xs">@(Managers.Where(x => x.Id.Equals(Appraisal.Manager_Id)).FirstOrDefault().FirstName + " " + Managers.Where(x => x.Id.Equals(Appraisal.Manager_Id)).FirstOrDefault().LastName)</td>*@
+                                @*<td class="border px-1 py-2 text-xs text-center">@(Appraisal.Site_Id != 0 ? (Sites.Where(x => x.Id.Equals(Appraisal.Site_Id)).FirstOrDefault().Country.Name) : "")</td>*@
+                                <td class="border px-1 py-2 text-xs text-center">@(Appraisal.Site_Id != 0 ? (Sites.Where(x => x.Id.Equals(Appraisal.Site_Id)).FirstOrDefault().Description) : "")</td>
+                                <td class="border px-1 py-2 text-xs text-center">@Appraisal.AppraisalYear</td>
+                                <td class="border px-1 py-2 text-xs text-center">@((HRMS.Utilities.Enums.Quarter)Appraisal.Quarter)</td>
+                                <td class="border px-1 py-2 text-xs text-center statusCheck" id="@("changedStatus"+Appraisal.Id)">@(((Enums.Status)Appraisal.Status).ToString().Replace("_", " "))</td>
+                                <td class="border px-1 py-2 text-xs text-center @(Appraisal.PerformanceRating==(int)Enums.Rating.Solid_Performance?"":(Appraisal.PerformanceRating==(int)Enums.Rating.Improvement_Required_Now?"":(Appraisal.PerformanceRating==(int)Enums.Rating.Exemplary_Performance?"":(Appraisal.PerformanceRating==(int)Enums.Rating.Stronger_Performance_Needed?"":(Appraisal.PerformanceRating==(int)Enums.Rating.Strong_Performance?"":"")))))">@(((Enums.Rating)(Appraisal.PerformanceRating == null ? 0 : Appraisal.PerformanceRating)).ToString().Replace("_", " ").Replace("NA", "..."))</td>
+                                <td class="border px-1 py-2 text-xs text-center">
+                                    @if (canEdit)
+                                    {
+                                        <a class="btn-sm btn-success m-1  " href="@Url.Content("~/Appraisal/EditAssociateAppraisal/" + Appraisal.Id)">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    }
+                                    @if (canDelete)
+
+                                    {
+                                        <a class="btn-sm btn-danger m-1" href="@Url.Content("~/Appraisal/Delete/" + Appraisal.Id)">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    }
+                                    <a class="btn-sm btn-primary text-xs m-1" href="@Url.Content("~/Appraisal/AssociateDetailPreview/" + Appraisal.Id)">
+                                        Preview
+                                        @*<i class="fas fa-edit"></i>*@
+                                    </a>
+                                    @*<button class="btn-sm btn-success  ml-1 markButton @(Appraisal.Status==3? "hide" :"")" value="@Appraisal.Id" id=@("markCompleted"+Appraisal.Id) type="button" onclick="UpdateStatus(@Appraisal.Id)">
+                <span >Mark Completed</span>
+            </button>*@
+
+
+                                </td>
+                            </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="12" class="border px-4 py-4">
+                                        No Record Found!
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <button hidden id="modalStatus" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="modalOpenFunction()">Modal Test</button>
+                    <div name="modal" class="modal" id="myModal" style="margin-top:100px; padding:10px; margin-left:30%">
+                        <div class="modal-dialog ">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header  bg-blue-600">
+
+                                    Confirmation Alert
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+
+                                    <p id="psending"> Once marked as completed the appraisal will no more be editable. Do you really want to mark it completed?</p>
+
+
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer p-1">
+
+                                    <button id="markYes" class="btn btn-primary  float-right " data-dismiss="myModal">Yes</button>
+
+                                    <button id="markNo" class="btn btn-primary" data-dismiss="myModal">No</button>
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--/Grid Form-->
+
+</main>
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script src="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+        var markStatusId;
+
+
+    });
+    $('#markNo').click(function () {
+        $('#myModal').modal('hide');
+    });
+    $('#markYes').click(function () {
+        var statusChangedID = '#markCompleted' + markStatusId;
+
+        $(statusChangedID).addClass('hide');
+        $('#myModal').modal('hide');
+
+        $('#markCompleted' + markStatusId).attr("disabled", true);
+        StatusCompletionCall(markStatusId);
+
+    });
+    function UpdateStatus(Id) {
+        markStatusId = Id;
+        $('#modalStatus').trigger('click');
+    }
+    function StatusCompletionCall(Id) {
+
+        var Url = '@Url.Content("~/Appraisal/UpdateAssociateAppraisalStatus")';
+
+        $.ajax({
+            url: Url,
+            type: 'GET',
+            data: { id: Id },
+            success: function (response) {
+                var data = JSON.parse(response);
+                if (data == 'True') {
+                    var changedStatus = '#changedStatus' + Id;
+                    $(changedStatus).html("Completed");
+                    alert('Status Updated as Completed');
+
+                }
+                else {
+                    alert('Status not Updated');
+
+                };
+            },
+            error: function () {
+
+            }
+        });
+
+    }
+
+    function modalOpenFunction() {
+
+        $('#myModal').modal('show');
+    }
+
+    $('#FilterSearchTogglerAssociates').click(function () {
+        $('#filtersDivAssociates').toggleClass('hide');
+    })
+
+</script>

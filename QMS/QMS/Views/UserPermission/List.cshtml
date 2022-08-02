@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<main class="bg-white-500 flex-1 p-3 ">
+    <div class="flex flex-col">
+        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
+                    <span>User Permissions</span>
+                </div>
+                <div class="p-3">
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <select id="ddl_Role" onchange="GetPermissions(this)" class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600">
+                                <option value="0">Select Role</option>
+                                @foreach (var role in ViewBag.Roles)
+                                {
+                                    <option value="@role.Id">@role.Role_Name </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table table-responsive w-full text-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="p-3">Module</th>
+                                <th class="p-3">No Access</th>
+                                <th class="p-3">View Only</th>
+                                <th class="p-3">Add</th>
+                                <th class="p-3">Edit</th>
+                                <th class="p-3">Delete</th>
+                                <th class="p-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*@foreach (var userperm in ViewBag.UserPermissions)*@
+                            @foreach (var subModule in ViewBag.SubModules)
+                            {
+                                <tr>
+                                    <td>@subModule.Name</td>
+                                    <td><input id="@("AccessLevel0"+subModule.Id)" type="radio" value="0" name="@("AccessLevel"+subModule.Id)" disabled="disabled" /></td>
+                                    <td><input id="@("AccessLevel1"+subModule.Id)" type="radio" value="1" name="@("AccessLevel"+subModule.Id)" disabled="disabled" /></td>
+                                    <td><input id="@("AccessLevel2"+subModule.Id)" type="radio" value="2" name="@("AccessLevel"+subModule.Id)" disabled="disabled" /></td>
+                                    <td><input id="@("AccessLevel3"+subModule.Id)" type="radio" value="3" name="@("AccessLevel"+subModule.Id)" disabled="disabled" /></td>
+                                    <td><input id="@("AccessLevel4"+subModule.Id)" type="radio" value="4" name="@("AccessLevel"+subModule.Id)" disabled="disabled" /></td>
+                                    <td>
+                                        <button id="@("btnEnable"+subModule.Id)" class="test shadow bg-green-500 hover:bg-green-800 focus:shadow-outline focus:outline-none text-white   px-2 rounded" onclick="EnableEdit(@subModule.Id)">
+                                            Edit
+                                        </button>
+                                        <button id="@("btnDisable"+subModule.Id)" class="test shadow bg-green-500 hover:bg-green-800 focus:shadow-outline focus:outline-none text-white  px-2 rounded" style="display:none;" onclick="Save(@subModule.Id)">
+                                            Save
+                                        </button>
+                                        <button id="@("btnSave"+subModule.Id)" class="test shadow bg-red-500 hover:bg-red-800 focus:shadow-outline focus:outline-none text-white  px-2 rounded" style="display:none;" onclick="DisableEdit(@subModule.Id)">
+                                            Cancel
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    function EnableEdit(id) {
+        //alert(id);
+        //alert($('#btnDisable' + id).html());
+        $('#btnDisable' + id).show();
+        $('#btnSave' + id).show();
+        $('#btnEnable' + id).hide();
+        $('#AccessLevel0' + id).removeAttr("disabled");
+        $('#AccessLevel1' + id).removeAttr("disabled");
+        $('#AccessLevel2' + id).removeAttr("disabled");
+        $('#AccessLevel3' + id).removeAttr("disabled");
+        $('#AccessLevel4' + id).removeAttr("disabled");
+    }
+
+    function DisableEdit(id) {
+        //alert(id);
+        $('#btnDisable' + id).hide();
+        $('#btnSave' + id).hide();
+        $('#btnEnable' + id).show();
+        $('#AccessLevel0' + id).attr("disabled", "disabled");
+        $('#AccessLevel1' + id).attr("disabled", "disabled");
+        $('#AccessLevel2' + id).attr("disabled", "disabled");
+        $('#AccessLevel3' + id).attr("disabled", "disabled");
+        $('#AccessLevel4' + id).attr("disabled", "disabled");
+    }
+
+    function Save(id) {
+
+        var radioName = 'AccessLevel' + id;
+        var roleId = $('#ddl_Role').val();
+        var accessLevel = $("input[name='" + radioName+ "']:checked").val();
+
+        if (roleId == '0') {
+            alert('Please select role!');
+            return;
+        }
+        var objPermission = {
+            Id : 0,
+            SubModule_Id : id,
+            Role_Id: roleId,
+            AccessLevel: accessLevel
+        };
+        $.ajax({
+            type : "POST",
+            url : "@Url.Content("~/UserPermission/Add")",
+            data : JSON.stringify(objPermission),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data == 0) {
+                    alert('Unable to set permission!');
+                }
+                DisableEdit(id);
+            }
+        });
+    }
+    function GetPermissions(obj) {
+        var roleId = $(obj).val();
+        //alert(roleId);
+        if (roleId == '0') {
+            alert('Please select a valid role!');
+            return;
+        }
+        var URL = "@Url.Content("~/UserPermission/GetPermissionsByRoleId/")" + roleId;
+
+       $.ajax({
+            type : "GET",
+           url: URL,
+           success: function (data) {
+               //alert(JSON.stringify(data));
+               $.each(data, function (i, item) {
+                   //alert(item.Id);
+                   var radioName = 'AccessLevel' + item.SubModule_Id;
+                   $("input[name='" + radioName + "'][Value='" + item.AccessLevel + "']").prop("checked", true);
+               })
+                DisableEdit(id);
+            }
+        });
+    }
+</script>

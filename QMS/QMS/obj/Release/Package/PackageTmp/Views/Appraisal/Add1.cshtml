@@ -1,0 +1,847 @@
+﻿
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+}
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.theme.css" rel="stylesheet" />
+    <title>Test</title>
+
+    <style>
+        .ui-datepicker {
+            background: #5c7682;
+            border: 1px solid blue;
+            color: black
+        }
+    </style>
+</head>
+
+<main class="bg-white-500 flex-1 p-3 overflow-hidden">
+    <div class="flex flex-col">
+        <!--Grid Form-->
+
+        <form name="AppraisalEmployee" id="AppraisalEmployee" class="w-full" method="post" action="@Url.Content("~/Appraisal/Add")">
+            <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2 ">
+                <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-2/3 ml-24 ">
+                    <div class="bg-gray-400 px-2 py-3 border-solid border-gray-800 border-b text-2xl">
+                        Employee Appraisal
+                    </div>
+
+                    <div class="flex flex-wrap m-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+
+                            <img src="~/Templates/admin/dist/images/WPHLogo.png" />
+                        </div>
+
+                        <div class="w-full md:w-1/2 px-3  md:mb-0 font-bold">
+                            <br />
+                            <p style="font-size:24px; margin:5px; text-align:right"> Objectives and Results</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="p-3">
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Emp_Code">
+                                    Employee Code
+                                </label>
+                                <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Emp_Code" name="Emp_Code" type="text" placeholder="Enter Employee Code" autocomplete="off" value="@ViewBag.employee.Code">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="AppraisalYear">
+                                    Appraisal Year
+                                </label>
+                                <input disabled class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="AppraisalYear" name="AppraisalYear" value="@(DateTime.Now.Year)" type="text" placeholder="Enter Employee Code" autocomplete="off">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Emp_Name">
+                                    Employee Name
+                                </label>
+                                <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Emp_Name" name="Emp_Name" type="text" placeholder="Enter Employee Name" autocomplete="off" value="@ViewBag.employee.FirstName">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-1/3 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Emp_Title">
+                                    Position
+                                </label>
+                                <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Emp_Title" name="Emp_Title" type="text" placeholder="Enter Employee Position" autocomplete="off" value="@ViewBag.employee.JobTitle.Title">
+                            </div>
+
+                            <div class="w-full md:w-1/3 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="InitialDate">
+                                    Date
+                                </label>
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="InitialDate" name="InitialDate" type="text" autocomplete="off">
+                            </div>
+                        </div>
+
+
+                        <div class="flex flex-wrap  mb-6">
+                            <div>
+                                <span class="font-bold">1)	Objectives</span>  (employee) What are your top 3 objectives for business success in the next 12 months?
+                                Focus on your top 3 objectives that contribute to the overall company and your team’s objectives.
+
+
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap   border-solid" style="border:1px solid black">
+                            <div class="w-full md:w-4/6 px-3 mb-6 md:mb-0">
+
+                            </div>
+                            <div class="w-full md:w-2/6 px-3 border-1 font-bold">
+                                Due Date/Status
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap " style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1 "
+                                       for="Objective1">
+                                    Objective 1
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Objective1" name="Objective1"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj1DueDate" name="Obj1DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+                                <input type="text" class="form-control" id="Obj1Status" name="Obj1Status" />
+                                @*<textarea rows="2" class="form-control" id="Obj1Status" name="Obj1Status"></textarea>*@
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap " style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+                                       for="Objective2">
+                                    Objective 2
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Objective2" name="Objective2"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj2DueDate" name="Obj2DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+
+                                <input type="text" class="form-control" id="Obj2Status" name="Obj2Status" />
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap mb-6 " style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+                                       for="Objective3">
+                                    Objective 3
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Objective3" name="Objective3"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj3DueDate" name="Obj3DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+
+                                <input type="text" class="form-control" id="Obj3Status" name="Obj3Status" />
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap  mb-6">
+                            <div>
+                                <span class="font-bold">2)	Key Results</span> (employee) What outcomes define success for each objective?
+                                Objectives should be outcome based and will be measured by completion of each key results.
+
+
+
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap  border-solid" style="border:1px solid black">
+                            <div class="w-full md:w-4/6 px-3 mb-6 md:mb-0 font-bold">
+                                Objective 1
+                            </div>
+                            <div class="w-full md:w-2/6 px-3 border-1 font-bold">
+                                Due Date/Status
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap " style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+                                       for="Obj1KeyResult1">
+                                    Key Result 1
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Obj1KeyResult1" name="Obj1KeyResult1"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj1Result1DueDate" name="Obj1Result1DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+
+                                <input type="text" class="form-control" id="Obj1Result1Status" name="Obj1Result1Status" />
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap " style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+                                       for="Obj1KeyResult2">
+                                    Key Result 2
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Obj1KeyResult2" name="Obj1KeyResult2"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj1Result2DueDate" name="Obj1Result2DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+
+                                <input type="text" class="form-control" " id="Obj1Result2Status" name="Obj1Result2Status" />
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap mb-6" style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+                                       for="Obj1KeyResult3">
+                                    Key Result 3
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Obj1KeyResult3" name="Obj1KeyResult3"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj1Result3DueDate" name="Obj1Result3DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+
+                                <input type="text" class="form-control" id="Obj1Result3Status" name="Obj1Result3Status" />
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="flex flex-wrap   border-solid" style="border:1px solid black">
+                            <div class="w-full md:w-4/6 px-3 mb-6 md:mb-0 font-bold">
+                                Objective 2
+                            </div>
+                            <div class="w-full md:w-2/6 px-3 border-1 font-bold">
+                                Due Date/Status
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap " style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+                                       for="Obj2KeyResult1">
+                                    Key Result 1
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Obj2KeyResult1" name="Obj2KeyResult1"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj2Result1DueDate" name="Obj2Result1DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+
+                                <input type="text" class="form-control" id="Obj2Result1Status" name="Obj2Result1Status" />
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap " style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+                                       for="Obj2KeyResult2">
+                                    Key Result 2
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Obj2KeyResult2" name="Obj2KeyResult2"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj2Result2DueDate" name="Obj2Result2DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+
+                                <input type="text" class="form-control" id="Obj2Result2Status" name="Obj2Result2Status" />
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap mb-6" style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+                                       for="Obj2KeyResult3">
+                                    Key Result 3
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Obj2KeyResult3" name="Obj2KeyResult3"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj2Result3DueDate" name="Obj2Result3DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+
+                                <input type="text" class="form-control" id="Obj2Result3Status" name="Obj2Result3Status" />
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="flex flex-wrap border-solid" style="border:1px solid black">
+                            <div class="w-full md:w-4/6 px-3 mb-6 md:mb-0 font-bold">
+                                Objective 3
+                            </div>
+                            <div class="w-full md:w-2/6 px-3 border-1 font-bold">
+                                Due Date/Status
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap  " style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+                                       for="Obj3KeyResult1">
+                                    Key Result 1
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Obj3KeyResult1" name="Obj3KeyResult1"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj3Result1DueDate" name="Obj3Result1DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+
+                                <input type="text" class="form-control" id="Obj3Result1Status" name="Obj3Result1Status" />
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap " style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+                                       for="Obj3KeyResult2">
+                                    Key Result 2
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3 form-group" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Obj3KeyResult2" name="Obj3KeyResult2"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj3Result2DueDate" name="Obj3Result2DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+
+                                <input type="text" class="form-control" id="Obj3Result2Status" name="Obj3Result2Status" />
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap mb-6" style="border:1px solid black">
+                            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0" style="border:1px solid black">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"
+                                       for="Obj3KeyResult3">
+                                    Key Result 3
+                                </label>
+
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+                            <div class="w-full md:w-3/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="Obj3KeyResult3" name="Obj3KeyResult3"></textarea>
+                            </div>
+                            <div class="w-full md:w-2/6 px-3" style="border:1px solid black">
+
+
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="Obj3Result3DueDate" name="Obj3Result3DueDate" type="text" placeholder="Enter Due Date" autocomplete="off">
+
+                                <input type="text" class="form-control" id="Obj3Result3Status" name="Obj3Result3Status" />
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap  mb-6">
+                            <div>
+                                <b>I</b> believe my actions are as important as my achievements.  I will treat my colleagues, customers, and vendors with dignity and respect and strive to practice the WestPoint Home values at all times without exception.
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Emp_Signature">
+                                    Employee Signature
+                                </label>
+                                <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Emp_Signature" name="Emp_Signature" type="text" placeholder="Enter Sign" autocomplete="off">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Emp_SignDate">
+                                    Date
+                                </label>
+                                <input class="dateFormate appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Emp_SignDate" name="Emp_SignDate" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        @*</form>
+                    @Html.Partial("AppraisalEmployee")*@
+
+
+                        @*<p class="text-red-500 text-xs italic">Managarial Section</p>*@
+
+                        <hr />
+                        @*@Html.Partial("AppraisalManager")
+
+                    <form name="AppraisalManager" id="AppraisalManager" class="w-full" method="post" action="@Url.Content("~/Appraisal")">*@
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Manager_Name">
+                                    Manager Name
+                                </label>
+                                <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Manager_Name" name="Manager_Name" type="text" placeholder="Enter Manager Name" autocomplete="off">
+
+                            </div>
+                            <div class="w-full md:w-1/3 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Manager_Title">
+                                    Position
+                                </label>
+                                <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Manager_Title" name="Manager_Title" type="text" placeholder="Enter Manager Position" autocomplete="off">
+                            </div>
+
+                            <div class="w-full md:w-1/3 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="AppraisalDate">
+                                    Date
+                                </label>
+                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500 "
+                                       id="AppraisalDate" name="AppraisalDate" type="text" autocomplete="off">
+                            </div>
+                        </div>
+
+
+                        <div class="flex flex-wrap  mb-6">
+                            <div>
+                                <span class="font-bold"> 3)	How Objectives Were Achieved – The Right Way</span> (manager)
+                                Describe how objectives were met and key results were achieved considering effort, outcomes, and behaviors.
+                                Denote if each objective was exceeded, met, or missed and if performance is trending up, down, or neutral.
+
+
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="flex flex-wrap ">
+                            <div class="w-full md:w-3/6 px-3 mb-6 md:mb-0 font-bold" style="border:1px solid black">
+                                Objective 1 Manager Coaching
+                            </div>
+                            <div class="w-full md:w-3/6 px-3  font-bold">
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="w-full md:w-6/6 px-3 mb-6" style="border:1px solid black">
+
+                            <textarea rows="3" class="form-control" id="Obj1ManagerCoaching" name="Obj1ManagerCoaching"></textarea>
+                        </div>
+
+
+
+
+                        <div class="flex flex-wrap ">
+                            <div class="w-full md:w-3/6 px-3 mb-6 md:mb-0 font-bold" style="border:1px solid black">
+                                Objective 2 Manager Coaching
+                            </div>
+                            <div class="w-full md:w-3/6 px-3  font-bold">
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="w-full md:w-6/6 px-3 mb-6" style="border:1px solid black">
+
+                            <textarea rows="3" class="form-control" id="Obj2ManagerCoaching" name="Obj2ManagerCoaching"></textarea>
+                        </div>
+
+
+
+
+                        <div class="flex flex-wrap ">
+                            <div class="w-full md:w-3/6 px-3 mb-6 md:mb-0 font-bold" style="border:1px solid black">
+                                Objective 3 Manager Coaching
+                            </div>
+                            <div class="w-full md:w-3/6 px-3  font-bold">
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="w-full md:w-6/6 px-3 mb-6" style="border:1px solid black">
+
+                            <textarea rows="3" class="form-control" id="Obj3ManagerCoaching" name="Obj3ManagerCoaching"></textarea>
+                        </div>
+
+
+
+
+                        <div class="flex flex-wrap  mb-6">
+                            <div>
+                                <span class="font-bold">
+                                    4)	Overall Performance Summary
+                                </span>(manager)
+                                In a brief paragraph provide your overall comments and describe at least one area for growth or improvement.
+
+
+
+
+                            </div>
+                            <div class="w-full md:w-6/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="PerformanceSummary" name="PerformanceSummary"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="flex flex-wrap  mb-6">
+                            <div>
+                                <span class="font-bold">
+                                    5)	Thoughts on Key Results and Professional Development
+                                </span>(employee)
+
+
+
+
+                            </div>
+                            <div class="w-full md:w-6/6 px-3" style="border:1px solid black">
+
+                                <textarea rows="3" class="form-control" id="ProfessionalDevelopment" name="ProfessionalDevelopment"></textarea>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="flex flex-wrap  mb-6">
+                            <div>
+                                <span class="font-bold">
+                                    6)	Overall Performance Rating
+                                </span>(manager) – choose one - consider the key results and how they were achieved
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="PerformanceRating" id="Exemplary" value="5">
+                            <label class="form-check-label" for="Exemplary">
+                                Exemplary Performance
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="PerformanceRating" id="Strong " value="4">
+                            <label class="form-check-label" for="Strong">
+                                Strong Performance
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="PerformanceRating" id="Solid" value="3">
+                            <label class="form-check-label" for="Solid">
+                                Solid Performance
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="PerformanceRating" id="PerformanceNeeded" value="2">
+                            <label class="form-check-label" for="PerformanceNeeded">
+                                Stronger Performance Needed
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="PerformanceRating" id="ImprovementRequired" value="1">
+                            <label class="form-check-label" for="ImprovementRequired">
+                                Improvement Required Now
+                            </label>
+                        </div>
+                        <br />
+                        <div class="flex flex-wrap  mb-6">
+                            <div>
+                                As a leader, I will know the strengths of each individual on my team.  I will know what you are doing, how you are doing, and provide support for you to be successful.
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ManagerSignature">
+                                    Manager Signature
+                                </label>
+                                <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ManagerSignature" name="ManagerSignature" type="text" autocomplete="off">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ManagerSignDate">
+                                    Date
+                                </label>
+                                <input class="dateFormate appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ManagerSignDate" name="ManagerSignDate" type="text" autocomplete="off">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="md:flex md:items-right">
+                <div class="md:w-2/3">
+                    <button type="submit" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
+               
+            
+            <!--/Grid Form-->
+    </div>
+</main>
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script src="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.dateFormate').datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true,
+            showOtherMonths:true
+        });
+
+        $('.nemericVal').keypress(function (e) {
+            var inputValue = $(this).val();
+            if (!isDecimalValue(inputValue,event)) {
+                return false;
+            }
+
+           //return isNumber(event);
+
+
+        });
+
+        $('#save').click(function () {
+
+            $('#addForm').validate({
+
+                rules: {
+                    Description: {
+                        required: true
+                    },
+
+                    Email: {
+                        required: true,
+                        Email: true
+                    }
+                },
+                messages: {
+                    Description: {
+                        required: "Please fill with description"
+                    },
+
+                    Email: {
+                        required: "Please enter email address",
+                        Email: "Please enter valid email"
+                    }
+                },
+                highlight: function (element) {
+                    $(element).addClass('redBorder').removeClass('border border-red-500');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('redBorder').addClass('border border-red-500');
+                }
+
+            });
+            validateCountry();
+
+
+
+
+        });
+    });
+
+
+
+    $('#Country_Id').change(function () {
+        //alert($(this).val());
+
+        var countryId = $(this).val();
+        var Url = '@Url.Content("~/City/List/")' + countryId;
+        //alert(Url);
+        $.ajax({
+            url: Url,
+            type: 'GET',
+            success: function (response) {
+                //alert(response);
+                $('#City_Id').html(response);
+            },
+            error: function () {
+                //alert('Error');
+            }
+
+        });
+        validateCountry();
+    });
+
+    function validateCountry() {
+        var selectedCountry = $('#Country_Id').val();
+        if (selectedCountry == 'Select Country') {
+            $('#Country_Id').addClass('redBorder').removeClass('border border-red-500 focus:border-gray-600');
+            $('#countryErr').removeClass('hide');
+            return false;
+        }
+        else {
+            $('#Country_Id').removeClass('redBorder').addClass('border border-red-500 ');
+            $('#countryErr').addClass('hide');
+            return true;
+        }
+    }
+
+    function fetchEmployeeDetails(Code) {
+        //alert(Code);
+
+        var Url = '@Url.Content("~/Employee/Detail")' ;
+        //alert(Url);
+        $.ajax({
+            url: Url,
+            type: 'GET',
+            data: {code : Code},
+            success: function (response) {
+                var data = JSON.parse(response);
+                //alert(data.FirstName);
+                $('#Emp_Name').val(data.FirstName + ' ' + data.LastName);
+                $('#Emp_Title').val(data.JobTitle);
+            },
+            error: function () {
+                //alert('Error');
+            }
+
+        });
+
+    }
+
+    function showUserBlock(obj) {
+        //alert($(obj).prop("checked"));
+        if ($(obj).prop("checked") == true) {
+            $('#userInfo').show();
+        }
+        else {
+            $('#LoginId').val('');
+            $('#Password').val('');
+            $('#userInfo').hide();
+        }
+    }
+</script>

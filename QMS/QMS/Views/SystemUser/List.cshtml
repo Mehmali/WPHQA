@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var subModules = Session["subModules"] != null ? (List<QMS.Data.SubModule>)Session["subModules"] : new List<QMS.Data.SubModule>();
+    int subModuleId = subModules.Where(m => m.Name == "SystemUsers").FirstOrDefault().Id;
+    var Roles = (List<QMS.Data.Role>)ViewBag.Roles;
+    bool canAdd = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
+    bool canEdit = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
+    bool canDelete = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
+}
+
+<main class="bg-white-500 flex-1 p-3 overflow-hidden">
+    <div class="flex flex-col">
+        <!--Grid Form-->
+        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
+                    <span>System Users</span>
+                    @if (canAdd)
+                    {
+                        <span style="float:right;">
+                            @*<button class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded" onclick="AddJobTitle();">
+                                    Add Job Title
+                                </button>*@
+                            <a class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded text-decoration-none" href="@Url.Content("~/SystemUser/Add")">
+                                Add System User
+                            </a>
+
+                        </span>
+                    }
+                </div>
+
+                <div class="p-3">
+                    <table class="table-responsive w-full text-12 table-striped">
+                        <thead>
+                            <tr>
+                                <th class="border  px-24 py-2">Employee Name</th>
+                                <th class="border  px-24 py-2">User Name</th>
+                                <th class="border  px-24 py-2">Role Assigned</th>
+                                @*<th class="border  px-24 py-2">Password</th>*@
+                                @*<th class="border  px-2 py-2">Status</th>*@
+                                @*<th class="border  px-24 py-2">Last Updated By/On</th>*@
+                                <th class="border w-1/6 px-24 py-2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.SystemUsers != null && ViewBag.SystemUsers.Count > 0)
+                            {
+                                foreach (var sysUser in ViewBag.SystemUsers)
+                                {
+                            <tr>
+                                <td class="border pl-5">@(sysUser.Emp_Name)</td>
+                                <td class="border pl-5">@(sysUser.Login_Id)</td>
+                                <td class="border pl-5">@(Roles.Where(x=>x.Id.Equals(sysUser.Role_Id)).FirstOrDefault().Role_Name)</td>
+                                @*<td class="border  ">@sysUser.Password</td>
+        <td class="border ">@(sysUser.IsActive == false ? "In-Active" : "Active")</td>*@
+                                @*<td class="border ">@(employee.Department.Name)</td>*@
+                                @*<td class="border  ">@(sysUser.LastUpdatedBy + " " + sysUser.LastUpdatedOn)</td>*@
+                                <td class="border pl-5">
+
+                                    @if (canEdit)
+            {
+                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" href="@Url.Content("~/SystemUser/Edit/" + sysUser.Id)">
+                    <i class="fas fa-edit"></i>
+                </a>
+            }
+                                    @*@if (canDelete)
+                                    {
+                                        <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500" href="@Url.Content("~/SystemUser/Delete/" + sysUser.Id)">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    }*@
+                                </td>
+                            </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="11" class="border px-4 py-4">
+                                        No Record Found!
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--/Grid Form-->
+    </div>
+</main>
+

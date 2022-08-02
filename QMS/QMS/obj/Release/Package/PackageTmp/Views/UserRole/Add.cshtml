@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+}
+
+<main class="bg-white-500 flex-1 p-3 overflow-hidden">
+    <div class="flex flex-col">
+        <!--Grid Form-->
+        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2 ">
+            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-2/3 ml-24 ">
+                <div class="bg-gray-400 px-2 py-3 border-solid border-gray-800 border-b text-2xl">
+                    Assign User Role
+                </div>
+
+                <div class="p-3">
+                    <form name="addForm" id="addForm" class="w-full" method="post" action="@Url.Content("~/UserRole/Add")">
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="SystemUser">
+                                    System User
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="SystemUser_Id" name="SystemUser_Id">
+                                    <option>Select System User</option>
+                                    @foreach (var sysUser in ViewBag.SystemUsers)
+                                    {
+                                        <option value="@sysUser.Id">@(sysUser.LoginId)</option>
+                                        @*<option value="@country.Id" @(country.Id == vcountry.Country_Id ? "selected" : "")>@(country.Name + "[" + country.Code + "]")</option>*@
+                                    }
+                                </select>
+                                @*<p id="jobtitleErr" class="error mt-1 hide">Please select the job title.</p>*@
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Role">
+                                    User Role
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="Role_Id" name="Role_Id">
+                                    <option>Select Role</option>
+                                    @foreach (var role in ViewBag.Roles)
+                                    {
+                                        <option value="@role.Id">@(role.Name)</option>
+                                        @*<option value="@country.Id" @(country.Id == vcountry.Country_Id ? "selected" : "")>@(country.Name + "[" + country.Code + "]")</option>*@
+                                    }
+                                </select>
+                                @*<p id="jobtitleErr" class="error mt-1 hide">Please select the job title.</p>*@
+                            </div>
+
+                        </div>
+
+
+                        
+                        <div class="md:flex md:items-right">
+                            <div class="md:w-2/3">
+                                <button type="submit" id="save" class="test shadow bg-green-500 hover:bg-green-800 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                                    Save
+                                </button>
+                                <a class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-decoration-none" href="@Url.Content("~/UserRole/List")">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--/Grid Form-->
+    </div>
+</main>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#save').click(function () {
+
+            $('#addForm').validate({
+
+                rules: {
+                    LoginId: {
+                        required: true
+                    },
+
+                    Password: {
+                        required: true
+                    }
+                },
+                messages: {
+                    LoginId: {
+                        required: "Please fill with LoginId"
+                    },
+
+                    Password: {
+                        required: "Please enter Password",
+                    }
+                },
+                highlight: function (element) {
+                    $(element).addClass('redBorder').removeClass('border border-red-500');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('redBorder').addClass('border border-red-500');
+                }
+
+            });
+
+
+        });
+    });
+
+
+
+
+</script>

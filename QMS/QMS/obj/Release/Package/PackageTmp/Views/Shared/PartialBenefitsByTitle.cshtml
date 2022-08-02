@@ -1,0 +1,27 @@
+﻿@*<option>Select Benefits</option>
+    @foreach (var benefit in ViewBag.Benefits)
+    {
+        <option value="@benefit.Id">@benefit.Title</option>
+    }*@
+
+@if (ViewBag.Benefits != null && ViewBag.Benefits.Count > 0)
+            {
+                var EmpBenefits = ((List<HRMS.Data.EmployeeBenefit>)ViewBag.EmployeeBenefits).ToList();
+                foreach (var benefit in ViewBag.Benefits)
+                {
+
+        <tr>
+           
+            <td class="border px-4 py-2">@benefit.Title</td>
+            <td class="border px-4 py-2">@((EmpBenefits.Where(b=>b.Benefit_Id.Equals(benefit.Id)).FirstOrDefault()).MaxBudget)</td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="3" class="border px-4 py-4">
+            No Record Found!
+        </td>
+    </tr>
+}

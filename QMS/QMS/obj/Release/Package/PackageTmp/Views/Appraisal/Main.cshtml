@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+
+<div class="container m-auto" >
+
+       
+            <main class="bg-white-300 flex-1 justify-content-center overflow-hidden">
+                <div class="flex flex-col">
+
+
+
+                    <!-- Stats Row Starts Here -->
+                    <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2 text-center m-auto">
+                        <div class="shadow-lg bg-red-vibrant border-l-8 hover:bg-red-vibrant-dark border-red-vibrant-dark mb-2 p-2 md:w-1/4 mx-2 ">
+                            <div class="p-4 flex flex-col">
+
+                                <a href="@Url.Content("~/Appraisal/Index")" class="no-underline text-white text-lg text-2xl">
+                                    Add New Appraisal
+                                </a>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2 text-center ma-auto">
+
+
+                    <div class="shadow bg-info border-l-8 hover:bg-info-dark border-info-dark mb-2 p-2 md:w-1/4 mx-2">
+                        <div class="p-4 flex flex-col">
+
+                            <a href="@Url.Content("~/Appraisal/List")" class="no-underline text-white text-lg text-2xl">
+                                Managarial View
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2 text-center">
+
+                    <div class="shadow bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2">
+                        <div class="p-4 flex flex-col">
+
+                            <a href="@Url.Content("~/Appraisal/ListAll")" class="no-underline text-white text-lg text-2xl">
+                                HR View
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </main>
+        
+</div>
+

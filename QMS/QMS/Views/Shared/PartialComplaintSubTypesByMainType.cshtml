@@ -1,0 +1,7 @@
+﻿
+
+<option value="">Select Complaint Sub Type</option>
+@foreach (var complaintSubType in ViewBag.ComplaintSubTypes)
+{
+    <option value="@complaintSubType.Id">@complaintSubType.SubType</option>
+}

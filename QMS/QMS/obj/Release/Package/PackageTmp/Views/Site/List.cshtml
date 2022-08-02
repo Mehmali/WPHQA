@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var subModules = Session["subModules"] != null ? (List<HRMS.Data.SubModule>)Session["subModules"] : new List<HRMS.Data.SubModule>();
+    int subModuleId = subModules.Where(m => m.Name == "Sites").FirstOrDefault().Id;
+    bool canAdd = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 1);
+    bool canEdit = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
+    bool canDelete = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
+
+}
+
+<main class="bg-white-500 flex-1 p-3 overflow-hidden">
+    <div class="flex flex-col">
+        <!--Grid Form-->
+        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
+                    <span>Sites</span>
+                    @if (canAdd)
+                    {
+                        <span style="float:right;">
+                            @*<button class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded" onclick="AddJobTitle();">
+                                    Add Job Title
+                                </button>*@
+                            <a class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded text-decoration-none" href="@Url.Content("~/Site/Add")">
+                                Add Site
+                            </a>
+
+                        </span>
+                    }
+                </div>
+
+                <div class="p-3">
+                    <table class="table-responsive w-full rounded">
+                        <thead>
+                            <tr>
+                                <th class="border  px-4 py-2">Description</th>
+                                <th class="border  px-4 py-2">Address Line 1</th>
+                                <th class="border  px-4 py-2">Address Line 2</th>
+                                <th class="border  px-4 py-2">Phone</th>
+                                <th class="border hidden px-4 py-2">Cell</th>
+                                <th class="border hidden px-4 py-2">Fax</th>
+                                <th class="border  px-4 py-2">Email</th>
+                                @*<th class="border hidden px-4 py-2">Last Updated By</th>
+                                <th class="border hidden px-4 py-2">Last Updated On</th>*@
+                                <th class="border w-1/6 px-4 py-2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.Sites != null && ViewBag.Sites.Count > 0)
+                            {
+                                foreach (var site in ViewBag.Sites)
+                                {
+                                    <tr>
+                                        <td class="border px-4 py-2">@site.Description</td>
+                                        <td class="border px-4 py-2">@(site.AddressLine1 + ", " + site.City.Name + ", " + site.Country.Name)</td>
+                                        <td class="border px-4 py-2">@site.AddressLine2</td>
+                                        <td class="border px-4 py-2">@site.Phone</td>
+                                        <td class="border hidden px-4 py-2">@site.CellPhone</td>
+                                        <td class="border hidden px-4 py-2">@site.Fax</td>
+                                        <td class="border px-4 py-2">@site.Email</td>
+                                        @*<td class="border hidden px-4 py-2">@site.LastUpdatedBy</td>
+                                        <td class="border hidden px-4 py-2">@site.LastUpatedOn</td>*@
+                                        <td class="border px-4 py-2">
+                                            @if (canEdit)
+                                            {
+                                                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" href="@Url.Content("~/Site/Edit/" + site.Id)">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            }
+                                            @if (canDelete)
+                                            {
+                                                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500" href="@Url.Content("~/Site/Delete/" + site.Id)">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" class="border px-4 py-4">
+                                        No Record Found!
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--/Grid Form-->
+    </div>
+</main>
+
