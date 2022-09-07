@@ -22,24 +22,32 @@ namespace QMS.Repository
                     int complaintId = complaint.Id;
                     if (complaintId > 0)
                     {
+                        if (complaint.ComplaintFaultIds !=null) { 
                         ComplaintMainTypeRepository _repoComplaintMainType = new ComplaintMainTypeRepository();
                         ComplaintSubTypeRepository _repoComplaintSubType = new ComplaintSubTypeRepository();
-                        var MaintTypes = _repoComplaintMainType.GetComplaintMainTypeList();
-                        var SubTypes = _repoComplaintSubType.GetComplaintSubTypeList();
+                        FaultTypeRepository _repoFaultType = new FaultTypeRepository();
+                        //var MaintTypes = _repoComplaintMainType.GetComplaintMainTypeList();
+                        //var SubTypes = _repoComplaintSubType.GetComplaintSubTypeList();
+                        var Faults = _repoFaultType.GetFaultTypeList();
                         List<ComplaintDefect> defects = new List<ComplaintDefect>();
-                        foreach(int complaintSubTypeId in complaint.ComplaintSubTypeIds)
+                        foreach(int complaintFaultId in complaint.ComplaintFaultIds)
                         {
                             ComplaintDefect defect = new ComplaintDefect();
-                            defect.ComplaintMainType_Id = complaint.ComplaintMianType_Id;
-                            defect.ComplaintSubType_Id = complaintSubTypeId;
+                            defect.ComplaintMainType_Id = complaint.ComplaintMainType_Id;
+                            defect.ComplaintSubType_Id = complaint.ComplaintSubType_Id;
+                            defect.ComplaintFault_Id = complaintFaultId;
                             defect.Complaint_Id = complaintId;
-                            defect.ComplaintMainType = MaintTypes.Where(x => x.Id.Equals(defect.ComplaintMainType_Id)).FirstOrDefault().MainType;
-                            defect.ComplaintSubType = SubTypes.Where(x => x.Id.Equals(defect.ComplaintSubType_Id)).FirstOrDefault().SubType;
+                                defect.ComplaintMainType = complaint.ComplaintMainType;
+                                defect.ComplaintSubType = complaint.ComplaintSubType;
+                           // defect.ComplaintMainType = MaintTypes.Where(x => x.Id.Equals(defect.ComplaintMainType_Id)).FirstOrDefault().MainType;
+                           //defect.ComplaintSubType = SubTypes.Where(x => x.Id.Equals(defect.ComplaintSubType_Id)).FirstOrDefault().SubType;
+                                defect.ComplaintFault = Faults.Where(x => x.Id.Equals(defect.ComplaintFault_Id)).FirstOrDefault().Fault;
                             defect.CreatedOn = DateTime.Now;
                             defect.CreatedBy = 0;
                             defects.Add(defect);
                         }
                         AddComplaintDefects(defects);
+                        }
                     }
                     return complaintId;
                 }
@@ -92,7 +100,7 @@ namespace QMS.Repository
                 using (var db = new QAData())
                 {
                     var ComplaintDefects = db.ComplaintDefects.ToList();
-                    var removableComplaintDefects = ComplaintDefects.Where(x => complaintDefects.Any(y => y.Complaint_Id == x.Complaint_Id && y.ComplaintSubType_Id == x.ComplaintSubType_Id)).ToList();
+                    var removableComplaintDefects = ComplaintDefects.Where(x => complaintDefects.Any(y => y.Complaint_Id == x.Complaint_Id && y.ComplaintSubType_Id == x.ComplaintSubType_Id && y.ComplaintFault_Id == x.ComplaintFault_Id)).ToList();
                     db.ComplaintDefects.RemoveRange(removableComplaintDefects);
                     db.SaveChanges();
                     return true;

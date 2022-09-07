@@ -18,6 +18,8 @@ namespace QMS.Data
         [StringLength(500)]
         public string Dept_Name { get; set; }
 
+        public Boolean IsExternal { get; set; }
+
         public int? CreatedBy { get; set; }
 
         public DateTime? CreatedOn { get; set; }

@@ -21,6 +21,7 @@ namespace QMS.Controllers
         DepartmentRepository _repoDepartment = new DepartmentRepository();
         ComplaintMainTypeRepository _repoComplaintMainType = new ComplaintMainTypeRepository();
         ComplaintSubTypeRepository _repoComplaintSubType = new ComplaintSubTypeRepository();
+        FaultTypeRepository _repoFaultType = new FaultTypeRepository();
         EmployeeRepository _repoEmployee = new EmployeeRepository();
         ComplaintDocumentRepository _repoComplaintDocument = new ComplaintDocumentRepository();
         // GET: Dempartment
@@ -59,7 +60,7 @@ namespace QMS.Controllers
         {
             int employeeId = (int)Session["employeeId"];
             var Departments= _repoDepartment.GetDepartmentList().ToList();
-            ViewBag.Departments = Departments;
+            ViewBag.Departments = Departments.Where(x=>x.IsExternal.Equals(false));
             ViewBag.ComplaintMainTypes = _repoComplaintMainType.GetComplaintMainTypeList().ToList();
             var Employee = _repoEmployee.GetEmployeeById(employeeId);
             ViewBag.Employee = Employee;
@@ -100,7 +101,8 @@ namespace QMS.Controllers
             var Complaint = _repoComplaint.GetComplaintByIdSP(id);
            //var ComplaitSubTypeIds = Complaint.ComplaintSubTypeIds.Split(',');
             ViewBag.Complaint = Complaint;
-            ViewBag.ComplaintSubTypes = _repoComplaintSubType.GetComplaintSubTypeListByMainTypeId(Complaint.ComplaintMianType_Id);
+            //ViewBag.ComplaintSubTypes = _repoComplaintSubType.GetComplaintSubTypeListByMainTypeId(Complaint.ComplaintMianType_Id);
+            ViewBag.ComplaintFaults = _repoFaultType.GetFaultTypeListBySubTypeId(Complaint.ComplaintSubType_Id);
 
             return View();
         }
@@ -112,22 +114,27 @@ namespace QMS.Controllers
             int employeeId = (int)Session["employeeId"];
 
             var Departments = _repoDepartment.GetDepartmentList();
-            string[] existingcomplaintSubTypeIds = complaintById.ExistingComplaintSubTypeIds.Split(',').Select(x=>x.Trim()).ToArray();
-            string[] complaintSubTypeIds = complaintById.NewComplaintSubTypeIds;
-            var removeableComplaintDefects = existingcomplaintSubTypeIds.Except(complaintSubTypeIds).ToArray();
-            var addableComplaintDefects = complaintSubTypeIds.Except(existingcomplaintSubTypeIds).ToArray();
+            string[] existingcomplaintFaultIds = complaintById.ExistingComplaintFaultIds.Split(',').Select(x=>x.Trim()).ToArray();
+            string[] complaintFaultIds = complaintById.NewComplaintFaultIds;
+            var removeableComplaintDefects = existingcomplaintFaultIds.Except(complaintFaultIds).ToArray();
+            var addableComplaintDefects = complaintFaultIds.Except(existingcomplaintFaultIds).ToArray();
           
 
             Complaint complaint = new Complaint();
 
             complaint.Id = complaintById.Id;
             complaint.IsClosed = Convert.ToBoolean(complaintById.IsClosed);
+
             complaint.IssuerDepartment = complaintById.IssuerDepartment;
             complaint.IssuerDept_Id = complaintById.IssuerDept_Id;
+            complaint.ComplaintNature = complaintById.ComplaintNature;
+            complaint.ComplaintType = complaintById.ComplaintType;
             complaint.Issuer_Name = complaintById.Issuer_Name;
+            complaint.CustomerName = complaintById.CustomerName;
             complaint.ProblemArea = complaintById.ProblemArea;
             complaint.ProblemDescription = complaintById.ProblemDescription;
             complaint.ProblemReason = complaintById.ProblemReason;
+            complaint.ProblemDetectedOn = complaintById.ProblemDetectedOn;
             complaint.QARemarks = complaintById.QARemarks;
             complaint.ResponsibleDepartment = complaintById.ResponsibleDepartment;
             complaint.ResponsibleDeptRemarks = complaintById.ResponsibleDeptRemarks;
@@ -138,10 +145,13 @@ namespace QMS.Controllers
             complaint.ActionsTaken = complaintById.ActionsTaken;
             complaint.ActionTakenOn = complaintById.ActionTakenOn;
             complaint.CARCAPA = complaintById.CARCAPA;
+            complaint.IsValid = Convert.ToBoolean(complaintById.IsValid);
             complaint.ClosedBy = complaintById.ClosedBy;
             complaint.ClosedOn = complaintById.ClosedOn;
-            complaint.ComplaintMianType_Id = complaintById.ComplaintMianType_Id;
-            
+            complaint.ComplaintMainType_Id = complaintById.ComplaintMainType_Id;
+            complaint.ComplaintMainType = complaintById.ComplaintMainType;
+            complaint.ComplaintSubType_Id = complaintById.ComplaintSubType_Id;
+            complaint.ComplaintSubType = complaintById.ComplaintSubType;
             complaint.CreatedOn = complaintById.CreatedOn;
             complaint.CreatedBy = complaintById.CreatedBy;
             complaint.CurrentState = complaintById.CurrentState;
@@ -152,29 +162,35 @@ namespace QMS.Controllers
             int deptid = _repoComplaint.UpdateComplaint(complaint);
             if (deptid > 0)
             {
-                var MaintTypes = _repoComplaintMainType.GetComplaintMainTypeList();
-                var SubTypes = _repoComplaintSubType.GetComplaintSubTypeList();
+                //var MaintTypes = _repoComplaintMainType.GetComplaintMainTypeList();
+                //var SubTypes = _repoComplaintSubType.GetComplaintSubTypeList();
+                var Faults = _repoFaultType.GetFaultTypeList();
                 List<ComplaintDefect> defects = new List<ComplaintDefect>();
-                foreach (string complaintSubTypeId in addableComplaintDefects)
+                foreach (string complaintFaultId in addableComplaintDefects)
                 {
                     ComplaintDefect defect = new ComplaintDefect();
-                    defect.ComplaintMainType_Id = complaint.ComplaintMianType_Id;
-                    defect.ComplaintSubType_Id = Int32.Parse(complaintSubTypeId);
+                    defect.ComplaintMainType_Id = complaint.ComplaintMainType_Id;
+                    defect.ComplaintSubType_Id = complaint.ComplaintSubType_Id;
+                    defect.ComplaintFault_Id = Int32.Parse(complaintFaultId);
                     defect.Complaint_Id = complaint.Id;
-                    defect.ComplaintMainType = MaintTypes.Where(x => x.Id.Equals(defect.ComplaintMainType_Id)).FirstOrDefault().MainType;
-                    defect.ComplaintSubType = SubTypes.Where(x => x.Id.Equals(defect.ComplaintSubType_Id)).FirstOrDefault().SubType;
+                    defect.ComplaintMainType = complaint.ComplaintMainType;
+                    defect.ComplaintSubType = complaint.ComplaintSubType;
+                    defect.ComplaintFault = Faults.Where(x => x.Id.Equals(defect.ComplaintFault_Id)).FirstOrDefault().Fault;
                     defect.CreatedOn = DateTime.Now;
-                    defect.CreatedBy = 0;
+                    defect.CreatedBy = complaint.CreatedBy;
+                    defect.UpdatedOn = DateTime.Now;
+                    defect.UpdatedBy = complaint.CreatedBy;
                     defects.Add(defect);
                 }
                 _repoComplaint.AddComplaintDefects(defects);
 
                 List<ComplaintDefect> removeableDefects = new List<ComplaintDefect>();
-                foreach (string complaintSubTypeId in removeableComplaintDefects)
+                foreach (string complaintFaultId in removeableComplaintDefects)
                 {
                     ComplaintDefect defect = new ComplaintDefect();
-                    defect.ComplaintMainType_Id = complaint.ComplaintMianType_Id;
-                    defect.ComplaintSubType_Id = Int32.Parse(complaintSubTypeId);
+                    defect.ComplaintMainType_Id = complaint.ComplaintMainType_Id;
+                    defect.ComplaintSubType_Id = complaint.ComplaintSubType_Id;
+                    defect.ComplaintFault_Id = Int32.Parse(complaintFaultId);
                     defect.Complaint_Id = complaint.Id;
 
                     removeableDefects.Add(defect);
@@ -205,7 +221,7 @@ namespace QMS.Controllers
             var Complaint = _repoComplaint.GetComplaintByIdSP(id);
             //var ComplaitSubTypeIds = Complaint.ComplaintSubTypeIds.Split(',');
             ViewBag.Complaint = Complaint;
-            ViewBag.ComplaintSubTypes = _repoComplaintSubType.GetComplaintSubTypeListByMainTypeId(Complaint.ComplaintMianType_Id);
+            ViewBag.ComplaintSubTypes = _repoComplaintSubType.GetComplaintSubTypeListByMainTypeId(Complaint.ComplaintMainType_Id);
             ViewBag.ComplaintDocuments = _repoComplaintDocument.GetComplaintDocumentList(id);
 
             return View();

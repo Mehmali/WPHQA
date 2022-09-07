@@ -1,5 +1,4 @@
 ﻿using QMS.Data;
-using QMS.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;

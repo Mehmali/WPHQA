@@ -12,9 +12,15 @@ namespace QMS.Models
 
         public string Issuer_Name { get; set; }
 
+        public string ComplaintNature { get; set; }
+
+        public string ComplaintType { get; set; }
+
         public int IssuerDept_Id { get; set; }
 
         public string IssuerDepartment { get; set; }
+
+        public string CustomerName { get; set; }
 
         public int ResponsibleDept_Id { get; set; }
 
@@ -25,6 +31,8 @@ namespace QMS.Models
         public string ProblemArea { get; set; }
 
         public string ProblemReason { get; set; }
+
+        public DateTime? ProblemDetectedOn { get; set; }
 
         public string ResponsiblePersonName { get; set; }
 
@@ -43,7 +51,10 @@ namespace QMS.Models
 
         public string QARemarks { get; set; }
 
-        public Nullable<Boolean> IsClosed { get; set; }
+        public Boolean IsValid { get; set; }
+
+        public Boolean IsClosed { get; set; }
+
 
         public DateTime? ClosedOn { get; set; }
 
@@ -57,20 +68,24 @@ namespace QMS.Models
 
         public int? UpdatedBy { get; set; }
         
-        public int ComplaintMianType_Id { get; set; }
+        public int ComplaintMainType_Id { get; set; }
 
         public string ComplaintMainType { get; set; }
 
-        
-        public string ComplaintSubTypeIds { get; set; }
+        public int ComplaintSubType_Id { get; set; }
+
+        public string ComplaintSubType { get; set; }
 
 
-        public string ComplaintSubTypes { get; set; }
+        public string ComplaintFaultIds { get; set; }
 
-        public string[] NewComplaintSubTypeIds { get; set; }
+
+        public string ComplaintFaults { get; set; }
+
+        public string[] NewComplaintFaultIds { get; set; }
 
         [NotMapped]
-        public string ExistingComplaintSubTypeIds { get; set; }
+        public string ExistingComplaintFaultIds { get; set; }
 
 
 

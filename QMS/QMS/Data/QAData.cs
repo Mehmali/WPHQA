@@ -28,6 +28,8 @@ namespace QMS.Data
 
         public virtual DbSet<ComplaintDocument> ComplaintDocuments { get; set; }
 
+        public virtual DbSet<FaultType> FaultTypes { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Department>()

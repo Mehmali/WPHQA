@@ -15,9 +15,13 @@ namespace QMS.Models
 
         public int ComplaintMainType_Id { get; set; }
 
-        public string ComplaintSubTypeIds { get; set; }
+        public string ComplaintSubType { get; set; }
 
-        public string ComplaintSubTypes { get; set; }
+        public int? ComplaintSubType_Id { get; set; }
+
+        public string ComplaintFaultIds { get; set; }
+
+        public string ComplaintFaults { get; set; }
 
     }
 }

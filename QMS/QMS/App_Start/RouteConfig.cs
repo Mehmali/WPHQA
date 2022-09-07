@@ -13,23 +13,32 @@ namespace QMS
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "User", action = "Login", id = UrlParameter.Optional }
-            );
+
+
+            //    routes.MapRoute(
+            //    name: "Download",
+            //    url: "{controller}/{action}/{FileName}",
+            //    defaults: new { controller = "ComplaintDocument", action = "DownloadFile", FileName = UrlParameter.Optional }
+            //);
 
             routes.MapRoute(
-            name: "Download",
-            url: "{controller}/{action}/{FileName}",
-            defaults: new { controller = "ComplaintDocument", action = "DownloadFile", FileName = UrlParameter.Optional }
+            name: "Default1",
+            url: "Department/GetDepartmentsByComplaintType/{param}",
+            defaults: new { controller = "Department", action = "GetDepartmentsByComplaintType", param = UrlParameter.Optional }
+
         );
 
+            //routes.MapRoute(
+            //    name: "InvalidURL",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "User", action = "InvalidURLRequest", id = UrlParameter.Optional }
+            //);
+
             routes.MapRoute(
-                name: "InvalidURL",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "User", action = "InvalidURLRequest", id = UrlParameter.Optional }
-            );
+           name: "Default",
+           url: "{controller}/{action}/{id}",
+           defaults: new { controller = "User", action = "Login", id = UrlParameter.Optional }
+       );
         }
     }
 }

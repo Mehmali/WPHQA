@@ -12,6 +12,22 @@
 
 }
 
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.theme.css" rel="stylesheet" />
+    <title>Test</title>
+
+    <style>
+        .ui-datepicker {
+            background: #5c7682;
+            border: 1px solid blue;
+            color: black
+        }
+    </style>
+</head>
+
 <main class="bg-white-500 flex-1 p-3 overflow-hidden">
     <div class="flex flex-col">
         <!--Grid Form-->
@@ -24,6 +40,53 @@
                 <div class="p-3">
                     <form name="addForm" id="addForm" class="w-full" method="post" action="@Url.Content("~/Complaint/Add")">
 
+                        <input type="hidden" id="isValid" name="isValid" value="true" />
+                        <input type="hidden" id="IsClosed" name="IsClosed" value="false" />
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ComplaintNature">
+                                    Nature of Complaint
+                                </label>
+
+                                <input class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureQMS" value="QMS">
+                                <label class="form-check-label mr-6" for="ComplaintNatureQMS">
+                                    QMS
+                                </label>
+
+                                <input class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureOHS" value="OHS">
+                                <label class="form-check-label mr-6" for="ComplaintNatureOHS">
+                                    OHS
+                                </label>
+
+                                <input class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureEMS" value="EMS">
+                                <label class="form-check-label" for="ComplaintNatureEMS">
+                                    EMS
+                                </label>
+
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ComplaintType">
+                                    Complaint Type
+                                </label>
+
+                                <input class="form-check-input complaintType" type="radio" name="ComplaintType" id="ComplaintTypeInternal" value="Internal">
+                                <label class="form-check-label mr-6" for="ComplaintTypeInternal">
+                                    Internal
+                                </label>
+
+                                <input class="form-check-input complaintType" type="radio" name="ComplaintType" id="ComplaintTypeExternal" value="External">
+                                <label class="form-check-label mr-6" for="ComplaintTypeExternal">
+                                    External
+                                </label>
+
+
+                            </div>
+                        </div>
+
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
@@ -33,7 +96,7 @@
                                 <input disabled class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
                                        id="Issuer_Name" name="Issuer_Name" type="text" value="@ViewBag.Employee.Emp_Name">
                                 <input type="hidden" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="Issuer_Name" name="Issuer_Name"  value="@ViewBag.Employee.Emp_Name">
+                                       id="Issuer_Name" name="Issuer_Name" value="@ViewBag.Employee.Emp_Name">
 
                             </div>
                             <div class="w-full md:w-1/2 px-3">
@@ -42,21 +105,26 @@
                                     Complaint Issuer Department
                                 </label>
                                 <input disabled class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-        id="IssuerDept_Id" name="IssuerDept_Id" type="text" value="@ViewBag.EmployeeDepartment">
-                                <input type="hidden" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="IssuerDept_Id" name="IssuerDept_Id" value="@ViewBag.Employee.Department_Id">
+                                       id="IssuerDept_Id" name="IssuerDept_Id" type="text" value="@ViewBag.EmployeeDepartment">
+                                <input class="hide appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="IssuerDepartment" name="IssuerDept_Id" value="@ViewBag.Employee.Department_Id">
                             </div>
                         </div>
 
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3">
+
+
+
+
+
+                        <div  class="flex flex-wrap -mx-3 mb-6">
+                            <div id="Reponsible_DeptDiv" class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ResponsibleDept_Id">
                                     Responsible Department
                                 </label>
                                 <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
                                         id="ResponsibleDept_Id" name="ResponsibleDept_Id">
-                                    <option>Select Department</option>
+                                    <option value="0">Select Department</option>
                                     @foreach (var department in ViewBag.Departments)
                                     {
                                         <option value="@department.Id">@department.Dept_Name</option>
@@ -65,37 +133,71 @@
                                 </select>
 
                             </div>
+
+                            <div id="Customer_NameDiv" class="hide w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="CustomerName">
+                                    Customer Name
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="CustomerName" name="CustomerName" type="text" placeholder="" autocomplete="off">
+                            </div>
+
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="ComplaintMianType_Id">
+                                       for="ComplaintMainType_Id">
                                     Complaint Main Type
                                 </label>
                                 <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                        id="ComplaintMianType_Id" name="ComplaintMianType_Id">
-                                    <option>Select Complaint Main Type</option>
+                                        id="ComplaintMainType_Id" name="ComplaintMainType_Id">
+                                    <option value="">Select Complaint Main Type</option>
+
 
                                 </select>
+
+                                <input type="hidden" id="ComplaintMainType" name="ComplaintMainType" value="" />
 
                             </div>
                         </div>
 
-                       
+
 
 
 
                         <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+
+                            <div id="subType" class="hide w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="ComplaintSubTypeIds">
-                                    Complaint Sub Types
+                                       for="ComplaintSubType_Id">
+                                    Complaint Sub Type
                                 </label>
                                 <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                        id="ComplaintSubTypeIds" name="ComplaintSubTypeIds" multiple>
+                                        id="ComplaintSubType_Id" name="ComplaintSubType_Id">
                                     <option>Select Complaint Sub Type</option>
+
+                                </select>
+                                <input type="hidden" id="ComplaintSubType" name="ComplaintSubType" value="" />
+                            </div>
+
+                            <div id="faultType" class="hide w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ComplaintFaultIds">
+                                    Faults
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="ComplaintFaultIds" name="ComplaintFaultIds" multiple>
+                                    <option>Select Faults</option>
 
                                 </select>
 
                             </div>
+
+
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ProblemDescription">
@@ -105,14 +207,97 @@
                                        id="ProblemDescription" name="ProblemDescription" type="text" placeholder="Enter Problem Description" autocomplete="off">
                             </div>
 
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ProblemArea">
+                                    Problem Area
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ProblemArea" name="ProblemArea" type="text" placeholder="Enter Problem Area" autocomplete="off">
+                            </div>
+
                         </div>
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ProblemReason">
+                                    Problem Reason
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ProblemReason" name="ProblemReason" type="text" placeholder="Enter Problem Reason" autocomplete="off">
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ResponsiblePersonName">
+                                    Responsible Person Name
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ResponsiblePersonName" name="ResponsiblePersonName" type="text" placeholder="" autocomplete="off">
+                            </div>
+
+                        </div>
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ProblemDetectedOn">
+                                    Problem Detected On
+                                </label>
+                                <input class="dateFormate appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ProblemDetectedOn" name="ProblemDetectedOn" type="text">
+                            </div>
+
+
+
+                        </div>
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="RiskAssessment">
+                                    Risk Assessment
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="RiskAssessment" name="RiskAssessment">
+                                    <option value="0" selected>0</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+
+                                </select>
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="CARCAPA">
+                                    CAR/CAPA
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="CARCAPA" name="CARCAPA" type="text" placeholder="" autocomplete="off" value="CAR">
+                            </div>
+
+                        </div>
+
+
 
 
 
 
                         <div class="md:flex md:items-right">
                             <div class="md:w-2/3">
-                                <button type="submit" id="save" class="test shadow bg-green-500 hover:bg-green-800 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                                <button type="button" id="save" onclick="validateSubmit()" class="test shadow bg-green-500 hover:bg-green-800 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
                                     Save
                                 </button>
                                 <a class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-decoration-none" href="@Url.Content("~/Complaint/List")">
@@ -133,27 +318,15 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-    });
-
-    $('#ComplaintMianType_Id').change(function () {
-        //alert($(this).val());
-         var ComplaintMainTypeId = $(this).val();
-        var Url = '@Url.Content("~/ComplaintSubType/ComplaintSubTypeListByMainTypeId/")' + ComplaintMainTypeId;
-        //alert(Url);
-        $.ajax({
-            url: Url,
-            type: 'GET',
-            success: function (response) {
-                //alert(response);
-                $('#ComplaintSubTypeIds').html(response);
-            },
-            error: function () {
-                //alert('Error');
-            }
-
+        $('.dateFormate').datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true,
+            showOtherMonths: true
         });
-
     });
+
+  
 
         $('#ResponsibleDept_Id').change(function () {
         //alert($(this).val());
@@ -165,7 +338,7 @@
             type: 'GET',
             success: function (response) {
                 //alert(response);
-                $('#ComplaintMianType_Id').html(response);
+                $('#ComplaintMainType_Id').html(response);
             },
             error: function () {
                 //alert('Error');
@@ -175,5 +348,182 @@
 
     });
 
+    $('#ComplaintMainType_Id').change(function () {
+        //alert($(this).val());
+        var ComplaintMainTypeId = $(this).val();
+        var ComplaintMainType = $("#ComplaintMainType_Id option:selected").text();
+        $('#ComplaintMainType').val(ComplaintMainType);
+        
+        if (ComplaintMainTypeId=="") {
+            
+            $('#subType').addClass('hide');
+            $('#faultType').addClass('hide');
+            $('#ComplaintSubType_Id').val("");
+            $('#ComplaintFaultIds').val("");
+            $('#ComplaintSubType').val("");
+            $('#ComplaintMainType').val("");
+        }
+        
+        var Url = '@Url.Content("~/ComplaintSubType/ComplaintSubTypeListByMainTypeId/")' + ComplaintMainTypeId;
+        //alert(Url);
+        $.ajax({
+            url: Url,
+            type: 'GET',
+            success: function (response) {
+               
+                
+                $('#ComplaintSubType_Id').html(response);
+                var result = response;
+                if ($(result).filter('#optionVal').val() != '0') {
+                    $('#subType').removeClass('hide');
+                }
+                else {
+                    $('#subType').addClass('hide');
+                    $('#faultType').addClass('hide');
+                    $('#ComplaintSubType_Id').val("");
+                    $('#ComplaintSubType').val("");
+                    $('#ComplaintFaultIds').val("");
+                }
+                    
+                
+            },
+            error: function () {
+                //alert('Error');
+            }
+
+        });
+
+    });
+
+     $('#ComplaintSubType_Id').change(function () {
+        //alert($(this).val());
+         var ComplaintSubTypeId = $(this).val();
+         var ComplaintSubType = $("#ComplaintSubType_Id option:selected").text();
+         $('#ComplaintSubType').val(ComplaintSubType);
+
+         if (ComplaintSubTypeId == "") {
+             
+             $('#faultType').addClass('hide');             
+             $('#ComplaintSubType').val("");
+             $('#ComplaintFaultIds').val("");
+             
+         }
+
+        var Url = '@Url.Content("~/FaultType/FaultTypeListBySubTypeId/")' + ComplaintSubTypeId;
+        //alert(Url);
+        $.ajax({
+            url: Url,
+            type: 'GET',
+            success: function (response) {
+                //alert(response);
+                $('#ComplaintFaultIds').html(response);
+                var result = response;
+                if ($(result).filter('#optionVal').val() != '0') {
+                    $('#faultType').removeClass('hide');
+                }
+                else {
+                    $('#faultType').addClass('hide');
+                    $('#ComplaintFaultIds').val("");
+                }
+
+            },
+            error: function () {
+                //alert('Error');
+            }
+
+        });
+
+    });
+
+    function validateSubmit() {
+     
+
+        
+       
+        if ($('#ComplaintMainType_Id').val() == "") {
+
+            alert("Please enter complaint main type");
+
+
+        }
+        else if ($('#subType').hasClass('hide') == false && $('#ComplaintSubType_Id').val() == "") {
+            
+                alert('Please enter complaint Sub type');
+            
+        }
+        else if ($('#faultType').hasClass('hide') == false && $('#ComplaintFaultIds').val() == "") {
+            
+            alert('Please enter fault type');
+        }
+
+        else {
+           
+            $('#addForm').submit();
+        }
+    }
+
+    $('#RiskAssessment').change(function () {
+        var riskAssessment = $(this).val();
+        if (riskAssessment > 10) {
+            $('#CARCAPA').val("CAPA");
+        }
+        else {
+            $('#CARCAPA').val("CAR");
+        }
+    })
+
+    $('.complaintType').change(function () {
+        
+        var typeVal = $(this).val();
+        if (typeVal == 'External') {
+
+
+            var Url = '@Url.Content("~/Department/GetDepartmentsByComplaintType/")' + typeVal;
+            //alert(Url);
+            $.ajax({
+                url: Url,
+                type: 'GET',
+                success: function (response) {
+                    $('#IssuerDept_Id').addClass('hide');
+                    
+                    $('#IssuerDepartment').replaceWith(response);
+                    $('#IssuerDepartment').removeClass('hide');
+                    $('#Reponsible_DeptDiv').addClass('hide');
+                    $('#Customer_NameDiv').removeClass('hide');
+                    $('#ResponsibleDept_Id').val('17');
+
+                },
+                error: function () {
+                    //alert('Error');
+                }
+
+            });
+
+            var Url = '@Url.Content("~/ComplaintMainType/ComplaintMainTypeListByDepartment/17")';
+        //alert(Url);
+        $.ajax({
+            url: Url,
+            type: 'GET',
+            success: function (response) {
+                //alert(response);
+                $('#ComplaintMainType_Id').html(response);
+            },
+            error: function () {
+                //alert('Error');
+            }
+
+        });
+
+        }
+        else {
+            $('#IssuerDepartment').replaceWith('<input  class="hide appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"id="IssuerDepartment" name="IssuerDept_Id" value="@ViewBag.Employee.Department_Id">');
+            $('#IssuerDept_Id').removeClass('hide');  
+            $('#Reponsible_DeptDiv').removeClass('hide');
+            $('#Customer_NameDiv').addClass('hide');
+            $('#ResponsibleDept_Id').val('0');
+        }
+    })
+
+    GetDepartmentsByComplaintType
 
 </script>

@@ -1,7 +1,15 @@
 ﻿
 
-<option value="">Select Complaint Sub Type</option>
-@foreach (var complaintSubType in ViewBag.ComplaintSubTypes)
+
+@if ((ViewBag.ComplaintSubTypes).Count > 0)
 {
-    <option value="@complaintSubType.Id">@complaintSubType.SubType</option>
+    <option id="optionVal" value="">Select Complaint Sub Type</option>
+    foreach (var complaintSubType in ViewBag.ComplaintSubTypes)
+    {
+        <option value="@complaintSubType.Id">@complaintSubType.SubType</option>
+    }
+}
+else
+{
+        <option id="optionVal" value="0">Select Complaint Sub Type</option>
 }

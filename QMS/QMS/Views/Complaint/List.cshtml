@@ -40,7 +40,8 @@
                                 <th class="border  px-2 py-2 text-center">Complaint Issuer Department</th>
                                 <th class="border  px-2 py-2 text-center">Responsible Department</th>
                                 <th class="border  px-2 py-2 text-center">Complaint Main Type</th>
-                                <th class="border  px-2 py-2 text-center">Complaint Sub Types</th>
+                                <th class="border  px-2 py-2 text-center">Complaint Sub Type</th>
+                                <th class="border  px-2 py-2 text-center">Faults</th>
 
                                 <th class="border w-1/6 px-24 py-2">Actions</th>
                             </tr>
@@ -56,7 +57,8 @@
                                 <td class="border p-2">@(complaint.IssuerDepartment)</td>
                                 <td class="border p-2">@(complaint.ResponsibleDepartment)</td>
                                 <td class="border p-2">@(complaint.ComplaintMainType)</td>
-                                <td class="border p-2">@(complaint.ComplaintSubTypes)</td>
+                                <td class="border p-2">@(complaint.ComplaintSubType)</td>
+                                <td class="border p-2">@(complaint.ComplaintFaults)</td>
 
                                 <td class="border pl-5">
 
@@ -67,11 +69,11 @@
                                         </a>
                                     }
                                     @*@if (canDelete)
-        {
-            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500" href="@Url.Content("~/ComplaintSubType/Delete/" + sysUser.Id)">
-                <i class="fas fa-trash"></i>
-            </a>
-        }*@
+            {
+                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500" href="@Url.Content("~/ComplaintSubType/Delete/" + sysUser.Id)">
+                    <i class="fas fa-trash"></i>
+                </a>
+            }*@
 
                                     <a class="bg-blue-500 cursor-pointer rounded p-1 m-1 text-white text-sm" href="@Url.Content("~/Complaint/ViewDetail/" + complaint.Id)">
                                         View Detail

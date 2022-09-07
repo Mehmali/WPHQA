@@ -886,6 +886,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ComplaintController.cs" />
     <Compile Include="Controllers\ComplaintMainTypeController.cs" />
+    <Compile Include="Controllers\FaultTypeController.cs" />
     <Compile Include="Controllers\ComplaintSubTypeController.cs" />
     <Compile Include="Controllers\ComplaintDocumentController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
@@ -933,6 +934,7 @@
     <Compile Include="Data\ComplaintDocument.cs" />
     <Compile Include="Data\ComplaintDefects.cs" />
     <Compile Include="Data\Complaint.cs" />
+    <Compile Include="Data\FaultType.cs" />
     <Compile Include="Data\ComplaintSubType.cs" />
     <Compile Include="Data\ComplaintMainType.cs" />
     <Compile Include="Data\Department.cs" />
@@ -956,6 +958,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ComplaintRepository.cs" />
     <Compile Include="Repository\ComplaintMainTypeRepository.cs" />
+    <Compile Include="Repository\FaultTypeRepository.cs" />
     <Compile Include="Repository\ComplaintSubTypeRepository.cs" />
     <Compile Include="Repository\ComplaintDocumentRepository.cs" />
     <Compile Include="Repository\DepartmentRepository.cs" />
@@ -1142,6 +1145,11 @@
     <Content Include="Views\Complaint\List.cshtml" />
     <Content Include="Views\Shared\PartialComplaintSubTypesByMainType.cshtml" />
     <Content Include="Views\Complaint\ViewDetail.cshtml" />
+    <Content Include="Views\Shared\PartialFaultTypesBySubType.cshtml" />
+    <Content Include="Views\FaultType\Add.cshtml" />
+    <Content Include="Views\FaultType\Edit.cshtml" />
+    <Content Include="Views\FaultType\List.cshtml" />
+    <Content Include="Views\Shared\PartialDepartmentsByComplaintType.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

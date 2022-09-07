@@ -6,7 +6,9 @@
     Layout = "~/Views/Shared/Layout.cshtml";
 
     var Complaint = (QMS.Models.ComplaintById)ViewBag.Complaint;
-    string[] complaintSubTypeIds = Complaint.ComplaintSubTypeIds.Split(',');
+    string[] complaintFaultIds;
+    complaintFaultIds= string.IsNullOrEmpty(Complaint.ComplaintFaultIds) ? new string[0] : Complaint.ComplaintFaultIds.Split(',') ;
+
     // var Departments = (List<QMS.Data.Department>)(ViewBag.Departments);
 
     // var Employee = (QMS.Data.Employee)(ViewBag.Employee);
@@ -14,6 +16,22 @@
 
 
 }
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.theme.css" rel="stylesheet" />
+    <title>Test</title>
+
+    <style>
+        .ui-datepicker {
+            background: #616c85;
+            border: 1px solid blue;
+            color: black
+        }
+    </style>
+</head>
 
 <main class="bg-white-500 flex-1 p-3 overflow-hidden">
     <div class="flex flex-col">
@@ -29,7 +47,10 @@
                         <input type="hidden" id="Id" name="Id" value="@ViewBag.Complaint.Id">
                         <input type="hidden" id="IssuerDepartment" name="IssuerDepartment" value="@ViewBag.Complaint.IssuerDepartment">
                         <input type="hidden" id="ResponsibleDepartment" name="ResponsibleDepartment" value="@ViewBag.Complaint.ResponsibleDepartment">
-                        <input type="hidden" id="ExistingComplaintSubTypeIds" name="ExistingComplaintSubTypeIds" value="@ViewBag.Complaint.ComplaintSubTypeIds">
+                        <input type="hidden" id="ExistingComplaintFaultIds" name="ExistingComplaintFaultIds" value="@ViewBag.Complaint.ComplaintFaultIds">
+
+                        <input type="hidden" id="CreatedOn" name="CreatedOn" value="@ViewBag.Complaint.CreatedOn">
+                        <input type="hidden" id="CreatedBy" name="CreatedBy" value="@ViewBag.Complaint.CreatedBy">
 
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -55,7 +76,52 @@
                             </div>
                         </div>
 
+
                         <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ComplaintNature">
+                                    Nature of Complaint
+                                </label>
+
+                                <input class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureQMS" value="QMS" @(ViewBag.Complaint.ComplaintNature == "QMS" ? "checked" : "")>
+                                <label class="form-check-label mr-6" for="ComplaintNatureQMS">
+                                    QMS
+                                </label>
+
+                                <input class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureOHS" value="OHS" @(ViewBag.Complaint.ComplaintNature == "OHS" ? "checked" : "")>
+                                <label class="form-check-label mr-6" for="ComplaintNatureOHS">
+                                    OHS
+                                </label>
+
+                                <input class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureEMS" value="EMS" @(ViewBag.Complaint.ComplaintNature == "EMS" ? "checked" : "")>
+                                <label class="form-check-label" for="ComplaintNatureEMS">
+                                    EMS
+                                </label>
+
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ComplaintType">
+                                    Complaint Type
+                                </label>
+
+                                <input class="form-check-input" type="radio" name="ComplaintType" id="ComplaintTypeInternal" value="Internal" @(ViewBag.Complaint.ComplaintType == "Internal" ? "checked" : "")>
+                                <label class="form-check-label mr-6" for="ComplaintTypeInternal">
+                                    Internal
+                                </label>
+
+                                <input class="form-check-input" type="radio" name="ComplaintType" id="ComplaintTypeExternal" value="External" @(ViewBag.Complaint.ComplaintType == "External" ? "checked" : "")>
+                                <label class="form-check-label mr-6" for="ComplaintTypeExternal">
+                                    External
+                                </label>
+
+
+                            </div>
+                        </div>
+
+
+                        <div id="Responsible_DeptDiv" class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ResponsibleDept_Id">
@@ -70,17 +136,27 @@
                                 </select>
 
                             </div>
+
+                            <div id="Customer_NameDiv" class="hide w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="CustomerName">
+                                    Customer Name
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="CustomerName" name="CustomerName" type="text" placeholder="" autocomplete="off">
+                            </div>
+
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ComplaintMianType_Id">
                                     Complaint Main Type
                                 </label>
                                 <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                        id="ComplaintMianType_Id" name="ComplaintMianType_Id">
-                                    <option value="@ViewBag.Complaint.ComplaintMianType_Id">@ViewBag.Complaint.ComplaintMainType</option>
+                                        id="ComplaintMainType_Id" name="ComplaintMainType_Id">
+                                    <option value="@ViewBag.Complaint.ComplaintMainType_Id">@ViewBag.Complaint.ComplaintMainType</option>
 
                                 </select>
-
+                                <input type="hidden" id="ComplaintMainType" name="ComplaintMainType" value="@ViewBag.Complaint.ComplaintMainType" />
                             </div>
                         </div>
 
@@ -89,23 +165,44 @@
 
 
                         <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+
+                            <div id="subType" class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="NewComplaintSubTypeIds">
-                                    Complaint Sub Types
+                                       for="ComplaintSubType_Id">
+                                    Complaint Sub Type
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="ComplaintSubType_Id" name="ComplaintSubType_Id">
+                                    <option value="@ViewBag.Complaint.ComplaintSubType_Id">@ViewBag.Complaint.ComplaintSubType</option>
+
+                                </select>
+                                <input type="hidden" id="ComplaintSubType" name="ComplaintSubType" value="@ViewBag.Complaint.ComplaintSubType" />
+                            </div>
+
+                            <div id="faultType" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="NewComplaintFaultIds">
+                                    Complaint Faults
                                 </label>
                                 <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded  leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                        id="NewComplaintSubTypeIds" name="NewComplaintSubTypeIds" multiple size="3">
-                                    <option>Select Complaint Sub Type</option>
-                                    @foreach (var complaintSubType in ViewBag.ComplaintSubTypes)
+                                        id="NewComplaintFaultIds" name="NewComplaintFaultIds" multiple size="3">
+                                    <option value="">Select Faults</option>
+                                    @foreach (var complaintFault in ViewBag.ComplaintFaults)
                                     {
-                                        bool shouldSelected = complaintSubTypeIds.Any(c => Convert.ToInt32(c) == complaintSubType.Id);
-                                        <option value="@complaintSubType.Id" @(shouldSelected ? "selected" : "")>@complaintSubType.SubType</option>
+                                        bool isSelected = complaintFaultIds.Any(c => Convert.ToInt32(c) == complaintFault.Id);
+                                        <option value="@complaintFault.Id" @(isSelected ? "selected" : "")>@complaintFault.Fault</option>
                                     }
 
                                 </select>
 
                             </div>
+
+                        </div>
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ProblemDescription">
@@ -115,9 +212,183 @@
                                        id="ProblemDescription" name="ProblemDescription" type="text" value="@ViewBag.Complaint.ProblemDescription">
                             </div>
 
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ProblemArea">
+                                    Problem Area
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ProblemArea" name="ProblemArea" type="text" value="@ViewBag.Complaint.ProblemArea">
+                            </div>
+
                         </div>
 
 
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ProblemReason">
+                                    Problem Reason
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ProblemReason" name="ProblemReason" type="text" value="@ViewBag.Complaint.ProblemReason">
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ResponsiblePersonName">
+                                    Responsible Person Name
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ResponsiblePersonName" name="ResponsiblePersonName" type="text" value="@ViewBag.Complaint.ResponsiblePersonName">
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ProblemDetectedOn">
+                                    Problem Detected On
+                                </label>
+                                <input class="dateFormate appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ProblemDetectedOn" name="ProblemDetectedOn" type="text" value="@(ViewBag.Complaint.ProblemDetectedOn !=null?((Convert.ToDateTime(ViewBag.Complaint.ProblemDetectedOn)).ToShortDateString()):"")">
+                            </div>
+
+                          
+
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="RiskAssessment">
+                                    Risk Assessment Score
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="RiskAssessment" name="RiskAssessment">
+                                    <option value="0" @(Convert.ToInt32(ViewBag.Complaint.RiskAssessment) == 0 ? "selected" : "")>0</option>
+                                    <option value="5" @(Convert.ToInt32(ViewBag.Complaint.RiskAssessment) == 5 ? "selected" : "")>5</option>
+                                    <option value="10" @(Convert.ToInt32(ViewBag.Complaint.RiskAssessment) == 10 ? "selected" : "")>10</option>
+                                    <option value="15" @(Convert.ToInt32(ViewBag.Complaint.RiskAssessment) == 15 ? "selected" : "")>15</option>
+                                    <option value="20" @(Convert.ToInt32(ViewBag.Complaint.RiskAssessment) == 20 ? "selected" : "")>20</option>
+
+                                </select>
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="CARCAPA">
+                                    CAR/CAPA
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="CARCAPA" name="CARCAPA" type="text" value="@ViewBag.Complaint.CARCAPA">
+                            </div>
+
+                        </div>
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ActionDueDate">
+                                    Action Due Date
+                                </label>
+                                <input class="dateFormate appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ActionDueDate" name="ActionDueDate" type="text" value="@(ViewBag.Complaint.ActionDueDate !=null?((Convert.ToDateTime(ViewBag.Complaint.ActionDueDate)).ToShortDateString()):"")">
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ActionsTaken">
+                                    Actions Taken
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ActionsTaken" name="ActionsTaken" type="text" value="@ViewBag.Complaint.ActionsTaken">
+                            </div>
+
+                        </div>
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ActionTakenOn">
+                                    Action Taken On
+                                </label>
+                                <input class="dateFormate appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ActionTakenOn" name="ActionTakenOn" type="text" value="@(ViewBag.Complaint.ActionTakenOn!=null?((Convert.ToDateTime(ViewBag.Complaint.ActionTakenOn)).ToShortDateString()):"")">
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="ResponsibleDeptRemarks">
+                                    Responsible Department Remarks
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ResponsibleDeptRemarks" name="ResponsibleDeptRemarks" type="text" value="@ViewBag.Complaint.ResponsibleDeptRemarks">
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="IsValid">
+                                    Validity Status
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="IsValid" name="IsValid">
+                                    <option value="true" @(ViewBag.Complaint.IsValid == true ? "selected" : "")>Valid</option>
+                                    <option value="false" @(ViewBag.Complaint.IsValid == false ? "selected" : "")>Invalid</option>
+
+
+                                </select>
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="QARemarks">
+                                    QA Remarks
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="QARemarks" name="QARemarks" type="text" value="@ViewBag.Complaint.QARemarks">
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+
+
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="IsClosed">
+                                    Closure Status
+                                </label>
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="IsClosed" name="IsClosed">
+                                    <option value="false" @(ViewBag.Complaint.IsClosed == false ? "selected" : "")>Open</option>
+                                    <option value="true" @(ViewBag.Complaint.IsClosed == true ? "selected" : "")>Close</option>
+
+
+                                </select>
+                            </div>
+
+
+
+                        </div>
 
 
                         <div class="md:flex md:items-right">
@@ -142,6 +413,17 @@
 <script src="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        if ($('#ComplaintSubType_Id').val() == 0) {
+            $('#subType').addClass('hide');
+            $('#faultType').addClass('hide');
+        }
+
+        $('.dateFormate').datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true,
+            showOtherMonths: true
+        });
 
     });
 
@@ -175,7 +457,7 @@
             type: 'GET',
             success: function (response) {
                 //alert(response);
-                $('#ComplaintMianType_Id').html(response);
+                $('#ComplaintMainType_Id').html(response);
             },
             error: function () {
                 //alert('Error');
@@ -185,5 +467,14 @@
 
     });
 
+    $('#RiskAssessment').change(function () {
+        var riskAssessment = $(this).val();
+        if (riskAssessment > 10) {
+            $('#CARCAPA').val("CAPA");
+        }
+        else {
+            $('#CARCAPA').val("CAR");
+        }
+    })
 
 </script>

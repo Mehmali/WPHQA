@@ -12,9 +12,15 @@ namespace QMS.Data
 
         public string Issuer_Name { get; set; }
 
+        public string ComplaintNature { get; set; }
+
+        public string ComplaintType { get; set; }
+
         public int IssuerDept_Id { get; set; }
 
         public string IssuerDepartment { get; set; }
+
+        public string CustomerName { get; set; }
 
         public int ResponsibleDept_Id { get; set; }
 
@@ -25,6 +31,8 @@ namespace QMS.Data
         public string ProblemArea { get; set; }
 
         public string ProblemReason { get; set; }
+
+        public DateTime? ProblemDetectedOn { get; set; }
 
         public string ResponsiblePersonName { get; set; }
 
@@ -60,9 +68,15 @@ namespace QMS.Data
 
         public int? UpdatedBy { get; set; }
         
-        public int ComplaintMianType_Id { get; set; }
+        public int ComplaintMainType_Id { get; set; }
 
-        public int[] ComplaintSubTypeIds { get; set; }
+        public string ComplaintMainType { get; set; }
+
+        public int ComplaintSubType_Id { get; set; }
+
+        public string ComplaintSubType { get; set; }
+
+        public int[] ComplaintFaultIds { get; set; }
 
 
     }

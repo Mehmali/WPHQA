@@ -20,8 +20,12 @@ namespace QMS.Data
 
         public string ComplaintSubType { get; set; }
 
+        public int ComplaintFault_Id { get; set; }
 
-       
+        public string ComplaintFault { get; set; }
+
+
+
         public DateTime? CreatedOn { get; set; }
 
         public int? CreatedBy { get; set; }
