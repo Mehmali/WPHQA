@@ -1,155 +1,372 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/Layout.cshtml";
     var Complaint = (QMS.Models.ComplaintById)ViewBag.Complaint;
 
 }
 
-<main class="bg-white-500 flex-1 p-3 overflow-hidden">
-    <div class="flex flex-col">
-        <!--Grid Form-->
-        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2 ">
-            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-2/3 ml-24 ">
-                <div class="bg-gray-400 px-2 py-3 border-solid border-gray-800 border-b text-2xl">
-                    Complaint Detail
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/BootStrap/css/bootstrap.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <title>Complaint Detail</title>
+
+
+</head>
+<body id="container_content">
+    <div class="bg-gray-500">
+        <div id="hide0" class=" bg-gray-500" style="height:10px;"></div>
+        <div class="row">
+            <div class="col-1 " id="hide1">
+                <div class="row">
+                    <div class="col-11 "></div>
+                    <div class="col-1"></div>
                 </div>
+            </div>
+            <div class="col-10 " id="changeCol">
 
-                <div class="p-4 text-sm">
+                <div id="container" class="container bg-white  p-2 m-3 border">
+                    <div class="row border-bottom ">
 
-                    <input type="hidden" name="Id" value="@Complaint.Id" />
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label class="inline">
-                                Issuer Name:
-                            </label>
+                        <div class="col-12 ">
+                            <img class="p-2" style="margin-left:auto;margin-right:auto;" src="~/Templates/admin/dist/images/WPHLogo.png" />
                         </div>
-                        <div class="col-md-4">
-                            <label class="inline">
-                                @Complaint.Issuer_Name
-                            </label>
+                        <div class="col-12">
+                            <p class="p-3 " style="font-size:24px; margin:5px; margin-top:5px;text-align:center; font-weight:bold; color:#2565AE"> Corrective Action Request</p>
                         </div>
 
-                        <div class="col-md-2">
-                            <label class="inline">
-                                Issuer Department:
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="inline">
-                                @Complaint.IssuerDepartment
-                            </label>
+                    </div>
 
+                    <div class="row p-1">
+
+                        <div class="col-6   ">
+                            <label style=" font-size:16px; font-weight:bold; ">Complaint Id:</label>
+                            <span style=" font-size:14px; padding:2px;"> WPHB/QMS/CAR-@Complaint.Id</span>
+                        </div>
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Issuer Name:</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.Issuer_Name</span>
                         </div>
 
 
                     </div>
 
-                    <div class="row">
+                    <div class="row p-1">
 
-                        <div class="col-md-2">
-                            <label class="inline">
-                                Responsible Department:
-                            </label>
+                        <div class="col-6   ">
+                            <label style=" font-size:16px; font-weight:bold; ">Vilidity Status:</label>
+                            <span style=" font-size:14px; padding:2px;"> @(Complaint.IsValid ? "Valid" : "Invalid")</span>
                         </div>
-                        <div class="col-md-4">
-                            <label class="inline">
-                                @Complaint.ResponsibleDepartment
-                            </label>
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Closure Status:</label>
+                            <span style=" font-size:14px; padding:2px;">@(Complaint.IsClosed ? "Closed" : "Open")</span>
+                        </div>
 
-                        </div>
-                        <div class="col-md-2">
-                            <label class="inline">
-                                Main Type :
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="inline">
-                                @Complaint.ComplaintMainType
-                            </label>
 
+                    </div>
+
+                    <div class="row p-1">
+
+                        <div class="col-6   ">
+                            <label style=" font-size:16px; font-weight:bold; ">Issuer Department:</label>
+                            <span style=" font-size:14px; padding:2px;"> @Complaint.IssuerDepartment</span>
+                        </div>
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Responsible Department:</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ResponsibleDepartment</span>
+                        </div>
+
+
+                    </div>
+                    <div class="row p-1">
+
+
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Complaint Nature :</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ComplaintNature</span>
+                        </div>
+
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Complaint Type:</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ComplaintType</span>
+                        </div>
+
+                    </div>
+
+                    <div class="row p-1">
+
+
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Main Type :</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ComplaintMainType</span>
+                        </div>
+
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Sub Type:</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ComplaintSubType</span>
+                        </div>
+
+                    </div>
+
+                    <div class="row p-1">
+
+
+                        <div class="col-12  ">
+                            <label style=" font-size:16px; font-weight:bold">Faults :</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ComplaintFaults</span>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="row p-1">
+
+
+                        <div class="col-12  ">
+                            <label style=" font-size:16px; font-weight:bold">Problem Description :</label>
+                            <span id="txtAreaProblemDescription" style=" font-size:14px; padding:2px;">@Complaint.ProblemDescription</span>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="row p-1">
+
+
+
+                        <div class="col-12  ">
+                            <label style=" font-size:16px; font-weight:bold">Problem Area:</label>
+                            <span id="txtAreaProblemArea" style=" font-size:14px; padding:2px;">@Complaint.ProblemArea</span>
+                        </div>
+
+                    </div>
+
+                    <div class="row p-1">
+
+
+                        <div class="col-12  ">
+                            <label style=" font-size:16px; font-weight:bold">Problem Reason :</label>
+                            <span id="txtAreaProblemReason" style=" font-size:14px; padding:2px;">@Complaint.ProblemReason</span>
+                        </div>
+
+                     
+
+                    </div>
+
+                    <div class="row p-1">
+
+
+                     
+
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Responsible Person:</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ResponsiblePersonName</span>
                         </div>
 
                     </div>
 
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label class="inline">
-                                Sub Type:
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="inline">
-                                @Complaint.ComplaintSubTypes
-                            </label>
-                        </div>
+                    <div class="row p-1">
 
 
-                        <div class="col-md-2">
-                            <label class="inline">
-                                Problem Description:
-                            </label>
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Risk Assessment Score :</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.RiskAssessment</span>
                         </div>
-                        <div class="col-md-4">
-                            <label class="inline">
-                                @Complaint.ProblemDescription
-                            </label>
 
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">CAR/CAPA:</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.CARCAPA</span>
                         </div>
+
                     </div>
 
-                    <div>
+                    <div class="row p-1">
 
-                        <form method="post" action="@Url.Content("~/ComplaintDocument/UploadFile") " enctype="multipart/form-data">
-                            <input type="file" id="myFile" name="myFile">
-                            <input type="hidden" name="ComplaintId" value="@Complaint.Id" />
-                            <input type="submit">
-                        </form>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label class="inline">
-                                Documents
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="inline">
-                                @foreach (var document in ViewBag.ComplaintDocuments)
-                                {
-                                    <a href="@Url.Content("~/UploadedFiles/"+document.File_Name)" target="_blank"> @document.File_Name </a>
-                                    <a href="@Url.Content("~/ComplaintDocument/DownloadFile/"+document.Id)" > Download </a>
-                                    <a class="bg-gray-500 cursor-pointer rounded p-1 mx-1 text-red-500" href="@Url.Content("~/ComplaintDocument/Delete/" + document.Id)">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                }
-                            </label>
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Problem Detected On :</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ProblemDetectedOn</span>
                         </div>
 
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Action Due Date:</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ActionDueDate</span>
+                        </div>
 
-                        
                     </div>
 
-                    <div class="row mt-3">
-                        <div class="md:flex md:items-right">
-                            <div class="md:w-2/6">
-                                @*<a class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded text-decoration-none mr-2" href="@Url.Content("~/Employee/Edit/"+ViewBag.Employee.Id)">
-                        Edit
-                    </a>*@
-                                <a class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-decoration-none " href="@Url.Content("~/Complaint/List")">
-                                    Cancel
-                                </a>
+                    <div class="row p-1">
+
+
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">action Taken On :</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ActionTakenOn</span>
+                        </div>
+
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Action Taken:</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ActionsTaken</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row p-1">
+
+
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">Responsible Dept Remarks :</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.ResponsibleDeptRemarks</span>
+                        </div>
+
+                        <div class="col-6  ">
+                            <label style=" font-size:16px; font-weight:bold">QA Remarks:</label>
+                            <span style=" font-size:14px; padding:2px;">@Complaint.QARemarks</span>
+                        </div>
+
+                    </div>
+
+
+                    <div id="documentBlock">
+
+                        <div class="row p-1 border-top">
+
+                            <form id="UploadFile" method="post" action="@Url.Content("~/ComplaintDocument/UploadFile") " enctype="multipart/form-data">
+                                <input type="file" id="myFile" name="myFile">
+                                <input type="hidden" name="ComplaintId" value="@Complaint.Id" />
+                                <input type="button" onclick="UploadFile()" value="Upload" class="bg-success p-1 text-white rounded-3">
+                            </form>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label class="inline">
+                                    Documents
+                                </label>
                             </div>
+                            <div class="col-md-4">
+                                <label class="inline">
+                                    @foreach (var document in ViewBag.ComplaintDocuments)
+                                    {
+                                        <a href="@Url.Content("~/UploadedFiles/"+document.File_Name)" target="_blank"> @document.File_Name </a>
+                                        <a href="@Url.Content("~/ComplaintDocument/DownloadFile/"+document.Id)"> Download </a>
+                                        <a class="bg-gray-500 cursor-pointer rounded p-1 mx-1 text-red-500" href="@Url.Content("~/ComplaintDocument/Delete/" + document.Id)">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    }
+                                </label>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 text-left px-4">
+                            <a class="btn-sm btn-success m-5 p-3 float-start" id="hide4" href="@Url.Content("~/Complaint/List")">
+                                Back
+                                @*<i class="fas fa-edit"></i>*@
+                            </a>
+                            <input type="button" value="Export To PDF" id="hide3" class="btn btn-info btn_print float-end m-5 p-3" onclick="generatePDF()" />
                         </div>
                     </div>
+
+
+
+
                 </div>
 
+
+            </div>
+            <div class="col-1 " id="hide2">
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-11 "></div>
+                </div>
             </div>
 
         </div>
-        <!--/Grid Form-->
-    </div>
-</main>
 
+        <div style="height:10px;"></div>
+        @*<input type="button" value="Print" id="hide3" class="btn btn-info btn_print" onclick="generatePDF()" />*@
+
+        @*<a href="@Url.Action("ExportPDF", "Appraisal", new RouteValueDictionary(new { id = ViewBag.Appraisal.Id})) ">Export PDF</a>*@
+
+    </div>
+    <script src="~/BootStrap/jquery-3.2.1.min.js"></script>
+    <script src="~/BootStrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#txtAreaProblemDescription').html($('#txtAreaProblemDescription').text().replace(/\n\r?/g, '<br/>'));
+            $('#txtAreaProblemArea').html($('#txtAreaProblemArea').text().replace(/\n\r?/g, '<br/>'));
+            $('#txtAreaProblemReason').html($('#txtAreaProblemReason').text().replace(/\n\r?/g, '<br/>'));
+
+
+        })
+        function generatePDF() {
+            //const element = document.getElementById("container_content");
+            //html2pdf()
+            //    .from(element)
+            //    .save();
+
+            const element0 = document.getElementById("hide0");
+            const element1 = document.getElementById("hide1");
+            const element2 = document.getElementById("hide2");
+            const element3 = document.getElementById("hide3");
+            const element4 = document.getElementById("hide4");
+            const element5 = document.getElementById("LayoutHeader");
+            const element6 = document.getElementById("LayoutFooter");
+            const element7 = document.getElementById("documentBlock");
+            
+
+
+            element0.style.display = 'none';
+            element1.style.display = 'none';
+            element2.style.display = 'none';
+            element3.style.display = 'none';
+            element4.style.display = 'none';
+            element5.style.display = 'none';
+            element6.style.display = 'none';
+            element7.style.display = 'none';
+            $('#changeCol').removeClass('col-8').addClass('col-12');
+            $('#container').removeClass('border')
+            window.print();
+            element0.style.display = 'block';
+            element1.style.display = 'block';
+            element2.style.display = 'block';
+            element3.style.display = 'block';
+            element4.style.display = 'block';
+            element5.style.display = 'block';
+            element6.style.display = 'block';
+            element7.style.display = 'block';
+            $('#container').addClass('border')
+            $('#changeCol').addClass('col-8').removeClass('col-12');
+        }
+
+
+        function UploadFile() {
+            
+            if ($('#myFile').val() != "") {
+                $('#UploadFile').submit();
+            } else {
+                alert('Please select a file to upload');
+            }
+        }
+    </script>
+</body>
+</html>
 
 

@@ -114,10 +114,11 @@ namespace QMS.Controllers
             int employeeId = (int)Session["employeeId"];
 
             var Departments = _repoDepartment.GetDepartmentList();
-            string[] existingcomplaintFaultIds = complaintById.ExistingComplaintFaultIds.Split(',').Select(x=>x.Trim()).ToArray();
+
+            string[] existingcomplaintFaultIds = complaintById.ExistingComplaintFaultIds != null ? complaintById.ExistingComplaintFaultIds.Split(',').Select(x=>x.Trim()).ToArray() : null;
             string[] complaintFaultIds = complaintById.NewComplaintFaultIds;
-            var removeableComplaintDefects = existingcomplaintFaultIds.Except(complaintFaultIds).ToArray();
-            var addableComplaintDefects = complaintFaultIds.Except(existingcomplaintFaultIds).ToArray();
+            var removeableComplaintDefects = existingcomplaintFaultIds !=null ? existingcomplaintFaultIds.Except(complaintFaultIds).ToArray() : null;
+            var addableComplaintDefects = complaintFaultIds !=null ? complaintFaultIds.Except(existingcomplaintFaultIds).ToArray() : null;
           
 
             Complaint complaint = new Complaint();
@@ -165,37 +166,47 @@ namespace QMS.Controllers
                 //var MaintTypes = _repoComplaintMainType.GetComplaintMainTypeList();
                 //var SubTypes = _repoComplaintSubType.GetComplaintSubTypeList();
                 var Faults = _repoFaultType.GetFaultTypeList();
-                List<ComplaintDefect> defects = new List<ComplaintDefect>();
-                foreach (string complaintFaultId in addableComplaintDefects)
+                if (addableComplaintDefects != null)
                 {
-                    ComplaintDefect defect = new ComplaintDefect();
-                    defect.ComplaintMainType_Id = complaint.ComplaintMainType_Id;
-                    defect.ComplaintSubType_Id = complaint.ComplaintSubType_Id;
-                    defect.ComplaintFault_Id = Int32.Parse(complaintFaultId);
-                    defect.Complaint_Id = complaint.Id;
-                    defect.ComplaintMainType = complaint.ComplaintMainType;
-                    defect.ComplaintSubType = complaint.ComplaintSubType;
-                    defect.ComplaintFault = Faults.Where(x => x.Id.Equals(defect.ComplaintFault_Id)).FirstOrDefault().Fault;
-                    defect.CreatedOn = DateTime.Now;
-                    defect.CreatedBy = complaint.CreatedBy;
-                    defect.UpdatedOn = DateTime.Now;
-                    defect.UpdatedBy = complaint.CreatedBy;
-                    defects.Add(defect);
-                }
-                _repoComplaint.AddComplaintDefects(defects);
 
-                List<ComplaintDefect> removeableDefects = new List<ComplaintDefect>();
-                foreach (string complaintFaultId in removeableComplaintDefects)
+                
+                    List<ComplaintDefect> defects = new List<ComplaintDefect>();
+                
+                
+                    foreach (string complaintFaultId in addableComplaintDefects)
+                    {
+                        ComplaintDefect defect = new ComplaintDefect();
+                        defect.ComplaintMainType_Id = complaint.ComplaintMainType_Id;
+                        defect.ComplaintSubType_Id = complaint.ComplaintSubType_Id;
+                        defect.ComplaintFault_Id = Int32.Parse(complaintFaultId);
+                        defect.Complaint_Id = complaint.Id;
+                        defect.ComplaintMainType = complaint.ComplaintMainType;
+                        defect.ComplaintSubType = complaint.ComplaintSubType;
+                        defect.ComplaintFault = Faults.Where(x => x.Id.Equals(defect.ComplaintFault_Id)).FirstOrDefault().Fault;
+                        defect.CreatedOn = DateTime.Now;
+                        defect.CreatedBy = complaint.CreatedBy;
+                        defect.UpdatedOn = DateTime.Now;
+                        defect.UpdatedBy = complaint.CreatedBy;
+                        defects.Add(defect);
+                    }
+                    _repoComplaint.AddComplaintDefects(defects);
+                }
+
+                if (removeableComplaintDefects != null)
                 {
-                    ComplaintDefect defect = new ComplaintDefect();
-                    defect.ComplaintMainType_Id = complaint.ComplaintMainType_Id;
-                    defect.ComplaintSubType_Id = complaint.ComplaintSubType_Id;
-                    defect.ComplaintFault_Id = Int32.Parse(complaintFaultId);
-                    defect.Complaint_Id = complaint.Id;
+                    List<ComplaintDefect> removeableDefects = new List<ComplaintDefect>();
+                    foreach (string complaintFaultId in removeableComplaintDefects)
+                    {
+                        ComplaintDefect defect = new ComplaintDefect();
+                        defect.ComplaintMainType_Id = complaint.ComplaintMainType_Id;
+                        defect.ComplaintSubType_Id = complaint.ComplaintSubType_Id;
+                        defect.ComplaintFault_Id = Int32.Parse(complaintFaultId);
+                        defect.Complaint_Id = complaint.Id;
 
-                    removeableDefects.Add(defect);
+                        removeableDefects.Add(defect);
+                    }
+                    _repoComplaint.RemoveComplaintDefects(removeableDefects);
                 }
-                _repoComplaint.RemoveComplaintDefects(removeableDefects);
                 return RedirectToAction("List", "Complaint", new { });
             }
             else

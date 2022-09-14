@@ -84,21 +84,21 @@
                                     Nature of Complaint
                                 </label>
 
-                                <input class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureQMS" value="QMS" @(ViewBag.Complaint.ComplaintNature == "QMS" ? "checked" : "")>
+                                <input disabled class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureQMS" value="QMS" @(ViewBag.Complaint.ComplaintNature == "QMS" ? "checked" : "")>
                                 <label class="form-check-label mr-6" for="ComplaintNatureQMS">
                                     QMS
                                 </label>
 
-                                <input class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureOHS" value="OHS" @(ViewBag.Complaint.ComplaintNature == "OHS" ? "checked" : "")>
+                                <input disabled class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureOHS" value="OHS" @(ViewBag.Complaint.ComplaintNature == "OHS" ? "checked" : "")>
                                 <label class="form-check-label mr-6" for="ComplaintNatureOHS">
                                     OHS
                                 </label>
 
-                                <input class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureEMS" value="EMS" @(ViewBag.Complaint.ComplaintNature == "EMS" ? "checked" : "")>
+                                <input disabled class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureEMS" value="EMS" @(ViewBag.Complaint.ComplaintNature == "EMS" ? "checked" : "")>
                                 <label class="form-check-label" for="ComplaintNatureEMS">
                                     EMS
                                 </label>
-
+                                <input type="hidden"  name="ComplaintNature"  value="@ViewBag.Complaint.ComplaintNature">
                             </div>
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
@@ -106,17 +106,17 @@
                                     Complaint Type
                                 </label>
 
-                                <input class="form-check-input" type="radio" name="ComplaintType" id="ComplaintTypeInternal" value="Internal" @(ViewBag.Complaint.ComplaintType == "Internal" ? "checked" : "")>
+                                <input disabled class="form-check-input" type="radio" name="ComplaintType" id="ComplaintTypeInternal" value="Internal" @(ViewBag.Complaint.ComplaintType == "Internal" ? "checked" : "")>
                                 <label class="form-check-label mr-6" for="ComplaintTypeInternal">
                                     Internal
                                 </label>
 
-                                <input class="form-check-input" type="radio" name="ComplaintType" id="ComplaintTypeExternal" value="External" @(ViewBag.Complaint.ComplaintType == "External" ? "checked" : "")>
+                                <input disabled class="form-check-input" type="radio" name="ComplaintType" id="ComplaintTypeExternal" value="External" @(ViewBag.Complaint.ComplaintType == "External" ? "checked" : "")>
                                 <label class="form-check-label mr-6" for="ComplaintTypeExternal">
                                     External
                                 </label>
 
-
+                                <input type="hidden" name="ComplaintType" value="@ViewBag.Complaint.ComplaintType">
                             </div>
                         </div>
 
@@ -203,22 +203,22 @@
                         <div class="flex flex-wrap -mx-3 mb-6">
 
 
-                            <div class="w-full md:w-1/2 px-3">
+                            <div class="w-full md:w-2/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ProblemDescription">
                                     Problem Description
                                 </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="ProblemDescription" name="ProblemDescription" type="text" value="@ViewBag.Complaint.ProblemDescription">
+                               
+                                <textarea rows="3" class="form-control" id="ProblemDescription" name="ProblemDescription" value="@ViewBag.Complaint.ProblemDescription">@ViewBag.Complaint.ProblemDescription</textarea>
                             </div>
 
-                            <div class="w-full md:w-1/2 px-3">
+                            <div class="w-full md:w-2/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ProblemArea">
                                     Problem Area
                                 </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="ProblemArea" name="ProblemArea" type="text" value="@ViewBag.Complaint.ProblemArea">
+                              
+                                <textarea rows="3" class="form-control" id="ProblemArea" name="ProblemArea" value="@ViewBag.Complaint.ProblemArea">@ViewBag.Complaint.ProblemArea</textarea>
                             </div>
 
                         </div>
@@ -227,14 +227,20 @@
                         <div class="flex flex-wrap -mx-3 mb-6">
 
 
-                            <div class="w-full md:w-1/2 px-3">
+                            <div class="w-full md:w-2/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ProblemReason">
                                     Problem Reason
                                 </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="ProblemReason" name="ProblemReason" type="text" value="@ViewBag.Complaint.ProblemReason">
+                                
+                                <textarea rows="3" class="form-control" id="ProblemReason" name="ProblemReason" value="@ViewBag.Complaint.ProblemReason">@ViewBag.Complaint.ProblemReason</textarea>
                             </div>
+
+                           
+
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
 
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
@@ -245,11 +251,6 @@
                                        id="ResponsiblePersonName" name="ResponsiblePersonName" type="text" value="@ViewBag.Complaint.ResponsiblePersonName">
                             </div>
 
-                        </div>
-
-                        <div class="flex flex-wrap -mx-3 mb-6">
-
-
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ProblemDetectedOn">
@@ -259,7 +260,7 @@
                                        id="ProblemDetectedOn" name="ProblemDetectedOn" type="text" value="@(ViewBag.Complaint.ProblemDetectedOn !=null?((Convert.ToDateTime(ViewBag.Complaint.ProblemDetectedOn)).ToShortDateString()):"")">
                             </div>
 
-                          
+
 
                         </div>
 

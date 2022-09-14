@@ -51,7 +51,7 @@
                                     Nature of Complaint
                                 </label>
 
-                                <input class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureQMS" value="QMS">
+                                <input class="form-check-input" type="radio" name="ComplaintNature" id="ComplaintNatureQMS" value="QMS" checked>
                                 <label class="form-check-label mr-6" for="ComplaintNatureQMS">
                                     QMS
                                 </label>
@@ -73,12 +73,12 @@
                                     Complaint Type
                                 </label>
 
-                                <input class="form-check-input complaintType" type="radio" name="ComplaintType" id="ComplaintTypeInternal" value="Internal">
+                                <input class="form-check-input complaintType" type="radio" name="ComplaintType" id="ComplaintTypeInternal" value="Internal" checked>
                                 <label class="form-check-label mr-6" for="ComplaintTypeInternal">
                                     Internal
                                 </label>
 
-                                <input class="form-check-input complaintType" type="radio" name="ComplaintType" id="ComplaintTypeExternal" value="External">
+                                <input class="form-check-input complaintType" type="radio" name="ComplaintType" id="ComplaintTypeExternal" value="External" >
                                 <label class="form-check-label mr-6" for="ComplaintTypeExternal">
                                     External
                                 </label>
@@ -198,22 +198,26 @@
                         <div class="flex flex-wrap -mx-3 mb-6">
 
 
-                            <div class="w-full md:w-1/2 px-3">
+                            <div class="w-full md:w-2/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ProblemDescription">
                                     Problem Description
                                 </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="ProblemDescription" name="ProblemDescription" type="text" placeholder="Enter Problem Description" autocomplete="off">
+                                @*<input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+        id="ProblemDescription" name="ProblemDescription" type="text" placeholder="Enter Problem Description" autocomplete="off">*@
+                                <textarea rows="3" class="form-control" id="ProblemDescription" name="ProblemDescription"></textarea>
+                                
                             </div>
 
-                            <div class="w-full md:w-1/2 px-3">
+                            <div class="w-full md:w-2/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ProblemArea">
                                     Problem Area
                                 </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="ProblemArea" name="ProblemArea" type="text" placeholder="Enter Problem Area" autocomplete="off">
+                                @*<input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ProblemArea" name="ProblemArea" type="text" placeholder="Enter Problem Area" autocomplete="off">*@
+
+                                <textarea rows="3" class="form-control" id="ProblemArea" name="ProblemArea"></textarea>
                             </div>
 
                         </div>
@@ -222,14 +226,22 @@
                         <div class="flex flex-wrap -mx-3 mb-6">
 
 
-                            <div class="w-full md:w-1/2 px-3">
+                            <div class="w-full md:w-2/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ProblemReason">
                                     Problem Reason
                                 </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="ProblemReason" name="ProblemReason" type="text" placeholder="Enter Problem Reason" autocomplete="off">
+                                @*<input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ProblemReason" name="ProblemReason" type="text" placeholder="Enter Problem Reason" autocomplete="off">*@
+
+                                <textarea rows="3" class="form-control" id="ProblemReason" name="ProblemReason"></textarea>
                             </div>
+
+
+                        </div>
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
 
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
@@ -240,19 +252,13 @@
                                        id="ResponsiblePersonName" name="ResponsiblePersonName" type="text" placeholder="" autocomplete="off">
                             </div>
 
-                        </div>
-
-
-                        <div class="flex flex-wrap -mx-3 mb-6">
-
-
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ProblemDetectedOn">
                                     Problem Detected On
                                 </label>
-                                <input class="dateFormate appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="ProblemDetectedOn" name="ProblemDetectedOn" type="text">
+                                <input class="dateFormate appearance-none  block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="ProblemDetectedOn" name="ProblemDetectedOn" type="text" autocomplete="off">
                             </div>
 
 
@@ -330,6 +336,10 @@
 
         $('#ResponsibleDept_Id').change(function () {
         //alert($(this).val());
+            $('#subType').addClass('hide');
+            $('#faultType').addClass('hide');
+            $('#ComplaintSubType_Id').addClass('hide').html("");
+            $('#ComplaintFaultIds').addClass('hide').html("");
          var DepartmentId = $(this).val();
         var Url = '@Url.Content("~/ComplaintMainType/ComplaintMainTypeListByDepartment/")' + DepartmentId;
         //alert(Url);
@@ -376,6 +386,7 @@
                 var result = response;
                 if ($(result).filter('#optionVal').val() != '0') {
                     $('#subType').removeClass('hide');
+                    $('#ComplaintSubType_Id').removeClass('hide');
                 }
                 else {
                     $('#subType').addClass('hide');
@@ -420,6 +431,7 @@
                 var result = response;
                 if ($(result).filter('#optionVal').val() != '0') {
                     $('#faultType').removeClass('hide');
+                    $('#ComplaintFaultIds').removeClass('hide');
                 }
                 else {
                     $('#faultType').addClass('hide');
@@ -488,9 +500,7 @@
                     
                     $('#IssuerDepartment').replaceWith(response);
                     $('#IssuerDepartment').removeClass('hide');
-                    $('#Reponsible_DeptDiv').addClass('hide');
-                    $('#Customer_NameDiv').removeClass('hide');
-                    $('#ResponsibleDept_Id').val('17');
+               
 
                 },
                 error: function () {
@@ -498,6 +508,14 @@
                 }
 
             });
+
+            $('#Reponsible_DeptDiv').addClass('hide');
+            $('#subType').addClass('hide');
+            $('#faultType').addClass('hide');
+            $('#ComplaintSubType_Id').addClass('hide').html("");
+            $('#ComplaintFaultIds').addClass('hide').html("");
+            $('#Customer_NameDiv').removeClass('hide');
+            $('#ResponsibleDept_Id').val('17');
 
             var Url = '@Url.Content("~/ComplaintMainType/ComplaintMainTypeListByDepartment/17")';
         //alert(Url);
@@ -521,9 +539,13 @@
             $('#Reponsible_DeptDiv').removeClass('hide');
             $('#Customer_NameDiv').addClass('hide');
             $('#ResponsibleDept_Id').val('0');
+            $('#ComplaintMainType_Id').html('<select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600" id="ComplaintMainType_Id" name="ComplaintMainType_Id"><option value="">Select Complaint Main Type</option></select>')
+            $('#CustomerName').val("");
+           
+
         }
     })
 
-    GetDepartmentsByComplaintType
+    
 
 </script>

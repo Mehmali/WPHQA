@@ -1144,12 +1144,13 @@
     <Content Include="Views\Complaint\Index.cshtml" />
     <Content Include="Views\Complaint\List.cshtml" />
     <Content Include="Views\Shared\PartialComplaintSubTypesByMainType.cshtml" />
-    <Content Include="Views\Complaint\ViewDetail.cshtml" />
+    <Content Include="Views\Complaint\ViewDetailOriginal.cshtml" />
     <Content Include="Views\Shared\PartialFaultTypesBySubType.cshtml" />
     <Content Include="Views\FaultType\Add.cshtml" />
     <Content Include="Views\FaultType\Edit.cshtml" />
     <Content Include="Views\FaultType\List.cshtml" />
     <Content Include="Views\Shared\PartialDepartmentsByComplaintType.cshtml" />
+    <Content Include="Views\Complaint\ViewDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
