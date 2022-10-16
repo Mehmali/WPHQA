@@ -41,11 +41,12 @@ namespace QMS.Controllers
                 var loggedInUser = _repoUser.GetSystemUser(user);
                 var permissions = _repoUser.GetPermissions((Int32)loggedInUser.Role_Id).ToList();
                 Session["user"] = loggedInUser;
+                Session["Role_Id"] = loggedInUser.Role_Id;
                 Session["employeeId"] = loggedInUser.Employee_Id;
                 Session["permissions"] = permissions;
                 Session["subModules"] = _repoModule.GetSubModulesList();
                
-                return RedirectToAction("List", "Complaint", new { });
+                return RedirectToAction("ComplaintReceivedList", "Complaint", new { });
             }
             else
             {

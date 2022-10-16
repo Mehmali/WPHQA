@@ -1,0 +1,122 @@
+﻿
+
+@{
+    /**/
+
+    
+
+    var Complaint = (QMS.Models.ComplaintById)ViewBag.Complaint;
+    string[] complaintFaultIds;
+    complaintFaultIds = string.IsNullOrEmpty(Complaint.ComplaintFaultIds) ? new string[0] : Complaint.ComplaintFaultIds.Split(',');
+
+    // var Departments = (List<QMS.Data.Department>)(ViewBag.Departments);
+
+    // var Employee = (QMS.Data.Employee)(ViewBag.Employee);
+
+
+
+}
+
+
+<div class="flex flex-wrap -mx-3 mb-6">
+
+    <div id="subType" class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="ComplaintSubType_Id">
+            Complaint Sub Type
+        </label>
+        <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                id="ComplaintSubType_Id" name="ComplaintSubType_Id">
+            <option value="@ViewBag.Complaint.ComplaintSubType_Id">@ViewBag.Complaint.ComplaintSubType</option>
+
+        </select>
+        <input type="hidden" id="ComplaintSubType" name="ComplaintSubType" value="@ViewBag.Complaint.ComplaintSubType" />
+    </div>
+
+    <div id="faultType" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="NewComplaintFaultIds">
+            Complaint Faults
+        </label>
+        <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded  leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                id="NewComplaintFaultIds" name="NewComplaintFaultIds" multiple size="3">
+            <option value="">Select Faults</option>
+            @foreach (var complaintFault in ViewBag.ComplaintFaults)
+            {
+                bool isSelected = complaintFaultIds.Any(c => Convert.ToInt32(c) == complaintFault.Id);
+                <option value="@complaintFault.Id" @(isSelected ? "selected" : "")>@complaintFault.Fault</option>
+            }
+
+        </select>
+
+    </div>
+
+</div>
+
+<div class="flex flex-wrap -mx-3 mb-6">
+
+
+    <div class="w-full md:w-2/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="ProblemDescription">
+            Problem Description
+        </label>
+
+        <textarea rows="3" class="form-control" id="ProblemDescription" name="ProblemDescription" value="@ViewBag.Complaint.ProblemDescription">@ViewBag.Complaint.ProblemDescription</textarea>
+    </div>
+</div>
+
+<div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-2/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="ProblemArea">
+            Problem Area
+        </label>
+
+        <textarea rows="3" class="form-control" id="ProblemArea" name="ProblemArea" value="@ViewBag.Complaint.ProblemArea">@ViewBag.Complaint.ProblemArea</textarea>
+    </div>
+
+</div>
+
+
+<div class="flex flex-wrap -mx-3 mb-6">
+
+
+    <div class="w-full md:w-2/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="ProblemReason">
+            Problem Reason
+        </label>
+
+        <textarea rows="3" class="form-control" id="ProblemReason" name="ProblemReason" value="@ViewBag.Complaint.ProblemReason">@ViewBag.Complaint.ProblemReason</textarea>
+    </div>
+
+
+
+</div>
+
+<div class="flex flex-wrap -mx-3 mb-6">
+
+    <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="ResponsiblePersonName">
+            Responsible Person Name
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+               id="ResponsiblePersonName" name="ResponsiblePersonName" type="text" value="@ViewBag.Complaint.ResponsiblePersonName">
+    </div>
+
+    <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="ProblemDetectedOn">
+            Problem Detected On
+        </label>
+        <input class="dateFormate appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+               id="ProblemDetectedOn" name="ProblemDetectedOn" type="text" value="@(ViewBag.Complaint.ProblemDetectedOn !=null?((Convert.ToDateTime(ViewBag.Complaint.ProblemDetectedOn)).ToShortDateString()):"")">
+    </div>
+
+
+
+</div>
+
+

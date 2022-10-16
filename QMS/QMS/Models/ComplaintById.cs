@@ -84,6 +84,8 @@ namespace QMS.Models
 
         public string[] NewComplaintFaultIds { get; set; }
 
+      
+
         [NotMapped]
         public string ExistingComplaintFaultIds { get; set; }
 

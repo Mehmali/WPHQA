@@ -1,15 +1,16 @@
 ﻿
 @{
     Layout = null;
-    var user = Session["user"] != null ? (HRMS.Data.SystemUser)Session["user"] : new HRMS.Data.SystemUser();
-    var permissions = Session["permissions"] != null ? (List<HRMS.Data.UserPermission>)Session["permissions"] : new List<HRMS.Data.UserPermission>();
-    var userRole = user.UserRoles.FirstOrDefault().Role_Id;
+    var user = Session["user"] != null ? (QMS.Data.SystemUser)Session["user"] : new QMS.Data.SystemUser();
+    var permissions = Session["permissions"] != null ? (List<QMS.Data.UserPermission>)Session["permissions"] : new List<QMS.Data.UserPermission>();
+    var userRole = user.Role_Id;
 
-    var subModules = Session["subModules"] != null ? (List<HRMS.Data.SubModule>)Session["subModules"] : new List<HRMS.Data.SubModule>();
+    var subModules = Session["subModules"] != null ? (List<QMS.Data.SubModule>)Session["subModules"] : new List<QMS.Data.SubModule>();
     var SecurityMenu = new List<String>();
     var DefinitionMenu = new List<String>();
-    var AppraisalMenu = new List<String>();
+    var ComplaintMenu = new List<String>();
     var ReportMenu = new List<String>();
+    var QualityAssuranceMenu = new List<String>();
 }
 
 @*<!DOCTYPE html>
@@ -17,7 +18,7 @@
     <html>
     <head>
         <meta name="viewport" content="width=device-width" />
-        <title>HRMS</title>
+        <title>QMS</title>
     </head>
     <body>
         <div>
@@ -50,7 +51,7 @@
         <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.structure.css" rel="stylesheet" />
         <link href="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.theme.css" rel="stylesheet" />*@
 
-    <title>HRMS</title>
+    <title>QMS</title>
 
     <style>
 
@@ -139,99 +140,37 @@
                     <div class="p-1 mx-3 inline-flex items-center">
 
 
-                        <h1 class="text-center font-bold font-serif  text-white text-3xl mt-2  px-10">Objectives & Results</h1>
+                        <h1 class="text-center font-bold font-serif  text-white text-3xl mt-2  px-10">Quality Management System</h1>
                     </div>
                     <div class="p-1 flex flex-row items-center">
                         @*<img onclick="profileToggle()" class="inline-block h-8 w-8 rounded-full" src="https://avatars0.githubusercontent.com/u/4323180?s=460&v=4" alt="">*@
                         <div>
-                            <div @*href="#"*@ @*onclick="profileToggle()"*@ class="text-white p-2 no-underline hidden md:block lg:block">@(user.Employee.FirstName + " " + user.Employee.LastName)</div>
+                            <div @*href="#"*@ @*onclick="profileToggle()"*@ class="text-white p-2 no-underline hidden md:block lg:block">@(user.Login_Id)</div>
                         </div>
                         <div class="m-1 hover:bg-blue-600 border border-white">
                             <a href="@Url.Content("~/User/Logout")" class=" text-white p-3 no-underline text-sm">Sign Out</a>
                         </div>
                         @*<div class="m-1 hover:bg-blue-600 border border-white">
-                            <a href="@Url.Content("~/User/ChangePassword")" class=" text-white p-3 no-underline text-sm">Change Password</a>
-                        </div>*@
+                                <a href="@Url.Content("~/User/ChangePassword")" class=" text-white p-3 no-underline text-sm">Change Password</a>
+                            </div>*@
                     </div>
 
                 </div>
             </header>
 
             <!--/Header-->
-            <div class="flex flex-1 side-bar ">
+            <div id="renderBody" class="flex flex-1 side-bar ">
                 <!--Sidebar-->
-                <aside id="sidebar" class=" bg-side-nav w-1/2 md:w-1/6 lg:w-1/6 border-r border-side-nav hidden md:block lg:block">
-                    <ul class="list-reset flex flex-col" style="margin-left:-20px">
+                <aside id="sidebar" class=" bg-side-nav w-1/2 md:w-1/6 lg:w-1/6 border-r border-side-nav hidden md:block lg:block" style="background-color:lavender !important">
+                    <ul id="layoutUL" class="list-reset flex flex-col" style="margin-left:-20px">
                         <li class=" w-full h-full py-3  border-b border-light-border hover:bg-white">
-                            <a href="@Url.Content("~/Appraisal/Index")"
-                               class="font-sans font-hairline  hover:font-normal text-sm text-nav-item no-underline px-4 py-3">
+                            <a href="@Url.Content("~/Complaint/ComplaintReceivedList")"
+                               class="font-sans font-hairline hover:font-normal  text-sm text-nav-item no-underline px-4 py-3">
                                 <i class="fas fa-tachometer-alt float-left "></i>
                                 Dashboard
                                 @*<span><i class="fas fa-angle-down float-right"></i></span>*@
                             </a>
                         </li>
-
-
-                        @*<li class=" w-full h-full py-3  border-b border-light-border hover:bg-white">
-            <a href="@Url.Content("~/Appraisal/Main")"
-               class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline px-4 py-3">
-                <i class="fas fa-tachometer-alt float-left "></i>
-                Appraisal Main
-                <span><i class="fas fa-angle-right float-right"></i></span>
-            </a>
-        </li>*@
-
-
-
-                        @*<li class=" w-full h-full py-3  border-b border-light-border hover:bg-white ">
-            <a href="#AppraisalUL" data-toggle="collapse" id="ultogglerAppraisal"
-               class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline px-4 py-3">
-                <i class="fas fa-bars float-left"></i>
-                Appraisals
-                <span><i class="fas fa-angle-right float-right"></i></span>
-            </a>
-            <ul id="AppraisalUL" class="list-reset flex flex-col hide MenuCollapse">
-
-                <li class="w-full h-full py-2 border-b border-light-border  bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
-                    <a href="@Url.Content("~/Appraisal/List1")"
-                       class="font-sans font-hairline hover:font-normal px-4 py-2 text-sm text-nav-item no-underline text-white">
-
-                        My Appraisal
-                        <span><i class="fa fa-angle-right float-right"></i></span>
-                    </a>
-                </li>
-
-                <li class="w-full h-full py-2 border-b border-light-border  bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
-                    <a href="@Url.Content("~/Appraisal/ListAssociates1")"
-                       class="font-sans font-hairline hover:font-normal px-4 py-2 text-sm text-nav-item no-underline text-white">
-
-                        Managarial View
-                        <span><i class="fa fa-angle-right float-right"></i></span>
-                    </a>
-                </li>
-
-                <li class="w-full h-full py-2 border-b border-light-border  bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
-                    <a href="@Url.Content("~/Appraisal/ListAll1")"
-                       class="font-sans font-hairline hover:font-normal px-4 py-2 text-sm text-nav-item no-underline text-white">
-
-                        HR View
-                        <span><i class="fa fa-angle-right float-right"></i></span>
-                    </a>
-                </li>
-
-            </ul>
-        </li>*@
-
-
-
-
-
-
-
-
-
-
-
 
 
                         @foreach (var sm in subModules)
@@ -262,40 +201,40 @@
                                         DefinitionMenu.Add("Job Title");
                                         break;
 
-                                    case "Shift":
-                                        DefinitionMenu.Add("Shift");
+                                    case "ComplaintMainType":
+                                        DefinitionMenu.Add("Compl. Main Type");
                                         break;
 
-                                    case "Site":
-                                        DefinitionMenu.Add("Site");
+                                    case "ComplaintSubType":
+                                        DefinitionMenu.Add("Compl. Sub Type");
                                         break;
 
-                                    case "Benefit":
-                                        DefinitionMenu.Add("Benefit");
+                                    case "FaultType":
+                                        DefinitionMenu.Add("Fault Type");
                                         break;
 
-                                    case "Employee Benefit":
-                                        DefinitionMenu.Add("Employee Benefit");
+                                    case "Complaint":
+                                        ComplaintMenu.Add("Complaints");
                                         break;
 
-                                    case "My Appraisal":
-                                        AppraisalMenu.Add("My Objectives");
+                                    case "ComplaintsReceived":
+                                        ComplaintMenu.Add("Complaints Received");
                                         break;
 
-                                    case "Managarial View":
-                                        AppraisalMenu.Add("Supervisory Review");
+                                    case "ComplaintsIssued":
+                                        ComplaintMenu.Add("Complaints Issued");
                                         break;
 
-                                    case "Next Level View":
-                                        AppraisalMenu.Add("Next Level Review");
-                                        break;
-
-                                    case "HR View":
-                                        AppraisalMenu.Add("HR Review");
+                                    case "ExternalComplaint":
+                                        ComplaintMenu.Add("External Complaints");
                                         break;
 
                                     case "Report":
                                         ReportMenu.Add("Reports");
+                                        break;
+
+                                    case "QualityAssurance":
+                                        QualityAssuranceMenu.Add("Quality Assurance");
                                         break;
 
 
@@ -307,13 +246,6 @@
                                         SecurityMenu.Add("System User");
                                         break;
 
-                                    case "UserRole":
-                                        SecurityMenu.Add("User Role");
-                                        break;
-
-                                    case "UserLoginActivity":
-                                        SecurityMenu.Add("User Login Activity");
-                                        break;
 
                                     case "UserPermission":
                                         SecurityMenu.Add("User Permission");
@@ -350,72 +282,87 @@
 
                         }
 
-                        @if (AppraisalMenu.Count > 0)
+                        @if (ComplaintMenu.Count > 0)
                         {
                             <li class=" w-full h-full py-3  border-b border-light-border hover:bg-white ">
-                                <a href="#AppraisalSection" data-toggle="collapse" id="ultogglerAppraisal"
+                                <a href="#ComplaintSection" data-toggle="collapse" id="ultogglerComplaint"
                                    class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline px-4 py-3">
                                     <i class="fas fa-bars float-left mr-1"></i>
-                                    Objectives
+                                    Complaints
                                     <span><i class="fas fa-angle-down float-right"></i></span>
                                 </a>
-                                <ul id="AppraisalSection" class="list-reset flex flex-col hide MenuCollapse">
-                                    @foreach (var appraisalItem in AppraisalMenu)
+                                <ul id="ComplaintSection" class="list-reset flex flex-col hide MenuCollapse">
+                                    @foreach (var complaintItem in ComplaintMenu)
                                     {
-                                        if (appraisalItem == "My Objectives")
+                                        if (complaintItem == "Complaints Received")
                                         {
                                             <li class="w-full h-full py-2 border-b border-light-border  bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
-                                                <a href="@Url.Content("~/Appraisal/List")"
-                                                   class="font-sans font-hairline hover:font-normal px-3 py-2 text-sm text-nav-item no-underline text-white">
+                                                <a href="@Url.Content("~/Complaint/ComplaintReceivedList")"
+                                                   class="font-sans font-hairline hover:font-normal px-1 py-2  text-sm text-nav-item no-underline text-white">
 
-                                                    @appraisalItem
+                                                    @complaintItem
                                                     @*<span><i class="fa fa-angle-right float-right"></i></span>*@
                                                 </a>
                                             </li>}
-                                        if (appraisalItem == "Supervisory Review")
+                                        if (complaintItem == "Complaints Issued")
                                         {
                                             <li class="w-full h-full py-2 border-b border-light-border  bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
-                                                <a href="@Url.Content("~/Appraisal/ListAssociates")"
-                                                   class="font-sans font-hairline hover:font-normal px-3 py-2 text-xs text-nav-item no-underline text-white">
+                                                <a href="@Url.Content("~/Complaint/ComplaintIssuedList")"
+                                                   class="font-sans font-hairline hover:font-normal px-1 py-2  text-sm text-nav-item no-underline text-white">
 
-                                                    @appraisalItem
+                                                    @complaintItem
                                                     @*<span><i class="fa fa-angle-right float-right"></i></span>*@
                                                 </a>
                                             </li>}
-                                        if (appraisalItem == "Next Level Review")
+                                        if (complaintItem == "External Complaints")
                                         {
                                             <li class="w-full h-full py-2 border-b border-light-border  bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
+                                                <a href="@Url.Content("~/Complaint/ExternalComplaintsList")"
+                                                   class="font-sans font-hairline hover:font-normal  px-1 py-2 text-sm text-nav-item no-underline text-white">
 
-                                                <a href="@Url.Content("~/Appraisal/ListNLAssociates")"
-                                                   class="font-sans font-hairline hover:font-normal px-3 py-2 text-xs text-nav-item no-underline text-white">
-
-                                                    @appraisalItem
+                                                    @complaintItem
                                                     @*<span><i class="fa fa-angle-right float-right"></i></span>*@
                                                 </a>
                                             </li>}
-                                        if (appraisalItem == "HR Review")
-                                        {
-                                            <li class="w-full h-full py-2 border-b border-light-border  bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
 
-                                                <a href="@Url.Content("~/Appraisal/ListAll")"
-                                                   class="font-sans font-hairline hover:font-normal px-3 py-2 text-sm text-nav-item no-underline text-white">
 
-                                                    @appraisalItem
-                                                    @*<span><i class="fa fa-angle-right float-right"></i></span>*@
-                                                </a>
-                                            </li>}
-                                        if (appraisalItem == "Reports")
-                                        {
-                                            <li class="w-full h-full py-2 border-b border-light-border  bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
-
-                                                <a href="@Url.Content("~/Appraisal/ListCount")"
-                                                   class="font-sans font-hairline hover:font-normal px-3 py-2 text-sm text-nav-item no-underline text-white">
-
-                                                    @appraisalItem
-                                                    @*<span><i class="fa fa-angle-right float-right"></i></span>*@
-                                                </a>
-                                            </li>}
                                     }
+                                </ul>
+                            </li>
+
+                        }
+
+                        @if (QualityAssuranceMenu.Count > 0)
+                        {
+                            <li class=" w-full h-full py-3  border-b border-light-border hover:bg-white ">
+                                <a href="#QASection" data-toggle="collapse" id="ultogglerQA"
+                                   class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline px-4 py-3">
+                                    <i class="fas fa-bars float-left mr-1"></i>
+                                    QA Review
+                                    <span><i class="fas fa-angle-down float-right"></i></span>
+                                </a>
+                                <ul id="QASection" class="list-reset flex flex-col hide MenuCollapse">
+                                   
+                                      
+                                            <li class="w-full h-full py-2 border-b border-light-border  bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
+                                                <a href="@Url.Content("~/Complaint/List")"
+                                                   class="font-sans font-hairline hover:font-normal px-1 py-2 text-sm text-nav-item no-underline text-white">
+
+                                                    All Compaints
+                                                    @*<span><i class="fa fa-angle-right float-right"></i></span>*@
+                                                </a>
+                                            </li>
+
+
+                                    
+                                    <li class="w-full h-full py-2 border-b border-light-border  bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
+                                        <a href="@Url.Content("~/Complaint/List/2")"
+                                           class="font-sans font-hairline hover:font-normal px-1 py-2 text-sm text-nav-item no-underline text-white">
+
+                                            Pending Approval
+                                            @*<span><i class="fa fa-angle-right float-right"></i></span>*@
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
 
@@ -424,16 +371,16 @@
                         @if (ReportMenu.Count > 0)
                         {
                             <li class=" w-full h-full py-3  border-b border-light-border hover:bg-white ">
-                                <a href="#SecuritySection" data-toggle="collapse" id="ultogglerSecurity"
+                                <a href="#ReportsSection" data-toggle="collapse" id="ultogglerReports"
                                    class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline px-4 py-3">
                                     <i class="fas fa-bars float-left mr-1"></i>
                                     Reports
                                     <span><i class="fas fa-angle-down float-right"></i></span>
                                 </a>
-                                <ul id="SecuritySection" class="list-reset flex flex-col hide MenuCollapse">
+                                <ul id="ReportsSection" class="list-reset flex flex-col hide MenuCollapse">
 
                                     <li class="w-full h-full py-2  border-b border-light-border bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
-                                        <a href="@Url.Content("~/Appraisal/ListStatusCount")"
+                                        <a href="@Url.Content("~/Complaint/ListStatusCount")"
                                            class="font-sans font-hairline hover:font-normal px-3 py-2 text-sm text-nav-item no-underline text-white ">
 
                                             Status Summary
@@ -441,7 +388,7 @@
                                         </a>
                                     </li>
                                     <li class="w-full h-full py-2  border-b border-light-border bg-grey-darker hover:bg-grey-darkest" style="margin-left:-15px !important">
-                                        <a href="@Url.Content("~/Appraisal/ListRatingCount")"
+                                        <a href="@Url.Content("~/Complaint/ListRatingCount")"
                                            class="font-sans font-hairline hover:font-normal px-3 py-2 text-sm text-nav-item no-underline text-white ">
 
                                             Rating Summary
@@ -489,90 +436,90 @@
 
 
                         @*@if (permissions.Any(p => p.Role_Id == userRole && p.SubModule_Id == 3))
-        {
-            <li class="w-full h-full py-3 px-2 border-b border-light-border">
-                <a href="@Url.Content("~/JobTitle/List")"
-                   class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-                    <i class="fab fa-wpforms float-left mx-2"></i>
-                    Job Titles
-                    <span><i class="fa fa-angle-right float-right"></i></span>
-                </a>
-            </li>
-        }
-        @if (permissions.Any(p => p.Role_Id == userRole && p.SubModule_Id == 2))
-        {
-            <li class="w-full h-full py-3 px-2 border-b border-light-border">
-                <a href="@Url.Content("~/Department/List")"
-                   class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-                    <i class="fas fa-grip-horizontal float-left mx-2"></i>
-                    Departments
-                    <span><i class="fa fa-angle-right float-right"></i></span>
-                </a>
-            </li>
-        }
-        @if (permissions.Any(p => p.Role_Id == userRole && p.SubModule_Id == 4))
-        {
-            <li class="w-full h-full py-3 px-2 border-b border-light-border">
-                <a href="@Url.Content("~/Role/Index")"
-                   class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-                    <i class="fas fa-table float-left mx-2"></i>
-                    Roles
-                    <span><i class="fa fa-angle-right float-right"></i></span>
-                </a>
-            </li>
-        }
-        @if (permissions.Any(p => p.Role_Id == userRole && p.SubModule_Id == 5))
-        {
-            <li class="w-full h-full py-3 px-2 border-b border-light-border">
-                <a href="@Url.Content("~/Site/List")"
-                   class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-                    <i class="fab fa-uikit float-left mx-2"></i>
-                    Sites
-                    <span><i class="fa fa-angle-right float-right"></i></span>
-                </a>
-            </li>
-        }
-        @if (permissions.Any(p => p.Role_Id == userRole && p.SubModule_Id == 1))
-        {
-            <li class="w-full h-full py-3 px-2 border-b border-300-border">
-                <a href="@Url.Content("~/Employee/List")" class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-                    <i class="fas fa-square-full float-left mx-2"></i>
-                    Employees
-                    <span><i class="fa fa-angle-right float-right"></i></span>
-                </a>
-            </li>
-        }*@
+                            {
+                                <li class="w-full h-full py-3 px-2 border-b border-light-border">
+                                    <a href="@Url.Content("~/JobTitle/List")"
+                                       class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                        <i class="fab fa-wpforms float-left mx-2"></i>
+                                        Job Titles
+                                        <span><i class="fa fa-angle-right float-right"></i></span>
+                                    </a>
+                                </li>
+                            }
+                            @if (permissions.Any(p => p.Role_Id == userRole && p.SubModule_Id == 2))
+                            {
+                                <li class="w-full h-full py-3 px-2 border-b border-light-border">
+                                    <a href="@Url.Content("~/Department/List")"
+                                       class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                        <i class="fas fa-grip-horizontal float-left mx-2"></i>
+                                        Departments
+                                        <span><i class="fa fa-angle-right float-right"></i></span>
+                                    </a>
+                                </li>
+                            }
+                            @if (permissions.Any(p => p.Role_Id == userRole && p.SubModule_Id == 4))
+                            {
+                                <li class="w-full h-full py-3 px-2 border-b border-light-border">
+                                    <a href="@Url.Content("~/Role/Index")"
+                                       class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                        <i class="fas fa-table float-left mx-2"></i>
+                                        Roles
+                                        <span><i class="fa fa-angle-right float-right"></i></span>
+                                    </a>
+                                </li>
+                            }
+                            @if (permissions.Any(p => p.Role_Id == userRole && p.SubModule_Id == 5))
+                            {
+                                <li class="w-full h-full py-3 px-2 border-b border-light-border">
+                                    <a href="@Url.Content("~/Site/List")"
+                                       class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                        <i class="fab fa-uikit float-left mx-2"></i>
+                                        Sites
+                                        <span><i class="fa fa-angle-right float-right"></i></span>
+                                    </a>
+                                </li>
+                            }
+                            @if (permissions.Any(p => p.Role_Id == userRole && p.SubModule_Id == 1))
+                            {
+                                <li class="w-full h-full py-3 px-2 border-b border-300-border">
+                                    <a href="@Url.Content("~/Employee/List")" class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                        <i class="fas fa-square-full float-left mx-2"></i>
+                                        Employees
+                                        <span><i class="fa fa-angle-right float-right"></i></span>
+                                    </a>
+                                </li>
+                            }*@
                         @*<li class="w-full h-full py-3 px-2">
-            <a href="#"
-               class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-                <i class="far fa-file float-left mx-2"></i>
-                Pages
-                <span><i class="fa fa-angle-down float-right"></i></span>
-            </a>
-            <ul class="list-reset -mx-2 bg-white-medium-dark">
-                <li class="border-t mt-2 border-light-border w-full h-full px-2 py-3">
-                    <a href="login.html"
-                       class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-                        Login Page
-                        <span><i class="fa fa-angle-right float-right"></i></span>
-                    </a>
-                </li>
-                <li class="border-t border-light-border w-full h-full px-2 py-3">
-                    <a href="register.html"
-                       class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-                        Register Page
-                        <span><i class="fa fa-angle-right float-right"></i></span>
-                    </a>
-                </li>
-                <li class="border-t border-light-border w-full h-full px-2 py-3">
-                    <a href="404.html"
-                       class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-                        404 Page
-                        <span><i class="fa fa-angle-right float-right"></i></span>
-                    </a>
-                </li>
-            </ul>
-        </li>*@
+                                <a href="#"
+                                   class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                    <i class="far fa-file float-left mx-2"></i>
+                                    Pages
+                                    <span><i class="fa fa-angle-down float-right"></i></span>
+                                </a>
+                                <ul class="list-reset -mx-2 bg-white-medium-dark">
+                                    <li class="border-t mt-2 border-light-border w-full h-full px-2 py-3">
+                                        <a href="login.html"
+                                           class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                            Login Page
+                                            <span><i class="fa fa-angle-right float-right"></i></span>
+                                        </a>
+                                    </li>
+                                    <li class="border-t border-light-border w-full h-full px-2 py-3">
+                                        <a href="register.html"
+                                           class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                            Register Page
+                                            <span><i class="fa fa-angle-right float-right"></i></span>
+                                        </a>
+                                    </li>
+                                    <li class="border-t border-light-border w-full h-full px-2 py-3">
+                                        <a href="404.html"
+                                           class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                            404 Page
+                                            <span><i class="fa fa-angle-right float-right"></i></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>*@
 
                         <li class=" w-full h-full py-3  border-b border-light-border hover:bg-white ">
                             <a href="#ChangePassSection" data-toggle="collapse" id="ultogglerChangePass"
@@ -591,8 +538,8 @@
 
                                     </a>
                                     @*<button class=" btn btn-primary" id="modalOpener" data-toggle="modal" data-target="#myModal" onclick="modalOpenFunction()">
-                        New Objectives
-                    </button>*@
+                                            New Objectives
+                                        </button>*@
 
                                 </li>
 
@@ -606,336 +553,337 @@
                 <div id="ProfileDropDown" class="rounded hidden shadow-md bg-white relativeLogout pin-t  pin-r" style="position:absolute">
                     <ul class="list-reset mr-4">
                         @*<li><a href="#" class="no-underline px-2 py-2 block text-black hover:bg-grey-light">My account</a></li>
-                <li><a href="#" class="no-underline px-2 py-2 block text-black hover:bg-grey-light">Notifications</a></li>
-                <li><hr class="border-t mx-2 border-grey-ligght"></li>*@
+                            <li><a href="#" class="no-underline px-2 py-2 block text-black hover:bg-grey-light">Notifications</a></li>
+                            <li><hr class="border-t mx-2 border-grey-ligght"></li>*@
                         <li><a href="@Url.Content("~/User/Logout")" class="no-underline px-2 py-2 block text-black hover:bg-grey-light">Logout</a></li>
                     </ul>
                 </div>
 
                 @*<form method="post" action="/User/ChangePassword" >*@
-                    <div name="modal" class="modal" id="myModalPassword" style="margin-top:315px;  padding:10px; margin-left:40%">
-                        @*<div style="margin-top:100px;"></div>*@
-                        <div class="modal-dialog ">
-                            <div class="modal-content" >
+                <div name="modal" class="modal" id="myModalPassword" style="margin-top:315px;  padding:10px; margin-left:40%">
+                    @*<div style="margin-top:100px;"></div>*@
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
 
-                                <!-- Modal Header -->
-                                <div class="modal-header text-white  bg-blue-600">
+                            <!-- Modal Header -->
+                            <div class="modal-header text-white  bg-blue-600">
 
-                                    Change Password
+                                Change Password
 
-                                    
-                                </div>
-
-                                <!-- Modal body -->
-                                <div class="modal-body">
-
-                                    <div class="w-full md:w-3/3 px-2 mb-6 md:mb-0">
-                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                               for="OldPassword">
-                                            Old Password
-                                        </label>
-                                        <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                               id="oldPassword" name="OldPassword" type="password" placeholder="" autocomplete="off" />
-
-                                        @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
-                                    </div>
-                                    <br />
-                                    <div class="w-full md:w-3/3 px-2 mb-6 md:mb-0">
-                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                               for="password">
-                                            New Password
-                                        </label>
-                                        <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                               id="password" name="password" type="password" placeholder="" autocomplete="off">
-
-                                        @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
-                                    </div>
-                                    <br />
-                                    <div class="w-full md:w-3/3 px-2 mb-6 md:mb-0">
-                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                               for="confirmPassword">
-                                            Confirm New Password
-                                        </label>
-                                        <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                               id="confirmPassword" name="confirmPassword" type="password" placeholder="" autocomplete="off">
-
-                                        @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
-                                    </div>
-
-                                    <div id="suc" class="hide text-success">Password changed successfully</div>
-                                    <div id="fail" class="hide text-danger">Old Password you entered is incorrect</div>
-                                </div>
-
-                                <!-- Modal footer -->
-                                <div class="modal-footer p-1">
-
-                                    <button id="btnConfirmPass" type="button" class="btn btn-primary" onclick="VerifyPassword()">Change</button>
-                                    <button hidden id="btnChangePass" type="submit" class="btn btn-primary  float-right " data-dismiss="myModalPassword">Hidden</button>
-
-                                    <button id="btnCancelPass" type="button" class="btn btn-primary" data-dismiss="myModalPassword">Close</button>
-
-
-
-
-                                </div>
 
                             </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+                                <div class="w-full md:w-3/3 px-2 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                           for="OldPassword">
+                                        Old Password
+                                    </label>
+                                    <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                           id="oldPassword" name="OldPassword" type="password" placeholder="" autocomplete="off" />
+
+                                    @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                                </div>
+                                <br />
+                                <div class="w-full md:w-3/3 px-2 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                           for="password">
+                                        New Password
+                                    </label>
+                                    <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                           id="password" name="password" type="password" placeholder="" autocomplete="off">
+
+                                    @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                                </div>
+                                <br />
+                                <div class="w-full md:w-3/3 px-2 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                           for="confirmPassword">
+                                        Confirm New Password
+                                    </label>
+                                    <input class="appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                           id="confirmPassword" name="confirmPassword" type="password" placeholder="" autocomplete="off">
+
+                                    @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                                </div>
+
+                                <div id="suc" class="hide text-success">Password changed successfully</div>
+                                <div id="fail" class="hide text-danger">Old Password you entered is incorrect</div>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer p-1">
+
+                                <button id="btnConfirmPass" type="button" class="btn btn-primary" onclick="VerifyPassword()">Change</button>
+                                <button hidden id="btnChangePass" type="submit" class="btn btn-primary  float-right " data-dismiss="myModalPassword">Hidden</button>
+
+                                <button id="btnCancelPass" type="button" class="btn btn-primary" data-dismiss="myModalPassword">Close</button>
+
+
+
+
+                            </div>
+
                         </div>
                     </div>
+                </div>
                 @*</form>*@
 
-                @RenderBody()
-
+                <div id="renderBodyDiv" class="overflow-scroll w-full ">
+                    @RenderBody()
+                </div>
 
 
                 @*<main class="bg-white-300 flex-1 p-3 overflow-hidden">
-            <div class="flex flex-col">
-                <!-- Stats Row Starts Here -->
-                <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
-                    <div class="shadow-lg bg-red-vibrant border-l-8 hover:bg-red-vibrant-dark border-red-vibrant-dark mb-2 p-2 md:w-1/4 mx-2">
-                        <div class="p-4 flex flex-col">
-                            <a href="#" class="no-underline text-white text-2xl">
-                                $244
-                            </a>
-                            <a href="#" class="no-underline text-white text-lg">
-                                Total Sales
-                            </a>
-                        </div>
-                    </div>
-                    <div class="shadow bg-info border-l-8 hover:bg-info-dark border-info-dark mb-2 p-2 md:w-1/4 mx-2">
-                        <div class="p-4 flex flex-col">
-                            <a href="#" class="no-underline text-white text-2xl">
-                                $199.4
-                            </a>
-                            <a href="#" class="no-underline text-white text-lg">
-                                Total Cost
-                            </a>
-                        </div>
-                    </div>
-                    <div class="shadow bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2">
-                        <div class="p-4 flex flex-col">
-                            <a href="#" class="no-underline text-white text-2xl">
-                                900
-                            </a>
-                            <a href="#" class="no-underline text-white text-lg">
-                                Total Users
-                            </a>
-                        </div>
-                    </div>
-                    <div class="shadow bg-success border-l-8 hover:bg-success-dark border-success-dark mb-2 p-2 md:w-1/4 mx-2">
-                        <div class="p-4 flex flex-col">
-                            <a href="#" class="no-underline text-white text-2xl">
-                                500
-                            </a>
-                            <a href="#" class="no-underline text-white text-lg">
-                                Total Products
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Stats Row Ends Here -->
-                <!-- Card Sextion Starts Here -->
-                <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
-                    <!-- card -->
-                    <div class="rounded overflow-hidden shadow bg-white mx-2 w-full">
-                        <div class="px-6 py-2 border-b border-light-grey">
-                            <div class="font-bold text-xl">Trending Categories</div>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table text-grey-darkest">
-                                <thead class="bg-grey-dark text-white text-normal">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Item</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Current</th>
-                                        <th scope="col">Change</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>
-                                            <button class="bg-blue-500 hover:bg-blue-800 text-white font-light py-1 px-2 rounded-full">
-                                                Twitter
-                                            </button>
-                                        </td>
-                                        <td>4500</td>
-                                        <td>4600</td>
-                                        <td>
-                                            <span class="text-green-500"><i class="fas fa-arrow-up"></i>5%</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>
-                                            <button class="bg-primary hover:bg-primary-dark text-white font-light py-1 px-2 rounded-full">
-                                                Facebook
-                                            </button>
-                                        </td>
-                                        <td>10000</td>
-                                        <td>3000</td>
-                                        <td>
-                                            <span class="text-red-500"><i class="fas fa-arrow-down"></i>65%</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>
-                                            <button class="bg-success hover:bg-success-dark text-white font-light py-1 px-2 rounded-full">
-                                                Amazon
-                                            </button>
-                                        </td>
-                                        <td>10000</td>
-                                        <td>3000</td>
-                                        <td>
-                                            <span class="text-red-500"><i class="fas fa-arrow-down"></i>65%</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td>
-                                            <button class="bg-blue-500 hover:bg-blue-800 text-white font-light py-1 px-2 rounded-full">
-                                                Microsoft
-                                            </button>
-                                        </td>
-                                        <td>10000</td>
-                                        <td>3000</td>
-                                        <td>
-                                            <span class="text-green-500"><i class="fas fa-arrow-up"></i>65%</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- /card -->
-                </div>
-                <!-- /Cards Section Ends Here -->
-                <!-- Progress Bar -->
-                <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2 mt-2">
-                    <div class="rounded overflow-hidden shadow bg-white mx-2 w-full pt-2">
-                        <div class="px-6 py-2 border-b border-light-grey">
-                            <div class="font-bold text-xl">Progress Among Projects</div>
-                        </div>
-                        <div class="">
-                            <div class="w-full">
-                                <div class="shadow w-full bg-grey-light">
-                                    <div class="bg-blue-500 text-xs leading-none py-1 text-center text-white"
-                                         style="width: 45%">
-                                        45%
+                        <div class="flex flex-col">
+                            <!-- Stats Row Starts Here -->
+                            <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
+                                <div class="shadow-lg bg-red-vibrant border-l-8 hover:bg-red-vibrant-dark border-red-vibrant-dark mb-2 p-2 md:w-1/4 mx-2">
+                                    <div class="p-4 flex flex-col">
+                                        <a href="#" class="no-underline text-white text-2xl">
+                                            $244
+                                        </a>
+                                        <a href="#" class="no-underline text-white text-lg">
+                                            Total Sales
+                                        </a>
                                     </div>
                                 </div>
+                                <div class="shadow bg-info border-l-8 hover:bg-info-dark border-info-dark mb-2 p-2 md:w-1/4 mx-2">
+                                    <div class="p-4 flex flex-col">
+                                        <a href="#" class="no-underline text-white text-2xl">
+                                            $199.4
+                                        </a>
+                                        <a href="#" class="no-underline text-white text-lg">
+                                            Total Cost
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="shadow bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2">
+                                    <div class="p-4 flex flex-col">
+                                        <a href="#" class="no-underline text-white text-2xl">
+                                            900
+                                        </a>
+                                        <a href="#" class="no-underline text-white text-lg">
+                                            Total Users
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="shadow bg-success border-l-8 hover:bg-success-dark border-success-dark mb-2 p-2 md:w-1/4 mx-2">
+                                    <div class="p-4 flex flex-col">
+                                        <a href="#" class="no-underline text-white text-2xl">
+                                            500
+                                        </a>
+                                        <a href="#" class="no-underline text-white text-lg">
+                                            Total Products
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Stats Row Ends Here -->
+                            <!-- Card Sextion Starts Here -->
+                            <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
+                                <!-- card -->
+                                <div class="rounded overflow-hidden shadow bg-white mx-2 w-full">
+                                    <div class="px-6 py-2 border-b border-light-grey">
+                                        <div class="font-bold text-xl">Trending Categories</div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table text-grey-darkest">
+                                            <thead class="bg-grey-dark text-white text-normal">
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Item</th>
+                                                    <th scope="col">Last</th>
+                                                    <th scope="col">Current</th>
+                                                    <th scope="col">Change</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>
+                                                        <button class="bg-blue-500 hover:bg-blue-800 text-white font-light py-1 px-2 rounded-full">
+                                                            Twitter
+                                                        </button>
+                                                    </td>
+                                                    <td>4500</td>
+                                                    <td>4600</td>
+                                                    <td>
+                                                        <span class="text-green-500"><i class="fas fa-arrow-up"></i>5%</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>
+                                                        <button class="bg-primary hover:bg-primary-dark text-white font-light py-1 px-2 rounded-full">
+                                                            Facebook
+                                                        </button>
+                                                    </td>
+                                                    <td>10000</td>
+                                                    <td>3000</td>
+                                                    <td>
+                                                        <span class="text-red-500"><i class="fas fa-arrow-down"></i>65%</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>
+                                                        <button class="bg-success hover:bg-success-dark text-white font-light py-1 px-2 rounded-full">
+                                                            Amazon
+                                                        </button>
+                                                    </td>
+                                                    <td>10000</td>
+                                                    <td>3000</td>
+                                                    <td>
+                                                        <span class="text-red-500"><i class="fas fa-arrow-down"></i>65%</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">4</th>
+                                                    <td>
+                                                        <button class="bg-blue-500 hover:bg-blue-800 text-white font-light py-1 px-2 rounded-full">
+                                                            Microsoft
+                                                        </button>
+                                                    </td>
+                                                    <td>10000</td>
+                                                    <td>3000</td>
+                                                    <td>
+                                                        <span class="text-green-500"><i class="fas fa-arrow-up"></i>65%</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /card -->
+                            </div>
+                            <!-- /Cards Section Ends Here -->
+                            <!-- Progress Bar -->
+                            <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2 mt-2">
+                                <div class="rounded overflow-hidden shadow bg-white mx-2 w-full pt-2">
+                                    <div class="px-6 py-2 border-b border-light-grey">
+                                        <div class="font-bold text-xl">Progress Among Projects</div>
+                                    </div>
+                                    <div class="">
+                                        <div class="w-full">
+                                            <div class="shadow w-full bg-grey-light">
+                                                <div class="bg-blue-500 text-xs leading-none py-1 text-center text-white"
+                                                     style="width: 45%">
+                                                    45%
+                                                </div>
+                                            </div>
 
-                                <div class="shadow w-full bg-grey-light mt-2">
-                                    <div class="bg-teal-500 text-xs leading-none py-1 text-center text-white"
-                                         style="width: 55%">
-                                        55%
-                                    </div>
-                                </div>
+                                            <div class="shadow w-full bg-grey-light mt-2">
+                                                <div class="bg-teal-500 text-xs leading-none py-1 text-center text-white"
+                                                     style="width: 55%">
+                                                    55%
+                                                </div>
+                                            </div>
 
-                                <div class="shadow w-full bg-grey-light mt-2">
-                                    <div class="bg-orange-500 text-xs leading-none py-1 text-center text-white"
-                                         style="width: 65%">
-                                        65%
-                                    </div>
-                                </div>
+                                            <div class="shadow w-full bg-grey-light mt-2">
+                                                <div class="bg-orange-500 text-xs leading-none py-1 text-center text-white"
+                                                     style="width: 65%">
+                                                    65%
+                                                </div>
+                                            </div>
 
-                                <div class="shadow w-full bg-grey-300 mt-2">
-                                    <div class="bg-red-800 text-xs leading-none py-1 text-center text-white"
-                                         style="width: 75%">
-                                        75%
+                                            <div class="shadow w-full bg-grey-300 mt-2">
+                                                <div class="bg-red-800 text-xs leading-none py-1 text-center text-white"
+                                                     style="width: 75%">
+                                                    75%
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!--Profile Tabs-->
-                <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2 p-1 mt-2 mx-auto lg:mx-2 md:mx-2 justify-between">
-                    <!--Top user 1-->
-                    <div class="rounded rounded-t-lg overflow-hidden shadow max-w-xs my-3">
-                        <img src="https://i.imgur.com/w1Bdydo.jpg" alt="" class="w-full" />
-                        <div class="flex justify-center -mt-8">
-                            <img src="https://i.imgur.com/8Km9tLL.jpg" alt=""
-                                 class="rounded-full border-solid border-white border-2 -mt-3">
-                        </div>
-                        <div class="text-center px-3 pb-6 pt-2">
-                            <h3 class="text-black text-sm bold font-sans">Olivia Dunham</h3>
-                            <p class="mt-2 font-sans font-light text-grey-700">
-                                Hello, i'm from another the other
-                                side!
-                            </p>
-                        </div>
-                        <div class="flex justify-center pb-3 text-grey-dark">
-                            <div class="text-center mr-3 border-r pr-3">
-                                <h2>34</h2>
-                                <span>Photos</span>
+                            <!--Profile Tabs-->
+                            <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2 p-1 mt-2 mx-auto lg:mx-2 md:mx-2 justify-between">
+                                <!--Top user 1-->
+                                <div class="rounded rounded-t-lg overflow-hidden shadow max-w-xs my-3">
+                                    <img src="https://i.imgur.com/w1Bdydo.jpg" alt="" class="w-full" />
+                                    <div class="flex justify-center -mt-8">
+                                        <img src="https://i.imgur.com/8Km9tLL.jpg" alt=""
+                                             class="rounded-full border-solid border-white border-2 -mt-3">
+                                    </div>
+                                    <div class="text-center px-3 pb-6 pt-2">
+                                        <h3 class="text-black text-sm bold font-sans">Olivia Dunham</h3>
+                                        <p class="mt-2 font-sans font-light text-grey-700">
+                                            Hello, i'm from another the other
+                                            side!
+                                        </p>
+                                    </div>
+                                    <div class="flex justify-center pb-3 text-grey-dark">
+                                        <div class="text-center mr-3 border-r pr-3">
+                                            <h2>34</h2>
+                                            <span>Photos</span>
+                                        </div>
+                                        <div class="text-center">
+                                            <h2>42</h2>
+                                            <span>Friends</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Top user 2-->
+                                <div class="rounded rounded-t-lg overflow-hidden shadow max-w-xs my-3">
+                                    <img src="https://i.imgur.com/w1Bdydo.jpg" alt="" class="w-full" />
+                                    <div class="flex justify-center -mt-8">
+                                        <img src="https://i.imgur.com/8Km9tLL.jpg" alt=""
+                                             class="rounded-full border-solid border-white border-2 -mt-3">
+                                    </div>
+                                    <div class="text-center px-3 pb-6 pt-2">
+                                        <h3 class="text-black text-sm bold font-sans">Olivia Dunham</h3>
+                                        <p class="mt-2 font-sans font-light text-grey-dark">
+                                            Hello, i'm from another the other
+                                            side!
+                                        </p>
+                                    </div>
+                                    <div class="flex justify-center pb-3 text-grey-dark">
+                                        <div class="text-center mr-3 border-r pr-3">
+                                            <h2>34</h2>
+                                            <span>Photos</span>
+                                        </div>
+                                        <div class="text-center">
+                                            <h2>42</h2>
+                                            <span>Friends</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Top user 3-->
+                                <div class="rounded rounded-t-lg overflow-hidden shadow max-w-xs my-3">
+                                    <img src="https://i.imgur.com/w1Bdydo.jpg" alt="" class="w-full" />
+                                    <div class="flex justify-center -mt-8">
+                                        <img src="https://i.imgur.com/8Km9tLL.jpg" alt=""
+                                             class="rounded-full border-solid border-white border-2 -mt-3">
+                                    </div>
+                                    <div class="text-center px-3 pb-6 pt-2">
+                                        <h3 class="text-black text-sm bold font-sans">Olivia Dunham</h3>
+                                        <p class="mt-2 font-sans font-light text-grey-dark">
+                                            Hello, i'm from another the other
+                                            side!
+                                        </p>
+                                    </div>
+                                    <div class="flex justify-center pb-3 text-grey-dark">
+                                        <div class="text-center mr-3 border-r pr-3">
+                                            <h2>34</h2>
+                                            <span>Photos</span>
+                                        </div>
+                                        <div class="text-center">
+                                            <h2>42</h2>
+                                            <span>Friends</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-center">
-                                <h2>42</h2>
-                                <span>Friends</span>
-                            </div>
+                            <!--/Profile Tabs-->
                         </div>
-                    </div>
-                    <!--Top user 2-->
-                    <div class="rounded rounded-t-lg overflow-hidden shadow max-w-xs my-3">
-                        <img src="https://i.imgur.com/w1Bdydo.jpg" alt="" class="w-full" />
-                        <div class="flex justify-center -mt-8">
-                            <img src="https://i.imgur.com/8Km9tLL.jpg" alt=""
-                                 class="rounded-full border-solid border-white border-2 -mt-3">
-                        </div>
-                        <div class="text-center px-3 pb-6 pt-2">
-                            <h3 class="text-black text-sm bold font-sans">Olivia Dunham</h3>
-                            <p class="mt-2 font-sans font-light text-grey-dark">
-                                Hello, i'm from another the other
-                                side!
-                            </p>
-                        </div>
-                        <div class="flex justify-center pb-3 text-grey-dark">
-                            <div class="text-center mr-3 border-r pr-3">
-                                <h2>34</h2>
-                                <span>Photos</span>
-                            </div>
-                            <div class="text-center">
-                                <h2>42</h2>
-                                <span>Friends</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Top user 3-->
-                    <div class="rounded rounded-t-lg overflow-hidden shadow max-w-xs my-3">
-                        <img src="https://i.imgur.com/w1Bdydo.jpg" alt="" class="w-full" />
-                        <div class="flex justify-center -mt-8">
-                            <img src="https://i.imgur.com/8Km9tLL.jpg" alt=""
-                                 class="rounded-full border-solid border-white border-2 -mt-3">
-                        </div>
-                        <div class="text-center px-3 pb-6 pt-2">
-                            <h3 class="text-black text-sm bold font-sans">Olivia Dunham</h3>
-                            <p class="mt-2 font-sans font-light text-grey-dark">
-                                Hello, i'm from another the other
-                                side!
-                            </p>
-                        </div>
-                        <div class="flex justify-center pb-3 text-grey-dark">
-                            <div class="text-center mr-3 border-r pr-3">
-                                <h2>34</h2>
-                                <span>Photos</span>
-                            </div>
-                            <div class="text-center">
-                                <h2>42</h2>
-                                <span>Friends</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/Profile Tabs-->
-            </div>
-        </main>*@
+                    </main>*@
                 <!--/Main-->
             </div>
 
-            
+
             <!--Footer-->
             <footer id="LayoutFooter" class="bg-grey-darkest text-white p-2">
                 <div class="flex flex-1 mx-auto">&copy; Copy Right Reserved</div>
@@ -945,6 +893,8 @@
         </div>
     </div>
 
+
+    <!------------open---------->
     <script src="~/Templates/admin/main.js"></script>
     <script src="~/JQueryValidation/jquery.js"></script>
     <script src="~/JQueryValidation/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -952,14 +902,40 @@
     <script src="~/Scripts/jquery-3.6.0.js"></script>
     <script src="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.js"></script>
     @*<script src="~/Scripts/jquery-3.6.0.min.js"></script>*@
+
+    @*--------------------*@
+    @*<script src="~/Scripts/jquery-3.6.0.min.js"></script>*@
+    @*--------------------*@
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @*<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>*@
+
+    @*--------------------*@
     @*<script src="~/Scripts/moment.min.js"></script>
         <script src="~/Scripts/bootstrap.min.js"></script>
         <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>*@
+    @*--------------------*@
+
     <script src="~/Scripts/CustomDate.js"></script>
+
+    <!-----------end-------->
+
+    @*<script src="~/Templates/admin/main.js"></script>
+    <script src="~/JQueryValidation/jquery.js"></script>
+    <script src="~/JQueryValidation/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/JQueryValidation/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    
+    <script src="~/Scripts/CustomDate.js"></script>*@
 </body>
 </html>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        resizeWindow();
+
         $('.fa-trash').click(function () {
                                 if (!confirm("Do you really want to delete this record?")) {
                                     return false;
@@ -976,10 +952,31 @@
                 $(this).parent('li').find('ul').addClass('hide');
         })
 
-        $('#ultogglerAppraisal').click(function () {
+        $('#ultogglerComplaint').click(function () {
             if ($(this).parent('li').find('ul').hasClass('hide')) {
                 $('.MenuCollapse').addClass('hide');
                
+                $(this).parent('li').find('ul').removeClass('hide');
+
+            }
+            else
+                $(this).parent('li').find('ul').addClass('hide');
+        })
+
+        $('#ultogglerQA').click(function () {
+            if ($(this).parent('li').find('ul').hasClass('hide')) {
+                $('.MenuCollapse').addClass('hide');
+
+                $(this).parent('li').find('ul').removeClass('hide');
+
+            }
+            else
+                $(this).parent('li').find('ul').addClass('hide');
+        })
+
+        $('#ultogglerReports').click(function () {
+            if ($(this).parent('li').find('ul').hasClass('hide')) {
+                $('.MenuCollapse').addClass('hide');
                 $(this).parent('li').find('ul').removeClass('hide');
 
             }
@@ -1136,5 +1133,24 @@
             //$('#btnChangePass').trigger('click');
         }
     }
+
+    function resizeWindow() {
+        var headerHeight = $('#LayoutHeader').height();
+        var footerHeight = $('#LayoutFooter').height();
+        var windowHeight = $(window).height();
+        var remainingHeight = windowHeight - headerHeight - footerHeight - 2;
+        $('#renderBody').css('max-height', remainingHeight);
+
+
+    }
+
+    $("#layoutUL li").click(function () {
+        var windowHeight = $(window).height();
+        var layoutHeight = $('#layoutUL').height();
+        if (layoutHeight > windowHeight) {
+
+            $('#renderBody').css('max-height', layoutHeight);
+        }
+    })
 
 </script>

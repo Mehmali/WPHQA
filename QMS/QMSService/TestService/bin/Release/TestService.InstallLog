@@ -1,0 +1,311 @@
+﻿Installing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Installing service TestService...
+Service TestService has been successfully installed.
+Creating EventLog source TestService in log Application...
+Committing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Uninstalling assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Removing EventLog source TestService.
+Service TestService is being removed from the system...
+Service TestService was successfully removed from the system.
+Attempt to stop service TestService.
+Uninstalling assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Removing EventLog source TestService.
+Service TestService is being removed from the system...
+Service TestService was successfully removed from the system.
+Attempt to stop service TestService.
+Uninstalling assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Removing EventLog source TestService.
+Warning: The source TestService is not registered on the local machine.
+Service TestService is being removed from the system...
+An exception occurred during the uninstallation of the System.ServiceProcess.ServiceInstaller installer.
+System.ComponentModel.Win32Exception: The specified service does not exist as an installed service
+An exception occurred while uninstalling. This exception will be ignored and the uninstall will continue. However, the application might not be fully uninstalled after the uninstall is complete.
+Installing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Installing service TestService...
+Service TestService has been successfully installed.
+Creating EventLog source TestService in log Application...
+Committing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Uninstalling assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Removing EventLog source TestService.
+Service TestService is being removed from the system...
+Service TestService was successfully removed from the system.
+Attempt to stop service TestService.
+Uninstalling assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Removing EventLog source TestService.
+Service TestService is being removed from the system...
+Service TestService was successfully removed from the system.
+Installing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Installing service TestService...
+Service TestService has been successfully installed.
+Creating EventLog source TestService in log Application...
+Committing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Uninstalling assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Removing EventLog source TestService.
+Service TestService is being removed from the system...
+Service TestService was successfully removed from the system.
+Installing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Installing service TestService...
+Service TestService has been successfully installed.
+Creating EventLog source TestService in log Application...
+Committing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+Uninstalling assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Removing EventLog source TestService.
+Warning: The source TestService is not registered on the local machine.
+Service TestService is being removed from the system...
+An exception occurred during the uninstallation of the System.ServiceProcess.ServiceInstaller installer.
+System.ComponentModel.Win32Exception: The specified service does not exist as an installed service
+An exception occurred while uninstalling. This exception will be ignored and the uninstall will continue. However, the application might not be fully uninstalled after the uninstall is complete.
+Installing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Installing service TestService...
+Service TestService has been successfully installed.
+Creating EventLog source TestService in log Application...
+Committing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Installing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Installing service TestService...
+Service TestService has been successfully installed.
+Creating EventLog source TestService in log Application...
+Committing assembly 'F:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = F:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = F:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Installing assembly 'D:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Installing service AttendanceService...
+Service AttendanceService has been successfully installed.
+Creating EventLog source AttendanceService in log Application...
+Committing assembly 'D:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Uninstalling assembly 'D:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Removing EventLog source AttendanceService.
+Service AttendanceService is being removed from the system...
+Service AttendanceService was successfully removed from the system.
+Attempt to stop service AttendanceService.
+Installing assembly 'D:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Installing service AttendanceService...
+Service AttendanceService has been successfully installed.
+Creating EventLog source AttendanceService in log Application...
+Committing assembly 'D:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Uninstalling assembly 'D:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Removing EventLog source AttendanceService.
+Service AttendanceService is being removed from the system...
+Service AttendanceService was successfully removed from the system.
+Attempt to stop service AttendanceService.
+Installing assembly 'D:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Installing service PROCAOT...
+Service PROCAOT has been successfully installed.
+Creating EventLog source PROCAOT in log Application...
+Committing assembly 'D:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Uninstalling assembly 'D:\TestSoft\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\TestSoft\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\TestSoft\TestService\TestService\bin\Release\TestService.exe
+Removing EventLog source PROCAOT.
+Service PROCAOT is being removed from the system...
+Service PROCAOT was successfully removed from the system.
+Attempt to stop service PROCAOT.
+Installing assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+Installing service WEAVAOT...
+Service WEAVAOT has been successfully installed.
+Creating EventLog source WEAVAOT in log Application...
+Committing assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+Uninstalling assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+Removing EventLog source AudNot.
+Warning: The source AudNot is not registered on the local machine.
+Service AudNot is being removed from the system...
+An exception occurred during the uninstallation of the System.ServiceProcess.ServiceInstaller installer.
+System.ComponentModel.Win32Exception: The specified service does not exist as an installed service
+An exception occurred while uninstalling. This exception will be ignored and the uninstall will continue. However, the application might not be fully uninstalled after the uninstall is complete.
+Installing assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+Installing service AudNot...
+Service AudNot has been successfully installed.
+Creating EventLog source AudNot in log Application...
+Committing assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+Uninstalling assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+Removing EventLog source AudNot.
+Service AudNot is being removed from the system...
+Service AudNot was successfully removed from the system.
+Attempt to stop service AudNot.
+Installing assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+Installing service AudNot...
+Service AudNot has been successfully installed.
+Creating EventLog source AudNot in log Application...
+Committing assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+Uninstalling assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+Removing EventLog source AudNot.
+Service AudNot is being removed from the system...
+Service AudNot was successfully removed from the system.
+Installing assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+Installing service AudNot...
+Service AudNot has been successfully installed.
+Creating EventLog source AudNot in log Application...
+Committing assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+Uninstalling assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+Removing EventLog source AudNot.
+Warning: The source AudNot is not registered on the local machine.
+Service AudNot is being removed from the system...
+An exception occurred during the uninstallation of the System.ServiceProcess.ServiceInstaller installer.
+System.ComponentModel.Win32Exception: The specified service does not exist as an installed service
+An exception occurred while uninstalling. This exception will be ignored and the uninstall will continue. However, the application might not be fully uninstalled after the uninstall is complete.
+Uninstalling assembly 'D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.InstallLog
+   assemblypath = D:\AuditNotificationService\TestService\TestService\bin\Release\TestService.exe
+Removing EventLog source AudNot.
+Warning: The source AudNot is not registered on the local machine.
+Service AudNot is being removed from the system...
+An exception occurred during the uninstallation of the System.ServiceProcess.ServiceInstaller installer.
+System.ComponentModel.Win32Exception: The specified service does not exist as an installed service
+An exception occurred while uninstalling. This exception will be ignored and the uninstall will continue. However, the application might not be fully uninstalled after the uninstall is complete.

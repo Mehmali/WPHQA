@@ -3,11 +3,11 @@
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/Layout.cshtml";
-    var subModules = Session["subModules"] != null ? (List<HRMS.Data.SubModule>)Session["subModules"] : new List<HRMS.Data.SubModule>();
+    var subModules = Session["subModules"] != null ? (List<QMS.Data.SubModule>)Session["subModules"] : new List<QMS.Data.SubModule>();
     int subModuleId = subModules.Where(m => m.Name == "Employees").FirstOrDefault().Id;
-    bool canAdd = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
-    bool canEdit = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
-    bool canDelete = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
+    bool canAdd = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
+    bool canEdit = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
+    bool canDelete = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
     
 }
 
@@ -85,15 +85,10 @@
                         <thead>
                             <tr>
                                 @*<th class="border  px-2 py-2"><a href="@Url.Content("~/Employee/List/" + new { sortOrder = ViewBag.sortOrder == null ? "Asc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy="Code" })">Code</a></th>*@
-                                <th class="border  px-2 py-2">@Html.ActionLink("Code", "List", new { sortOrder = ViewBag.sortOrder == null ? "Desc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy = "Code", pageNumber = ViewBag.pageNumber == 0 ? 1 : ViewBag.pageNumber })</th>
-                                <th class="border  px-2 py-2">@Html.ActionLink("Name", "List", new { sortOrder = ViewBag.sortOrder == null ? "Desc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy = "FirstName", pageNumber = ViewBag.pageNumber == 0 ? 1 : ViewBag.pageNumber })</th>
+                                <th class="border  px-2 py-2">@Html.ActionLink("Code", "List", new { sortOrder = ViewBag.sortOrder == null ? "Desc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy = "Emp_Code", pageNumber = ViewBag.pageNumber == 0 ? 1 : ViewBag.pageNumber })</th>
+                                <th class="border  px-2 py-2">@Html.ActionLink("Name", "List", new { sortOrder = ViewBag.sortOrder == null ? "Desc" : (ViewBag.sortOrder == "Asc" ? "Desc" : "Asc"), sortBy = "Emp_Name", pageNumber = ViewBag.pageNumber == 0 ? 1 : ViewBag.pageNumber })</th>
                                 @*<th class="border  px-2 py-2">Name</th>*@
-                                <th class="border  px-2 py-2">Job-Title</th>
-                                <th class="border  px-2 py-2">DOB</th>
-                                <th class="border  px-2 py-2">Hire Date</th>
-                                <th class="border  px-2 py-2">Department</th>
-                                <th class="border  px-2 py-2">Site</th>
-                                <th class="border  px-2 py-2">Address</th>
+                              
                                 @*<th class="border  px-4 py-2">Last Updated By/On</th>*@
                                 <th class="border w-1/6 px-4 py-2">Actions</th>
                             </tr>
@@ -104,14 +99,9 @@
                                 foreach (var employee in ViewBag.Employees)
                                 {
                                     <tr>
-                                        <td class="border px-2 py-2">@(employee.Code)</td>
-                                        <td class="border px-2 py-2 ">@(employee.FirstName + " " + employee.LastName)</td>
-                                        <td class="border px-2 py-2 ">@(employee.JobTitle.Title)</td>
-                                        <td class="border px-2 py-2  ">@employee.DOB.ToShortDateString()</td>
-                                        <td class="border px-2 py-2  ">@employee.HireDate.ToShortDateString()</td>
-                                        <td class="border px-2 py-2 ">@(employee.Department.Name)</td>
-                                        <td class="border px-2 py-2  ">@(employee.Site.Description)</td>
-                                        <td class="border px-2 py-2 ">@(employee.AddressLine1)</td>
+                                        <td class="border px-2 py-2">@(employee.Emp_Code)</td>
+                                        <td class="border px-2 py-2 ">@(employee.Emp_Name)</td>
+                                  
                                         @*<td class="border  ">@(employee.LastUpdatedBy + " " + employee.LastUpdatedOn)</td>*@
                                         <td class="border ">
 
@@ -128,9 +118,7 @@
                                                 </a>
                                             }
                                             
-                                                <a class="bg-blue-400 cursor-pointer rounded p-1 mx-1 text-blue-900" href="@Url.Content("~/Employee/Details/" + employee.Id)">
-                                                    <i class="fas fa-street-view"></i>
-                                                </a>
+                                             
                                             
                                         </td>
                                     </tr>
@@ -161,11 +149,11 @@
 
             @if (ViewBag.pageNumber == 1)
             {
-                <li>@Html.ActionLink("Prev", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Code" : ViewBag.sortBy, pageNumber = 1 }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
+                <li>@Html.ActionLink("Prev", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = 1 }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
             }
             else
             {
-                <li>@Html.ActionLink("Prev", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Code" : ViewBag.sortBy, pageNumber = ViewBag.pageNumber - 1 }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
+                <li>@Html.ActionLink("Prev", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = ViewBag.pageNumber - 1 }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
             }
 
 
@@ -175,12 +163,12 @@
                 if (i == ViewBag.pageNumber)
                 {
 
-                    <li>@Html.ActionLink(i.ToString(), "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Code" : ViewBag.sortBy, pageNumber = i }, new { @class = " px-3 py-1 border bg-blue-700 text-white text-decoration-none" })</li>
+                    <li>@Html.ActionLink(i.ToString(), "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = i }, new { @class = " px-3 py-1 border bg-blue-700 text-white text-decoration-none" })</li>
                 }
                 else
                 {
 
-                    <li>@Html.ActionLink(i.ToString(), "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Code" : ViewBag.sortBy, pageNumber = i }, new { @class = " px-3 py-1 border bg-light text-decoration-none" })</li>
+                    <li>@Html.ActionLink(i.ToString(), "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = i }, new { @class = " px-3 py-1 border bg-light text-decoration-none" })</li>
 
                 }
 
@@ -191,11 +179,11 @@
 
             @if (ViewBag.pageNumber == totalPages)
             {
-                <li>@Html.ActionLink("Next", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Code" : ViewBag.sortBy, pageNumber = totalPages }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
+                <li>@Html.ActionLink("Next", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = totalPages }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
             }
             else
             {
-                <li>@Html.ActionLink("Next", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Code" : ViewBag.sortBy, pageNumber = ViewBag.pageNumber + 1 }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
+                <li>@Html.ActionLink("Next", "List", new { sortOrder = ViewBag.sortOrder == null ? "Asc" : ViewBag.sortOrder, sortBy = ViewBag.sortBy == null ? "Emp_Code" : ViewBag.sortBy, pageNumber = ViewBag.pageNumber + 1 }, new { @class = " px-3 py-1 border bg-blue-500 text-white text-decoration-none hover:bg-blue-800" })</li>
             }
         </ul>
 

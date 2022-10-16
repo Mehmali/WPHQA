@@ -1,0 +1,74 @@
+﻿<div class="flex flex-wrap -mx-3 mb-6">
+
+
+    <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="RiskAssessment">
+            Risk Assessment Score
+        </label>
+        <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                id="RiskAssessment" name="RiskAssessment">
+            <option value="0" @(Convert.ToInt32(ViewBag.Complaint.RiskAssessment) == 0 ? "selected" : "")>0</option>
+            <option value="5" @(Convert.ToInt32(ViewBag.Complaint.RiskAssessment) == 5 ? "selected" : "")>5</option>
+            <option value="10" @(Convert.ToInt32(ViewBag.Complaint.RiskAssessment) == 10 ? "selected" : "")>10</option>
+            <option value="15" @(Convert.ToInt32(ViewBag.Complaint.RiskAssessment) == 15 ? "selected" : "")>15</option>
+            <option value="20" @(Convert.ToInt32(ViewBag.Complaint.RiskAssessment) == 20 ? "selected" : "")>20</option>
+
+        </select>
+    </div>
+
+    <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="CARCAPA">
+            CAR/CAPA
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+               id="CARCAPA" name="CARCAPA" type="text" value="@ViewBag.Complaint.CARCAPA">
+    </div>
+
+</div>
+
+
+<div class="flex flex-wrap -mx-3 mb-6">
+
+    <div class="w-full md:w-2/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="QARemarks">
+            QA Remarks
+        </label>
+
+        <textarea rows="3" class="form-control" id="QARemarks" name="QARemarks" value="@ViewBag.Complaint.QARemarks">@ViewBag.Complaint.QARemarks</textarea>
+    </div>
+
+</div>
+
+<div class="flex flex-wrap -mx-3 mb-6">
+
+    <div class="w-full md:w-2/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="ActionDueDate">
+            Action Due Date
+        </label>
+
+        <input class="dateFormate appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+          onchange="setActionDueDate()"     id="ActionDueDateChange" name="ActionDueDateChange" type="text" value="@(ViewBag.Complaint.ActionDueDate !=null?((Convert.ToDateTime(ViewBag.Complaint.ActionDueDate)).ToShortDateString()):"")">
+    </div>
+
+</div>
+
+<div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="IsValid">
+            Validity Status
+        </label>
+        <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                id="IsValid" name="IsValid">
+            <option value="true" @(ViewBag.Complaint.IsValid == true ? "selected" : "")>Valid</option>
+            <option value="false" @(ViewBag.Complaint.IsValid == false ? "selected" : "")>Invalid</option>
+
+
+        </select>
+    </div>
+    </div>
+

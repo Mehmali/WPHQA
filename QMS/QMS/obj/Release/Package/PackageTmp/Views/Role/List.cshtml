@@ -2,11 +2,11 @@
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/Layout.cshtml";
-    var subModules = Session["subModules"] != null ? (List<HRMS.Data.SubModule>)Session["subModules"] : new List<HRMS.Data.SubModule>();
+    var subModules = Session["subModules"] != null ? (List<QMS.Data.SubModule>)Session["subModules"] : new List<QMS.Data.SubModule>();
     int subModuleId = subModules.Where(m => m.Name == "Departments").FirstOrDefault().Id;
-    bool canAdd = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
-    bool canEdit = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
-    bool canDelete = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
+    bool canAdd = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
+    bool canEdit = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
+    bool canDelete = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
 }
 
 <main class="bg-white-500 flex-1 p-3 overflow-hidden">
@@ -46,7 +46,7 @@
                                 {
                                     <tr>
                                         
-                                        <td class="border px-4 py-2">@role.Name</td>
+                                        <td class="border px-4 py-2">@role.Role_Name</td>
                                         @*<td class="border px-4 py-2">@role.LastUpdatedBy</td>
                                         <td class="border px-4 py-2">@role.LastUpdatedOn</td>*@
                                         <td class="border px-4 py-2">

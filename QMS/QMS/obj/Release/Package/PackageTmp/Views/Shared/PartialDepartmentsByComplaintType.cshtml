@@ -1,0 +1,10 @@
+﻿
+<select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+        id="IssuerDepartment" name="IssuerDept_Id">
+    <option value="">Select Department</option>
+    @foreach (var department in ViewBag.Departments)
+    {
+        <option value="@department.Id">@department.Dept_Name</option>
+
+    }
+</select>

@@ -766,6 +766,7 @@
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Templates\admin\dist\images\image1.jpg" />
     <Content Include="Templates\admin\dist\images\image10.jpeg" />
+    <Content Include="Templates\admin\dist\images\image11.jpg" />
     <Content Include="Templates\admin\dist\images\image2.jpg" />
     <Content Include="Templates\admin\dist\images\image3.jpg" />
     <Content Include="Templates\admin\dist\images\image4.jpg" />
@@ -810,6 +811,8 @@
     <Content Include="CrystalReports\DepartmentEFDS.xss">
       <DependentUpon>DepartmentEFDS.xsd</DependentUpon>
     </Content>
+    <Content Include="Downloads\doable.docx" />
+    <Content Include="Downloads\5 Why Chemical Handling.xlsx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
@@ -951,6 +954,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ComplaintById.cs" />
+    <Compile Include="Models\ComplaintsListParams.cs" />
     <Compile Include="Models\CustomComplaint.cs" />
     <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\StoredProcedures\SP_Employees.cs" />
@@ -969,8 +973,10 @@
     <Compile Include="Repository\RolesRepository.cs" />
     <Compile Include="Repository\UserPermissionRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Utilities\EmailUtility.cs" />
     <Compile Include="Utilities\Enums.cs" />
     <Compile Include="Utilities\PermissionChecker.cs" />
+    <Compile Include="Utilities\ServiceActions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -1150,6 +1156,14 @@
     <Content Include="Views\FaultType\Edit.cshtml" />
     <Content Include="Views\FaultType\List.cshtml" />
     <Content Include="Views\Shared\PartialDepartmentsByComplaintType.cshtml" />
+    <Content Include="Views\Complaint\ViewDetailBK.cshtml" />
+    <Content Include="Views\Complaint\ComplaintReceivedList.cshtml" />
+    <Content Include="Views\Complaint\ComplaintIssuedList.cshtml" />
+    <Content Include="Views\Complaint\ExternalComplaintsList.cshtml" />
+    <Content Include="Views\Shared\PartialEditResponsibleDepartmentView.cshtml" />
+    <Content Include="Views\Shared\PartialEditQADepartmentView.cshtml" />
+    <Content Include="Views\Shared\PartialEditIssuerDepartmentView.cshtml" />
+    <Content Include="Views\Complaint\Edit - Copy.cshtml" />
     <Content Include="Views\Complaint\ViewDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

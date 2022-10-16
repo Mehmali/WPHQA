@@ -1,0 +1,36 @@
+﻿<div class="flex flex-wrap -mx-3 mb-6">
+
+
+
+    <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="ActionsTaken">
+            Actions Taken
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+               id="ActionsTaken" name="ActionsTaken" type="text" value="@ViewBag.Complaint.ActionsTaken">
+    </div>
+
+    <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="ActionTakenOn">
+            Action Taken On
+        </label>
+        <input class="dateFormate appearance-none block w-full bg-white text-gray-700 border border-red-500 rounded py-2 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+               id="ActionTakenOn" name="ActionTakenOn" type="text" value="@(ViewBag.Complaint.ActionTakenOn!=null?((Convert.ToDateTime(ViewBag.Complaint.ActionTakenOn)).ToShortDateString()):"")">
+    </div>
+
+</div>
+
+<div class="flex flex-wrap -mx-3 mb-6">
+
+    <div class="w-full md:w-2/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+               for="ResponsibleDeptRemarks">
+            Responsible Department Remarks
+        </label>
+
+        <textarea rows="3" class="form-control" id="ResponsibleDeptRemarks" name="ResponsibleDeptRemarks" value="@ViewBag.Complaint.ResponsibleDeptRemarks">@ViewBag.Complaint.ResponsibleDeptRemarks</textarea>
+    </div>
+
+    </div>

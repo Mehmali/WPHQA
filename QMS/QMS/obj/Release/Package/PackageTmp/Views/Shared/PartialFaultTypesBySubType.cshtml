@@ -1,0 +1,15 @@
+﻿
+@if ((ViewBag.FaultTypes).Count > 0)
+{
+    <option id="optionVal" value="">Select Fault Type</option>
+    foreach (var faultType in ViewBag.FaultTypes)
+    {
+        <option value="@faultType.Id">@faultType.Fault</option>
+    }
+}
+else
+{
+    <option id="optionVal" value="0">Select Fault Type</option>
+}
+
+

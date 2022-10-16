@@ -1,19 +1,4 @@
-﻿@*@if (ViewBag.Benefits != null && ViewBag.Benefits.Count > 0)
-    {
-        <option>Select Benefits</option>
-        @foreach (var benefit in ViewBag.Benefits)
-        {
-            <option value="@benefit.Id">@benefit.Title</option>
-        }
-    }
-    else if (ViewBag.Cities != null && ViewBag.Cities.Count > 0)
-    {
-        <option>Select City</option>
-        @foreach (var city in ViewBag.Cities)
-        {
-            <option value="@city.Id">@(city.Name + "[" + city.Code + "]")</option>
-        }
-    }*@
+﻿
 
 <option value="">Select Facility</option>
 @foreach (var site in ViewBag.Sites)

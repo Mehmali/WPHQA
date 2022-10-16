@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static QMS.Utilities.Enums;
 
 namespace QMS.Repository
 {
@@ -113,7 +114,23 @@ namespace QMS.Repository
 
         }
 
-
+        public bool ChangeStatus(int id,ComplaintStatus status)
+        {
+            try
+            {
+                using (var db = new QAData())
+                {
+                    var Complaint = db.Complaints.Find(id);
+                    Complaint.CurrentState = (int)status;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
         public List<Complaint> GetComplaintList()
         {
@@ -159,6 +176,24 @@ namespace QMS.Repository
 
                     var complaint = db.Database.SqlQuery<ComplaintById>("SP_ComplaintById @ComplaintId", sqlParam).FirstOrDefault();
                     return complaint;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+
+        public List<Complaint> GetOpenComplaintsListByDate(DateTime date)
+        {
+            try
+            {
+                using (var db = new QAData())
+                {
+                   // int status = (int)ComplaintStatus.Open;
+                    var complaints = db.Complaints.Where(x=>x.ActionDueDate==date && x.CurrentState== 1).ToList();
+                    return complaints;
                 }
             }
             catch (Exception ex)

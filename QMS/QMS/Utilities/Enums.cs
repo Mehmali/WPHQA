@@ -26,6 +26,13 @@ namespace QMS.Utilities
             Fabrication = 4
         }
 
+        public enum ComplaintStatus
+        {
+            Open = 1,
+            Pending = 2,
+            Closed = 3
+        }
+
       
     }
 }

@@ -1,0 +1,107 @@
+﻿
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var ComplaintSubType = (QMS.Data.ComplaintSubType)ViewBag.ComplaintSubType;
+    //var Departments = (List<QMS.Data.Department>)ViewBag.Departments;
+
+}
+
+<main class="bg-white-500 flex-1 p-3 overflow-hidden">
+    <div class="flex flex-col">
+        <!--Grid Form-->
+        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2 ">
+            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-2/3 ml-24 ">
+                <div class="bg-gray-400 px-2 py-3 border-solid border-gray-800 border-b text-2xl">
+                    Update Compliant Sub Type
+                </div>
+
+                <div class="p-3">
+                    <form name="editForm" id="editForm" class="w-full" method="post" action="@Url.Content("~/ComplaintSubType/Edit")">
+                        <input type="hidden" name="Id" value="@ComplaintSubType.Id" />
+
+                        <input type="hidden" name="CreatedOn" value="@ComplaintSubType.CreatedOn" />
+                        <input type="hidden" name="CreatedBy" value="@ComplaintSubType.CreatedBy" />
+
+
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Dept_Id">
+                                    Department
+                                </label>
+                                <select disabled class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="Dept_Id" name="Dept_Id">
+                                    <option>@ComplaintSubType.Department</option>
+
+                                </select>
+                                <input type="hidden" name="Dept_Id" value="@ComplaintSubType.Dept_Id" />
+                                @*<p id="jobtitleErr" class="error mt-1 hide">Please select the job title.</p>*@
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="MainType_Id">
+                                    Complaint Main Type
+                                </label>
+                                <select disabled class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="MainType_Id" name="MainType_Id">
+                                    <option>@ComplaintSubType.MainType</option>
+
+                                </select>
+                                <input type="hidden" name="MainType_Id" value="@ComplaintSubType.MainType_Id" />
+                                @*<p id="jobtitleErr" class="error mt-1 hide">Please select the job title.</p>*@
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="SubType">
+                                    Sub Type Description
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="SubType" name="SubType" type="text" value="@ComplaintSubType.SubType">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="md:flex md:items-right">
+                            <div class="md:w-2/3">
+                                <button type="submit" id="save" class="test shadow bg-green-500 hover:bg-green-800 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                                    Save
+                                </button>
+                                <a class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-decoration-none" href="@Url.Content("~/ComplaintSubType/List")">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--/Grid Form-->
+    </div>
+</main>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+       
+    });
+
+
+
+  
+  
+</script>

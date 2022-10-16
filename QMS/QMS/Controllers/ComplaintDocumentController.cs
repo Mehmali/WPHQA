@@ -103,10 +103,27 @@ namespace QMS.Controllers
 
         //}
 
-        public ActionResult DownloadFile(int id)        {
+        public ActionResult DownloadFile(int id)
+        {
             var document = _repoComplaintDocument.GetComplaintDocumentById(id);
             string FileName = document.File_Name;
-            if (!string.IsNullOrEmpty(FileName))            {                Session["Message"] = "";                //string FileName = "";                string FPath = "";                //FileName = FilePath.Split('-')[1];                FPath = Server.MapPath("~/UploadedFiles\\") + FileName;                HttpContext.Response.Buffer = true;                HttpContext.Response.Charset = "";                HttpContext.Response.Cache.SetCacheability(HttpCacheability.NoCache);                //HttpContext.Response.ContentType = "application/vnd.ms-word";                HttpContext.Response.AddHeader("content-disposition", "attachment;filename=" + FileName);                HttpContext.Response.WriteFile(FPath);                HttpContext.Response.Flush();            }            return null;        }
+            if (!string.IsNullOrEmpty(FileName))
+            {
+                Session["Message"] = "";
+                //string FileName = "";
+                string FPath = "";
+                //FileName = FilePath.Split('-')[1];
+                FPath = Server.MapPath("~/UploadedFiles\\") + FileName;
+                HttpContext.Response.Buffer = true;
+                HttpContext.Response.Charset = "";
+                HttpContext.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                //HttpContext.Response.ContentType = "application/vnd.ms-word";
+                HttpContext.Response.AddHeader("content-disposition", "attachment;filename=" + FileName);
+                HttpContext.Response.WriteFile(FPath);
+                HttpContext.Response.Flush();
+            }
+            return null;
+        }
 
 
     }

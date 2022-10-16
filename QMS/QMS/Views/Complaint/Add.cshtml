@@ -42,6 +42,7 @@
 
                         <input type="hidden" id="isValid" name="isValid" value="true" />
                         <input type="hidden" id="IsClosed" name="IsClosed" value="false" />
+                        <input type="hidden" id="CurrentState" name="CurrentState" value="1" />
 
 
                         <div class="flex flex-wrap -mx-3 mb-6">
@@ -78,7 +79,7 @@
                                     Internal
                                 </label>
 
-                                <input class="form-check-input complaintType" type="radio" name="ComplaintType" id="ComplaintTypeExternal" value="External" >
+                                <input class="form-check-input complaintType" type="radio" name="ComplaintType" id="ComplaintTypeExternal" value="External">
                                 <label class="form-check-label mr-6" for="ComplaintTypeExternal">
                                     External
                                 </label>
@@ -116,7 +117,7 @@
 
 
 
-                        <div  class="flex flex-wrap -mx-3 mb-6">
+                        <div class="flex flex-wrap -mx-3 mb-6">
                             <div id="Reponsible_DeptDiv" class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ResponsibleDept_Id">
@@ -204,18 +205,19 @@
                                     Problem Description
                                 </label>
                                 @*<input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-        id="ProblemDescription" name="ProblemDescription" type="text" placeholder="Enter Problem Description" autocomplete="off">*@
+                id="ProblemDescription" name="ProblemDescription" type="text" placeholder="Enter Problem Description" autocomplete="off">*@
                                 <textarea rows="3" class="form-control" id="ProblemDescription" name="ProblemDescription"></textarea>
-                                
-                            </div>
 
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-2/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
                                        for="ProblemArea">
                                     Problem Area
                                 </label>
                                 @*<input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="ProblemArea" name="ProblemArea" type="text" placeholder="Enter Problem Area" autocomplete="off">*@
+                id="ProblemArea" name="ProblemArea" type="text" placeholder="Enter Problem Area" autocomplete="off">*@
 
                                 <textarea rows="3" class="form-control" id="ProblemArea" name="ProblemArea"></textarea>
                             </div>
@@ -232,7 +234,7 @@
                                     Problem Reason
                                 </label>
                                 @*<input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="ProblemReason" name="ProblemReason" type="text" placeholder="Enter Problem Reason" autocomplete="off">*@
+                id="ProblemReason" name="ProblemReason" type="text" placeholder="Enter Problem Reason" autocomplete="off">*@
 
                                 <textarea rows="3" class="form-control" id="ProblemReason" name="ProblemReason"></textarea>
                             </div>
@@ -297,7 +299,10 @@
                         </div>
 
 
-
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-2/2 px-3">Reference Documents</div>
+                            <a class="w-full md:w-2/2 px-3" href="@Url.Content("~/Downloads/5 Why Chemical Handling.xlsx")" target="_blank"> 5 Why Chemical Handling </a>
+                        </div>
 
 
 
@@ -450,9 +455,21 @@
     function validateSubmit() {
      
 
-        
+        if ($('#IssuerDept_Id').val() == "") {
+
+            alert("Please enter complaint Issuer Department");
+
+
+        }
+
+        else if ($('#ResponsibleDept_Id').val() == 0) {
+
+            alert("Please enter complaint Responsible Department");
+
+
+        }
        
-        if ($('#ComplaintMainType_Id').val() == "") {
+        else if ($('#ComplaintMainType_Id').val() == "") {
 
             alert("Please enter complaint main type");
 

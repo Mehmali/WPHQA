@@ -2,12 +2,12 @@
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/Layout.cshtml";
-    //List<HRMS.Data.JobTitle> JobTitlesList = (ViewBag.JobTitles == null ? new List<HRMS.Data.JobTitle>() : ViewBag.JobTitles);
-    var subModules = Session["subModules"] != null ? (List<HRMS.Data.SubModule>)Session["subModules"] : new List<HRMS.Data.SubModule>();
+    //List<QMS.Data.JobTitle> JobTitlesList = (ViewBag.JobTitles == null ? new List<QMS.Data.JobTitle>() : ViewBag.JobTitles);
+    var subModules = Session["subModules"] != null ? (List<QMS.Data.SubModule>)Session["subModules"] : new List<QMS.Data.SubModule>();
     int subModuleId = subModules.Where(m => m.Name == "Job Titles").FirstOrDefault().Id;
-    bool canAdd = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
-    bool canEdit = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
-    bool canDelete = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
+    bool canAdd = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
+    bool canEdit = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
+    bool canDelete = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
 }
 
 <main class="bg-white-500 flex-1 p-3 overflow-hidden">
@@ -47,7 +47,7 @@
                                 foreach (var jobTitle in ViewBag.JobTitles)
                                 {
                             <tr>
-                                <td class="border px-4 py-2">@jobTitle.Code</td>
+                                <td class="border px-4 py-2">@jobTitle.JobTitle_Code</td>
                                 <td class="border px-4 py-2">@jobTitle.Title</td>
                                 <td class="border px-4 py-2">@jobTitle.Description</td>
                                 @*<td class="border px-4 py-2">@jobTitle.LastUpdated</td>

@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var subModules = Session["subModules"] != null ? (List<QMS.Data.SubModule>)Session["subModules"] : new List<QMS.Data.SubModule>();
+    int subModuleId = subModules.Where(m => m.Name == "ExternalComplaints").FirstOrDefault().Id;
+    var Departments = (List<QMS.Data.Department>)ViewBag.Departments;
+    bool canAdd = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
+    bool canEdit = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
+    bool canDelete = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
+}
+
+<main class="bg-white-500 flex-1 p-3 overflow-hidden">
+    <div class="flex flex-col">
+        <!--Grid Form-->
+        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
+                    @*<span>Complaints List</span>*@
+
+                    <a class="bg-blue-400 hover:bg-blue-900 text-white  py-2 px-1 mx-1  text-decoration-none" href="@Url.Content("~/Complaint/ComplaintReceivedList")">
+                        Complaints Received
+                    </a>
+                    <a class="bg-blue-400 hover:bg-blue-900 text-white  py-2 px-1 mx-1  text-decoration-none" href="@Url.Content("~/Complaint/ComplaintIssuedList")">
+                        Complaints Issued
+                    </a>
+                    <a class="bg-gray-500 hover:bg-gray-500 text-white  py-2 px-1 mx-1  text-decoration-none" href="@Url.Content("~/Complaint/ExternalComplaintsList")">
+                        External Complaints
+                    </a>
+                    @*<a class="listBtn bg-blue-400 hover:bg-blue-900 text-white  py-2 px-2 mx-1 rounded text-decoration-none" href="@Url.Content("~/Complaint/List")">
+                        All Complaints
+                    </a>*@
+
+                    @if (canAdd)
+                    {
+                        <span style="float:right;">
+                            @*<button class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded" onclick="AddJobTitle();">
+                    Add Job Title
+                </button>*@
+                            <a class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded text-decoration-none" href="@Url.Content("~/Complaint/Add")">
+                                New Complaint
+                            </a>
+
+                        </span>
+                    }
+                </div>
+
+                <div class="p-3">
+                    <table class="table-responsive w-full text-12 table-striped">
+                        <thead class="bg-gray-600 text-white">
+                            <tr>
+                                <th class="border  px-2 py-2 text-center">Complaint Id</th>
+                                <th class="border  px-2 py-2 text-center">Complaint Issuer Name</th>
+                                <th class="border  px-2 py-2 text-center">Complaint Issuer Department</th>
+                                <th class="border  px-2 py-2 text-center">Responsible Department</th>
+                                <th class="border  px-2 py-2 text-center">Complaint Main Type</th>
+                                <th class="border  px-2 py-2 text-center">Risk Score</th>
+                                <th class="border  px-2 py-2 text-center">CAR/CAPA</th>
+                                <th class="border  px-2 py-2 text-center">Validity</th>
+                                <th class="border  px-2 py-2 text-center">Status</th>
+
+                                <th class="border w-1/6 px-24 py-2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.Complaints != null && ViewBag.Complaints.Count > 0)
+                            {
+                                foreach (var complaint in ViewBag.Complaints)
+                                {
+                            <tr>
+                                <td class="border p-2 ">@(complaint.Id)</td>
+                                <td class="border p-2">@(complaint.Issuer_Name)</td>
+                                <td class="border p-2">@(complaint.IssuerDepartment)</td>
+                                <td class="border p-2">@(complaint.ResponsibleDepartment)</td>
+                                <td class="border p-2">@(complaint.ComplaintMainType)</td>
+                                <td class="border p-2">@(complaint.RiskAssessment)</td>
+                                <td class="border p-2">@(complaint.CARCAPA)</td>
+                                <td class="border p-2">@(complaint.IsValid ? "Valid" : "Invalid")</td>
+                                <td class="border p-2">@(complaint.Status == 2 ? "Pending" : complaint.Status == 3 ? "Closed" : "Open")</td>
+
+                                <td class="border pl-5">
+
+                                    @if (canEdit)
+                                    {
+                                        <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" href="@Url.Content("~/Complaint/Edit/" + complaint.Id)">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    }
+                                    @*@if (canDelete)
+            {
+                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500" href="@Url.Content("~/ComplaintSubType/Delete/" + sysUser.Id)">
+                    <i class="fas fa-trash"></i>
+                </a>
+            }*@
+
+                                    <a class="bg-blue-500 cursor-pointer rounded p-1 m-1 text-white text-sm" href="@Url.Content("~/Complaint/ViewDetail/" + complaint.Id)">
+                                        View Detail
+                                    </a>
+                                </td>
+                            </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="11" class="border px-4 py-4">
+                                        No Record Found!
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--/Grid Form-->
+    </div>
+</main>
+
+
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script src="~/jquery-ui-1.12.1/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+      
+    });
+
+
+
+
+</script>
+
+

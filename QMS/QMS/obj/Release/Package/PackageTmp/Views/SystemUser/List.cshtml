@@ -2,11 +2,12 @@
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/Layout.cshtml";
-    var subModules = Session["subModules"] != null ? (List<HRMS.Data.SubModule>)Session["subModules"] : new List<HRMS.Data.SubModule>();
+    var subModules = Session["subModules"] != null ? (List<QMS.Data.SubModule>)Session["subModules"] : new List<QMS.Data.SubModule>();
     int subModuleId = subModules.Where(m => m.Name == "SystemUsers").FirstOrDefault().Id;
-    bool canAdd = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
-    bool canEdit = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
-    bool canDelete = HRMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
+    var Roles = (List<QMS.Data.Role>)ViewBag.Roles;
+    bool canAdd = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 2);
+    bool canEdit = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 3);
+    bool canDelete = QMS.Utilities.PermissionChecker.HasPermission(subModuleId, 4);
 }
 
 <main class="bg-white-500 flex-1 p-3 overflow-hidden">
@@ -36,6 +37,7 @@
                             <tr>
                                 <th class="border  px-24 py-2">Employee Name</th>
                                 <th class="border  px-24 py-2">User Name</th>
+                                <th class="border  px-24 py-2">Role Assigned</th>
                                 @*<th class="border  px-24 py-2">Password</th>*@
                                 @*<th class="border  px-2 py-2">Status</th>*@
                                 @*<th class="border  px-24 py-2">Last Updated By/On</th>*@
@@ -47,29 +49,30 @@
                             {
                                 foreach (var sysUser in ViewBag.SystemUsers)
                                 {
-                                    <tr>
-                                        <td class="border pl-5">@(sysUser.Employee.FirstName)</td>
-                                        <td class="border pl-5">@(sysUser.LoginId)</td>
-                                        @*<td class="border  ">@sysUser.Password</td>
-                                        <td class="border ">@(sysUser.IsActive == false ? "In-Active" : "Active")</td>*@
-                                        @*<td class="border ">@(employee.Department.Name)</td>*@
-                                        @*<td class="border  ">@(sysUser.LastUpdatedBy + " " + sysUser.LastUpdatedOn)</td>*@
-                                        <td class="border pl-5">
+                            <tr>
+                                <td class="border pl-5">@(sysUser.Emp_Name)</td>
+                                <td class="border pl-5">@(sysUser.Login_Id)</td>
+                                <td class="border pl-5">@(Roles.Where(x=>x.Id.Equals(sysUser.Role_Id)).FirstOrDefault().Role_Name)</td>
+                                @*<td class="border  ">@sysUser.Password</td>
+        <td class="border ">@(sysUser.IsActive == false ? "In-Active" : "Active")</td>*@
+                                @*<td class="border ">@(employee.Department.Name)</td>*@
+                                @*<td class="border  ">@(sysUser.LastUpdatedBy + " " + sysUser.LastUpdatedOn)</td>*@
+                                <td class="border pl-5">
 
-                                            @*@if (canEdit)
-                                                {
-                                                    <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" href="@Url.Content("~/SystemUser/Edit/" + sysUser.Id)">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                }*@
-                                            @if (canDelete)
-                                            {
-                                                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500" href="@Url.Content("~/SystemUser/Delete/" + sysUser.Id)">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            }
-                                        </td>
-                                    </tr>
+                                    @if (canEdit)
+            {
+                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" href="@Url.Content("~/SystemUser/Edit/" + sysUser.Id)">
+                    <i class="fas fa-edit"></i>
+                </a>
+            }
+                                    @*@if (canDelete)
+                                    {
+                                        <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500" href="@Url.Content("~/SystemUser/Delete/" + sysUser.Id)">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    }*@
+                                </td>
+                            </tr>
                                 }
                             }
                             else

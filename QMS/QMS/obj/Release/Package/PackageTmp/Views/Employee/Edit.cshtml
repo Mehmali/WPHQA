@@ -1,8 +1,9 @@
 ﻿
 
 @{
-    ViewBag.Title = "Add";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/Layout.cshtml";
+   
 
 }
 
@@ -35,85 +36,29 @@
                 <div class="p-3">
                     <form name="editForm" id="editForm" class="w-full" method="post" action="@Url.Content("~/Employee/Edit")">
                         <input type="hidden" name="Id" value="@ViewBag.Employee.Id" />
+                        <input type="hidden" name="IsActive" value="@ViewBag.Employee.IsActive.ToString()" />
                         <input type="hidden" name="CreatedBy" value="@ViewBag.Employee.CreatedBy" />
                         <input type="hidden" name="CreatedOn" value="@ViewBag.Employee.CreatedOn" />
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="Code">
+                                       for="Emp_Code">
                                     Code
                                 </label>
                                 <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="Code" name="Code" type="text" placeholder="Enter Code" value="@ViewBag.Employee.Code">
+                                       id="Emp_Code" name="Emp_Code" type="text" placeholder="Enter Code" value="@ViewBag.Employee.Emp_Code">
                                 @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
                             </div>
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="FirstName">
-                                    First Name
+                                       for="Emp_Name">
+                                    Name
                                 </label>
                                 <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="FirstName" name="FirstName" type="text" placeholder="Enter First Name" value="@ViewBag.Employee.FirstName">
+                                       id="Emp_Name" name="Emp_Name" type="text" placeholder="Enter Name" value="@ViewBag.Employee.Emp_Name">
                             </div>
                         </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="MiddleName">
-                                    Middle Name
-                                </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="MiddleName" name="MiddleName" type="text" placeholder="Enter Middle Name" value="@ViewBag.Employee.MiddleName">
-                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
-                            </div>
-                            <div class="w-full md:w-1/2 px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="LastName">
-                                    Last Name
-                                </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="LastName" name="LastName" type="text" placeholder="Enter Last Name" value="@ViewBag.Employee.LastName">
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="Gender">
-                                    Gender
-                                </label>
-                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                        id="Gender_Id" name="Gender">
-                                    <option>Select Gender</option>
-                                    @foreach (var gender in ViewBag.Gender)
-                                    {
-                                        <option value="@gender.Key" @(@ViewBag.Employee.Gender == @gender.Key ? "selected" : "")>@gender.Value</option>
-                                    }
-                                </select>
-                                <p id="countryErr" class="error mt-1 hide">Please select the gender.</p>
-                            </div>
-                            <div class="w-full md:w-1/2 px-3">
 
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="DOB">
-                                    DOB
-                                </label>
-                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="DOB" name="DOB" type="text" placeholder="Enter DOB" value="@((Convert.ToDateTime(ViewBag.Employee.DOB)).ToShortDateString())">
-                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
-                            </div>
-                            <div class="w-full md:w-1/2 px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="HireDate">
-                                    Hire Date
-                                </label>
-                                <input class="dateFormate appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="HireDate" name="HireDate" type="text" placeholder="Enter Hire Date" value="@((Convert.ToDateTime(ViewBag.Employee.HireDate.Date)).ToShortDateString())">
-                            </div>
-                        </div>
 
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/2 px-3">
@@ -126,11 +71,21 @@
                                     <option>Select Manager</option>
                                     @foreach (var manager in ViewBag.Managers)
                                     {
-                                        <option value="@manager.Id" @(manager.Id == ViewBag.Employee.Manager_Id ? "selected" : "")>@(manager.FirstName + " " + manager.LastName + "(" + manager.Code + ")")</option>
+                                        <option value="@manager.Id" @(manager.Id == ViewBag.Employee.Manager_Id ? "selected" : "")>@(manager.Emp_Name)</option>
                                         @*<option value="@country.Id" @(country.Id == vcountry.Country_Id ? "selected" : "")>@(country.Name + "[" + country.Code + "]")</option>*@
                                     }
                                 </select>
                                 @*<p id="jobtitleErr" class="error mt-1 hide">Please select the job title.</p>*@
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                       for="Email">
+                                    Email
+                                </label>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
+                                       id="Email" name="Email" type="text" placeholder="Enter Email" value="@ViewBag.Employee.Email">
+                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
                             </div>
 
                         </div>
@@ -161,185 +116,35 @@
                                     <option>Select Department</option>
                                     @foreach (var department in ViewBag.Departments)
                                     {
-                                        <option value="@department.Id" @(department.Id == ViewBag.Employee.Department_Id ? "selected" : "")>@(department.Name + "[" + department.Code + "]")</option>
+                                        <option value="@department.Id" @(department.Id == ViewBag.Employee.Department_Id ? "selected" : "")>@(department.Dept_Name + "[" + department.Dept_Code + "]")</option>
                                         @*<option value="@country.Id" @(country.Id == vcountry.Country_Id ? "selected" : "")>@(country.Name + "[" + country.Code + "]")</option>*@
                                     }
                                 </select>
                                 @*<p id="countryErr" class="error mt-1 hide">Please select the department.</p>*@
                             </div>
                         </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="Site">
-                                    Site
-                                </label>
-                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                        id="Site_Id" name="Site_Id">
-                                    <option>Select Site</option>
-                                    @foreach (var site in ViewBag.Sites)
-                                    {
-                                        <option value="@site.Id" @(site.Id == ViewBag.Employee.Site_Id ? "selected" : "")>@(site.Description)</option>
-                                        @*<option value="@country.Id" @(country.Id == vcountry.Country_Id ? "selected" : "")>@(country.Name + "[" + country.Code + "]")</option>*@
-                                    }
-                                </select>
-                                @*<p id="jobtitleErr" class="error mt-1 hide">Please select the job title.</p>*@
-                            </div>
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="Email">
-                                    Email
-                                </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="Email" name="Email" type="text" placeholder="Enter Email" value="@ViewBag.Employee.Email">
-                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="Fax">
-                                    Fax
-                                </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="Fax" name="Fax" type="text" placeholder="Enter Fax" value="@ViewBag.Employee.Fax">
-                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
-                            </div>
-                            <div class="w-full md:w-1/2 px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="HomePhone">
-                                    Home Phone
-                                </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="HomePhone" name="HomePhone" type="text" placeholder="Enter Home Phone" value="@ViewBag.Employee.HomePhone">
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="CellPhone">
-                                    Cell Phone
-                                </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="CellPhone" name="CellPhone" type="text" placeholder="Enter Cell Phone" value="@ViewBag.Employee.CellPhone">
-                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
-                            </div>
-                            <div class="w-full md:w-1/2 px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="AddressLine1">
-                                    Address Line1
-                                </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="AddressLine1" name="AddressLine1" type="text" placeholder="Enter Address Line1" value="@ViewBag.Employee.AddressLine1">
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="AddressLine2">
-                                    Address Line2
-                                </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="AddressLine2" name="AddressLine2" type="text" placeholder="Enter Address Line2" value="@ViewBag.Employee.AddressLine2">
-                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
-                            </div>
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="Country">
-                                    Country
-                                </label>
-                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                        id="Country_Id" name="Country_Id">
-                                    <option>Select Country</option>
-                                    @foreach (var country in ViewBag.Countries)
-                                    {
-                                        <option value="@country.Id" @(country.Id == ViewBag.Employee.Country_Id ? "selected" : "")>@(country.Name + "[" + country.Code + "]")</option>
-                                        @*<option value="@country.Id" @(country.Id == vcountry.Country_Id ? "selected" : "")>@(country.Name + "[" + country.Code + "]")</option>*@
-                                    }
-                                </select>
-                                <p id="countryErr" class="error mt-1 hide">Please select the country.</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="City">
-                                    City
-                                </label>
-                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                        id="City_Id" name="City_Id">
-                                    <option>Select City</option>
-                                    @foreach (var city in ViewBag.Cities)
-                                    {
-                                        <option value="@city.Id" @(city.Id == ViewBag.Employee.City_Id ? "selected" : "")>@(city.Name + "[" + city.Code + "]")</option>
-                                    }
-                                </select>
-                                @*<p class="text-red-500 text-xs italic">Please fill out this field.</p>*@
-                            </div>
-                            <div class="w-full md:w-1/2 px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="ZipCode">
-                                    Zip Code
-                                </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="ZipCode" name="ZipCode" type="text" placeholder="Enter Zip Code" value="@ViewBag.Employee.ZipCode">
-                            </div>
-                        </div>
 
-                        <hr />
+
+
                         <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="BasicSalary">
-                                    Basic Salary
-                                </label>
-                                <input class="nemericVal appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="BasicSalary" name="BasicSalary" type="text" placeholder="Enter Basic Salary" value="@ViewBag.Employee.BasicSalary">
-                            </div>
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="MedicalAllowance">
-                                    Medical Allowance
+                                       for="CompId">
+                                    Company
                                 </label>
-                                <input class="nemericVal appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="MedicalAllowance" name="MedicalAllowance" type="text" placeholder="Enter Medical Allowance" value="@ViewBag.Employee.MedicalAllowance">
+                                <select class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                        id="CompId" name="CompId">
+                                    <option>Select Company</option>
+                                    <option value="1" @(ViewBag.Employee.CompId == "1" ? "Selected" : "")>Spinning</option>
+                                    <option value="2" @(ViewBag.Employee.CompId == "2" ? "Selected" : "")>Weaving</option>
+                                    <option value="3" @(ViewBag.Employee.CompId == "3" ? "Selected" : "")>Finishing</option>
+                                    <option value="4" @(ViewBag.Employee.CompId == "4" ? "Selected" : "")>Fabrication</option>
+                                    <option value="5" @(ViewBag.Employee.CompId == "5" ? "Selected" : "")>Corporate</option>
+
+                                </select>
+
                             </div>
-                        </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="HouseRentAllowance">
-                                    House Rent Allowance
-                                </label>
-                                <input class="nemericVal appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="HouseRentAllowance" name="HouseRentAllowance" type="text" placeholder="Enter House Rent Allowance" value="@ViewBag.Employee.HouseRentAllowance">
-                            </div>
-                            <div class="w-full md:w-1/2 px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="TravellingAllowance">
-                                    Travelling Allowance
-                                </label>
-                                <input class="nemericVal appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="TravellingAllowance" name="TravellingAllowance" type="text" placeholder="Enter Travelling Allowance" value="@ViewBag.Employee.TravellingAllowance">
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="UtilityAllowance">
-                                    Utility Allowance
-                                </label>
-                                <input class="nemericVal appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="UtilityAllowance" name="UtilityAllowance" type="text" placeholder="Enter Utility Allowance" value="@ViewBag.Employee.UtilityAllowance">
-                            </div>
-                            <div class="w-full md:w-1/2 px-3">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                       for="OtherAllowance">
-                                    Other Allowance
-                                </label>
-                                <input class="nemericVal appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white-500"
-                                       id="OtherAllowance" name="OtherAllowance" type="text" placeholder="Enter Other Allowance" value="@ViewBag.Employee.OtherAllowance">
-                            </div>
+
                         </div>
 
                         <div class="md:flex md:items-right">
